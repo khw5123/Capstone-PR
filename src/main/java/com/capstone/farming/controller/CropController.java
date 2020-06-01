@@ -1,4 +1,4 @@
-package com.capstone.farming.controller;
+﻿package com.capstone.farming.controller;
 
 import com.capstone.farming.model.Crop;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ import java.util.List;
 public class CropController {
     private final String apiKey = "20200519ARN2H1BVVDHK2Y5BBHDPZG"; // API Key
     private final String maxNumOfRows = "20"; // 가져올 작물의 최대 개수
-    private final String cropTag = "item"; // 작물 태그
+    private final String cropTag = "item"; // 작물 루트 태그
     public static final HashMap<String, String> cropTags = new HashMap<String, String>(); // 작물 태그 내 속성에 따른 태그들
     static {
         cropTags.put("품종명", "cntntsSj");
