@@ -1,4 +1,4 @@
-﻿package com.capstone.farming.controller;
+package com.capstone.farming.controller;
 
 import com.capstone.farming.model.Crop;
 import org.springframework.stereotype.Controller;
