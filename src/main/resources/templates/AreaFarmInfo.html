@@ -10,38 +10,43 @@
     <title>지역별 작목정보</title>
 </head>
 <body>
-    <button id = "find-me">Show my location</button><br/>
-    <p id = "status"></p>
-
+<!--
     <div class="hAddr">
         <span class="title">지도중심기준 행정동 주소정보</span>
         <span id="currentAddr"></span>
     </div>
+-->
 
-    <select id="sidoCdResearch" name="sidoCdResearch" onchange="itemChange()" title="시도 선택">
-        <option value="시도선택" selected="selected">시도선택</option>
-        <option value="강원도">강원도</option>
-        <option value="경기도">경기도</option>
-        <option value="경상남도">경상남도</option>
-        <option value="경상북도">경상북도</option>
-        <option value="광주광역시">광주광역시</option>
-        <option value="대구광역시">대구광역시</option>
-        <option value="대전광역시">대전광역시</option>
-        <option value="부산광역시">부산광역시</option>
-        <option value="서울특별시">서울특별시</option>
-        <option value="세종특별자치시">세종특별자치시</option>
-        <option value="울산광역시">울산광역시</option>
-        <option value="인천광역시">인천광역시</option>
-        <option value="전라남도">전라남도</option>
-        <option value="전라북도">전라북도</option>
-        <option value="제주특별자치도">제주특별자치도</option>
-        <option value="충청남도">충청남도</option>
-        <option value="충청북도">충청북도</option>
-    </select>
+    <form action="/AreaInfo" accept-charset="utf-8" name = "person_info" method = "get">
+        <select id="sidoCdResearch" name="province" onchange="itemChange()" title="시도 선택">
+            <option value="시도선택" selected="selected">시도선택</option>
+            <option value="강원도">강원도</option>
+            <option value="경기도">경기도</option>
+            <option value="경상남도">경상남도</option>
+            <option value="경상북도">경상북도</option>
+            <option value="광주광역시">광주광역시</option>
+            <option value="대구광역시">대구광역시</option>
+            <option value="대전광역시">대전광역시</option>
+            <option value="부산광역시">부산광역시</option>
+            <option value="서울특별시">서울특별시</option>
+            <option value="세종특별자치시">세종특별자치시</option>
+            <option value="울산광역시">울산광역시</option>
+            <option value="인천광역시">인천광역시</option>
+            <option value="전라남도">전라남도</option>
+            <option value="전라북도">전라북도</option>
+            <option value="제주특별자치도">제주특별자치도</option>
+            <option value="충청남도">충청남도</option>
+            <option value="충청북도">충청북도</option>
+        </select>
 
-    <select id="sigunCdResearch" name="sigunCdResearch" onchange="sendform" title="시군구 선택">
-        <option value="" selected="selected">시군구선택</option>
-    </select>
+        <select id="sigunCdResearch" name="city" title="시군구 선택">
+            <option value="" selected="selected">시군구선택</option>
+        </select>
+        <input type = "submit" value = "검색"/>
+    </form>
+
+    <button id = "find-me">현재 위치</button><br/>
+    <p id = "status"></p>
 
     <div id="mainHide">
         <table class="table table-hover">
@@ -70,6 +75,11 @@
             </tr>
             </tbody>
         </table>
+
+        <th:block th:if="${shippingAreaList.empty}">해당 내용이 없습니다.</th:block>
+
+
+
     </div>
 
 
@@ -77,7 +87,9 @@
     <script
             src="https://code.jquery.com/jquery-3.5.1.slim.js"
             integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM="
-            crossorigin="anonymous"></script>
+            crossorigin="anonymous">
+
+    </script>
     <script>
     //이중 select
     var areas = [];
@@ -127,7 +139,7 @@
 
 
             if (areas[i].sido == selectSido) {
-                console.log(selectSido);
+                //console.log(selectSido);
                 $('#sigunCdResearch').empty();
 
                 for (var count = 0; count < areas[i].sigun.length; count++) {
@@ -152,17 +164,17 @@
             latitude  = position.coords.latitude;
             longitude = position.coords.longitude;
 
-            status.textContent = 'Latitude: '+ latitude + ' °, Longitude: ' + longitude+' °';
+            //status.textContent = 'Latitude: '+ latitude + ' °, Longitude: ' + longitude+' °';
         }
 
         function error() {
-            status.textContent = 'Unable to retrieve your location';
+            status.textContent = '위치를 검색할 수 없습니다.';
         }
 
         if(!navigator.geolocation) {
-            status.textContent = 'Geolocation is not supported by your browser';
+            status.textContent = '브라우저에서 위치를 지원하지 않습니다';
         } else {
-            status.textContent = 'Locating…';
+            //status.textContent = 'Locating…';
             navigator.geolocation.getCurrentPosition(success, error);
         }
 
@@ -180,26 +192,33 @@
     //현재좌표에 대한 주소정보를 표출하는 함수입니다
     function displayCurrentInfo(result, status) {
         if (status === kakao.maps.services.Status.OK) {
-            var infoDiv = document.getElementById('currentAddr');
+            //var infoDiv = document.getElementById('currentAddr');
 
             for(var i = 0; i < result.length; i++) {
                 // 행정동의 region_type 값은 'H' 이므로
                 if (result[i].region_type === 'H') {
                     //console.log(result[i]);
                     var result = result[i].address_name.split(" ");
-                    infoDiv.innerHTML = result[0]+" "+result[1];
+                    //infoDiv.innerHTML = result[0]+" "+result[1];
+
                     //sido select에 해당 태그가 select되고 form summit되기
                     $('#sidoCdResearch').val(result[0]).prop("selected", true);
                     itemChange();
                     $('#sigunCdResearch').val(result[1]).prop("selected", true);
-
-
                     break;
                 }
             }
         }
     }
 
+    //areaInfo controller model
+    var province = "[[${province}]]";
+    var city = "[[${city}]]";
+    if(province != "") {
+        $('#sidoCdResearch').val(province).prop("selected", true);
+        itemChange();
+        $('#sigunCdResearch').val(city).prop("selected", true);
+    }
     document.querySelector('#find-me').addEventListener('click', getLatLng);
 </script>
 </body>

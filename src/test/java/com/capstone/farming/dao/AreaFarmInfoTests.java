@@ -15,6 +15,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
+import static org.springframework.test.util.AssertionErrors.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest()
@@ -24,7 +25,7 @@ public class AreaFarmInfoTests {
     private MongoTemplate mongoTemplate;
 
     @Autowired
-    AreaFarmInfoDAO areaFarmInfoDAO = new AreaFarmInfoDAO();
+    AreaFarmInfoDAO areaFarmInfoDAO;
 
     //db 연결확인
     @Test
@@ -48,7 +49,7 @@ public class AreaFarmInfoTests {
     {
         Query query = new Query();
         query.addCriteria(Criteria.where("province").is("충청북도").andOperator(Criteria.where("city").is("제천시")));
-        List<ShippingArea> shippingAreaList1 = areaFarmInfoDAO.find(query);
+        List<ShippingArea> shippingAreaList1 = areaFarmInfoDAO.find("충청북도", "제천시");
         List<ShippingArea> shippingAreaList2 = mongoTemplate.find(query, ShippingArea.class);
         System.out.println(shippingAreaList1.size()+" "+shippingAreaList2.size()); // log로 바꾸기
         assertThat(shippingAreaList1.size(), is(shippingAreaList2.size()));
