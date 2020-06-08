@@ -71,7 +71,6 @@ public class CropController {
             }
             model.addAttribute("cropName", cropName);
             model.addAttribute("cropList", crop);
-            System.out.println(1/0);
         } catch(Exception e) {
             log.error("An error occurred in the foodCropsInfo method", e);
         }
