@@ -1,6 +1,7 @@
 package com.capstone.farming.controller;
 
 import com.capstone.farming.model.Crop;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Slf4j
 @Controller
 public class CropController {
     private final String apiKey = "20200519ARN2H1BVVDHK2Y5BBHDPZG"; // API Key
@@ -30,13 +32,14 @@ public class CropController {
         cropTags.put("정보파일", "atchFileLink");
     }
 
-    @RequestMapping("/CropInfo")
-    public String cropPage(Model model, String cropName) {
+    // 식량 작물
+    @RequestMapping("/Crop/FoodCropsInfo")
+    public String foodCropsInfo(Model model, String cropName) {
         try {
             // 작물을 선택하지 않았을 경우(초기 접속)
             if(cropName == null) {
                 model.addAttribute("cropName", "식량작물 선택");
-                return "CropInfo";
+                return "Crop/FoodCropsInfo";
             }
             // XML Parsing
             DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
@@ -69,9 +72,9 @@ public class CropController {
             model.addAttribute("cropName", cropName);
             model.addAttribute("cropList", crop);
         } catch(Exception e) {
-            System.out.println(e);
+            log.error("An error occurred in the foodCropsInfo method", e);
         }
-        return "CropInfo";
+        return "Crop/FoodCropsInfo";
     }
 
     private static String getTagValue(String tag, Element eElement) {
@@ -81,5 +84,49 @@ public class CropController {
             return null;
         }
         return nValue.getNodeValue();
+    }
+
+    // 특용 작물
+    @RequestMapping("/Crop/SpecialCropsInfo")
+    public String specialCropsInfo(Model model, String cropName) {
+        try {
+
+        } catch(Exception e) {
+            log.error("An error occurred in the specialCropsInfo method", e);
+        }
+        return "Crop/SpecialCropsInfo";
+    }
+
+    // 채소
+    @RequestMapping("/Crop/VegetableInfo")
+    public String vegetableInfo(Model model, String cropName) {
+        try {
+
+        } catch(Exception e) {
+            log.error("An error occurred in the vegetableInfo method", e);
+        }
+        return "Crop/VegetableInfo";
+    }
+
+    // 과수
+    @RequestMapping("/Crop/FruitInfo")
+    public String fruitInfo(Model model, String cropName) {
+        try {
+
+        } catch(Exception e) {
+            log.error("An error occurred in the fruitInfo method", e);
+        }
+        return "Crop/FruitInfo";
+    }
+
+    // 화훼
+    @RequestMapping("/Crop/FloweringPlantInfo")
+    public String floweringPlantInfo(Model model, String cropName) {
+        try {
+
+        } catch(Exception e) {
+            log.error("An error occurred in the floweringPlantInfo method", e);
+        }
+        return "Crop/FloweringPlantInfo";
     }
 }
