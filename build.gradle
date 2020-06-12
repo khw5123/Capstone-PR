@@ -29,10 +29,15 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.0' 
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.0' 
+    testCompileOnly 'junit:junit:4.12'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.1.0'
+    
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor" // Generating Your Own Metadata by Using the Annotation Processor
+
 }
 
 test {

@@ -2,6 +2,7 @@ package com.capstone.farming.controller;
 
 import com.capstone.farming.model.RealTimePriceResponse;
 import com.capstone.farming.service.RealTimePriceService;
+import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

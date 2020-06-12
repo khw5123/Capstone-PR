@@ -1,5 +1,10 @@
 package com.capstone.farming.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter @Setter @ToString
 public class Crop {
     private int id; // 번호
     private String cntntsSj; // 품종명
@@ -17,33 +22,5 @@ public class Crop {
         this.mainChartrInfo = mainChartrInfo;
         this.imgFileLinkOriginal = imgFileLinkOriginal;
         this.atchFileLink = atchFileLink;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getCntntsSj() {
-        return cntntsSj;
-    }
-
-    public String getUnbrngYear() {
-        return unbrngYear;
-    }
-
-    public String getUnbrngInsttInfo() {
-        return unbrngInsttInfo;
-    }
-
-    public String getMainChartrInfo() {
-        return mainChartrInfo;
-    }
-
-    public String getImgFileLinkOriginal() {
-        return imgFileLinkOriginal;
-    }
-
-    public String getAtchFileLink() {
-        return atchFileLink;
     }
 }
