@@ -6,38 +6,111 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
           crossorigin="anonymous">
+<!--    <script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>real time price</title>
+    <link href="/css/Loading.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 
 <h1>실시간 가격 정보</h1>
-<!--<h3>품종 : <span th:text="${kind}"></span></h3>-->
-<!--<h3>id = <span th:text="${fruit.kind}"></span></h3>-->
-<!--<button type="button" class="navyBtn" onclick="location.href='price/real_time_price?delngDe=20200507&prdlstNm=고구마&spciesNm=&whsalNm='">-->
-<!--    20200507 / 고구마-->
-<!--</button>-->
-<!--<button type="button" class="bar" onclick="location.href='price/real_time_price?delngDe=20200507&prdlstNm=고구마&spciesNm=호박고구마&whsalNm='">-->
-<!--    20200507 / 고구마 / 호박고구마-->
-<!--</button>-->
-<!--<button type="button" class="block" onclick="location.href='price/real_time_price?delngDe=20200507&prdlstNm=고구마&spciesNm=밤고구마&whsalNm='">-->
-<!--    20200507 / 고구마 / 밤고구마-->
-<!--</button>-->
-<!--<button type="button" onclick="location.href='price/real_time_price?delngDe=20200507&prdlstNm=포도&spciesNm=&whsalNm='">-->
-<!--    20200507 / 포도-->
-<!--</button>-->
-<!--<button type="button" onclick="location.href='price/real_time_price?delngDe=20200507&prdlstNm=포도&spciesNm=&whsalNm=인천삼산도매시장'">-->
-<!--    20200507 / 포도 / 인천삼산도매시장-->
-<!--</button>-->
 
-<form action="/Price/RealTimePrice" method="post">
-    <input type="text" name="delngDe" placeholder="경략일자">
-    <input type="text" name="prdlstNm" placeholder="품목명">
-    <input type="text" name="spciesNm" placeholder="품종명">
-    <input type="text" name="whsalNm" placeholder="시장명">
-    <input type="submit" value="조회">
+<!--<form action="/Price/RealTimePrice" accept-charset="utf-8" name = "price_info" method = "post">-->
+<form id="app-form" v-on:submit.prevent="request" name = "price_info" accept-charset="utf-8">
+
+    <input type="text" name="delngDe" placeholder="경략일자" ref="delngDe">
+
+    <select id="catgorySelect" name="catgoryCd" onchange="catgoryChange()" title="부류 선택" ref="catgoryCd">
+        <option value="" selected="selected">부류</option>
+        <option value="05">서류</option>
+        <option value="06">과실류</option>
+        <option value="08">과일과채류</option>
+    </select>
+
+    <select id="prdlstSelect" name="prdlstCd" onchange="prdlstChange()" title="품목 선택" ref="prdlstCd">
+        <option value="" selected="selected">품목</option>
+    </select>
+
+    <select id="spciesSelect" name="spciesCd" title="품종 선택" ref="spciesCd">
+        <option value="" selected="selected">품종</option>
+    </select>
+
+    <select id="whsalSelect" name="whsalCd" title="도매시장 선택" ref="whsalCd">
+        <option value="" selected="selected">도매시장</option>
+        <option value="110001">서울가락도매시장</option>
+        <option value="110008">서울강서도매시장</option>
+        <option value="210009">부산반여농산물도매시장</option>
+        <option value="230003">인천삼산도매시장</option>
+    </select>
+
+    <input type = "submit" value = "조회"/>
 </form>
 
-<div id="mainHide">
+<script
+        src="https://code.jquery.com/jquery-3.5.1.slim.js"
+        integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM="
+        crossorigin="anonymous">
+</script>
+
+<script>
+    var catgorys = [];
+    var selectedCatgorysIdx = 0;
+    catgorys.push({catgory: ["서류", "05"], prdlsts: [{prdlst: ["감자", "0501"], spcies: [ ["수미", "050101"], ["기타", "050199"] ]}, {prdlst: ["고구마", "0502"], spcies: [ ["밤고구마", "050201"], ["호박고구마", "050204"] ]}]});
+    catgorys.push({catgory: ["과실류", "06"], prdlsts: [{prdlst: ["사과", "0601"], spcies: [ ["후지", "060103"], ["미시마", "060139"] ]}, {prdlst: ["포도", "0603"], spcies: [ ["델라웨어", "060303"], ["포도(수입)", "060398"] ]}]});
+    catgorys.push({catgory: ["과일과채류", "08"], prdlsts: [{prdlst: ["수박", "0801"], spcies: [ ["흑수박", "080106"], ["수박(일반)(꼭지절단)", "080114"] ]}, {prdlst: ["딸기", "0804"], spcies: [ ["장희", "080406"], ["설향", "080413"] ]}]});
+
+    function catgoryChange() {
+
+        var selectedCatgory = $('#catgorySelect').val();
+
+        $('#prdlstSelect').empty();
+        var option = $("<option value=\"\">" + "품목" + "</option>");
+        $('#prdlstSelect').append(option);
+
+        if ("" != selectedCatgory) {
+
+            for (var i = 0; i < catgorys.length; i++) {
+
+                if (catgorys[i].catgory[1] == selectedCatgory) {
+
+                    selectedCatgorysIdx = i;
+
+                    for (var count = 0; count < catgorys[i].prdlsts.length; count++) {
+                        option = $("<option value=\"" + catgorys[i].prdlsts[count].prdlst[1] + "\">" + catgorys[i].prdlsts[count].prdlst[0] + "</option>");
+                        $('#prdlstSelect').append(option);
+                    }
+                }
+            }
+        }
+        prdlstChange();
+    }
+
+    function prdlstChange() {
+
+        var selectedPrdlst = $('#prdlstSelect').val();
+
+        $('#spciesSelect').empty();
+        var option = $("<option value=\"\">" + "품종" + "</option>");
+        $('#spciesSelect').append(option);
+
+        if ("" != selectedPrdlst) {
+
+            for (var i = 0; i < catgorys[selectedCatgorysIdx].prdlsts.length; i++) {
+
+                if (catgorys[selectedCatgorysIdx].prdlsts[i].prdlst[1] == selectedPrdlst) {
+                    for (var count = 0; count < catgorys[selectedCatgorysIdx].prdlsts[i].spcies.length; count++) {
+                        option = $("<option value=\"" + catgorys[selectedCatgorysIdx].prdlsts[i].spcies[count][1] + "\">" + catgorys[selectedCatgorysIdx].prdlsts[i].spcies[count][0] + "</option>");
+                        $('#spciesSelect').append(option);
+                    }
+                }
+            }
+        }
+    }
+</script>
+
+<div id="app-table">
+
     <table class="table table-hover">
         <thead>
         <tr>
@@ -53,21 +126,82 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="realTimePrice : ${realTimePriceList}">
-            <td th:text="${realTimePrice.sbidTime}"></td>
-            <td th:text="${realTimePrice.whsalMrktNm}"></td>
-            <td th:text="${realTimePrice.catgoryNewNm}"></td>
-            <td th:text="${realTimePrice.stdPrdlstNewNm}"></td>
-            <td th:text="${realTimePrice.stdSpciesNewNm}"></td>
-            <td><span th:text="${realTimePrice.delngPrut}"></span><span th:text="${realTimePrice.stdUnitNewNm}"></span></td>
-            <td th:text="${realTimePrice.stdQlityNewNm}"></td>
-            <td th:text="${realTimePrice.sbidPric}"></td>
-            <td th:text="${realTimePrice.delngQy}"></td>
+        <tr v-for="realTimePrice in realTimePriceList">
+            <td >{{ realTimePrice.sbidTime }}</td>
+            <td >{{ realTimePrice.whsalMrktNm }}</td>
+            <td >{{ realTimePrice.catgoryNewNm }}</td>
+            <td >{{ realTimePrice.stdPrdlstNewNm }}</td>
+            <td >{{ realTimePrice.stdSpciesNewNm }}</td>
+            <td><span >{{ realTimePrice.delngPrut }}</span><span >{{ realTimePrice.stdUnitNewNm }}</span></td>
+            <td >{{ realTimePrice.stdQlityNewNm }}</td>
+            <td >{{ realTimePrice.sbidPric }}</td>
+            <td >{{ realTimePrice.delngQy }}</td>
         </tr>
         </tbody>
     </table>
-</div>
-<span th:text="${message}" style="font-size: 20px"></span>
 
+    <span style="font-size: 20px">{{message}}</span>
+    <div class="load-6" v-if="isLoading">
+        <div class="letter-holder">
+            <div class="l-1 letter">데</div>
+            <div class="l-2 letter">이</div>
+            <div class="l-3 letter">터</div>
+            <div class="l-4 letter">가</div>
+            <div class="l-5 letter">져</div>
+            <div class="l-6 letter">오</div>
+            <div class="l-7 letter">는</div>
+            <div class="l-8 letter">중</div>
+            <div class="l-9 letter">.</div>
+            <div class="l-10 letter">.</div>
+            <div class="l-11 letter">.</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var appForm = new Vue({
+        el: '#app-form',
+        data: {
+            delngDe: null,
+            prdlstCd: null,
+            spciesCd: null,
+            whsalCd: null,
+        },
+        methods: {
+            request() {
+                this.delngDe = this.$refs.delngDe.value;
+                this.prdlstCd = this.$refs.prdlstCd.value;
+                this.spciesCd = this.$refs.spciesCd.value;
+                this.whsalCd = this.$refs.whsalCd.value;
+                appTable.isLoading = true;
+                axios.get('/Price/RealTimePrice/Data', {
+                    params: {
+                        delngDe: this.delngDe,
+                        prdlstCd: this.prdlstCd,
+                        spciesCd: this.spciesCd,
+                        whsalCd: this.whsalCd
+                    }
+                }).then(response => {
+                    appTable.realTimePriceList = response.data.realTimePriceList;
+                    appTable.pageNo = response.data.pageNo;
+                    appTable.totalPage = response.data.totalPage;
+                    appTable.message = response.data.message;
+                    appTable.isLoading = false;
+                });
+            }
+        }
+    });
+
+    var appTable = new Vue({
+        el: '#app-table',
+        data: {
+            realTimePriceList: null,
+            pageNo: null,
+            totalPage: null,
+            message: null,
+            isLoading: false,
+        }
+    });
+</script>
 </body>
 </html>

@@ -25,14 +25,14 @@ public class RealTimePriceDAO {
     /**
      * @param numOfRows 한 페이지 결과 수 (greater than 0)
      * @param pageNo 페이지 번호 (greater than 0)
-     * @param delngDe 경락일자 (not {@code null})
-     * @param prdlstCd 품목코드 (not {@code null})
+     * @param delngDe 경락일자 (not {@code null or empty})
+     * @param prdlstCd 품목코드 (not {@code null or empty})
      * @param spciesCd 품종코드
      * @param whsalCd 도매시장코드
      *
      * @throws IOException if an I/O error occurs
      * @throws IllegalArgumentException if {@code numOfRows} or {@code PageNo} is less than {@code 1} or
-     *                                      {@code delngDe} or {@code prdlstCd} is {@code null}
+     *                                      {@code delngDe} or {@code prdlstCd} is {@code null or empty}
      */
     public RealTimePriceResponse getRealTimePriceList(int numOfRows, int pageNo,
                                                       String delngDe, String prdlstCd,
@@ -41,14 +41,14 @@ public class RealTimePriceDAO {
 
         if(numOfRows < 1) throw new IllegalArgumentException("numOfRows should be greater than 0 but is assigned " + numOfRows);
         if(pageNo < 1) throw new IllegalArgumentException("pageNo should be greater than 0 but is assigned " + pageNo);
-        if(delngDe == null) throw new IllegalArgumentException("delngDe should not be null but is null");
-        if(prdlstCd == null) throw new IllegalArgumentException("prdlstCd should not be null but is null");
+        if(delngDe == null || delngDe.isEmpty()) throw new IllegalArgumentException("delngDe should not be null but is null");
+        if(prdlstCd == null || prdlstCd.isEmpty()) throw new IllegalArgumentException("prdlstCd should not be null but is null");
 
         String request = this.realTimePriceURL + "?ServiceKey=" + this.realTimePriceAPIKey + "&_type=json"
                             + "&numOfRows=" + numOfRows + "&pageNo=" + pageNo
                             + "&delngDe=" + delngDe + "&prdlstCd=" + prdlstCd
-                            + (spciesCd==null ? "" : ("&spciesCd=" + spciesCd))
-                            + (whsalCd==null ? "" : ( "&whsalCd=" + whsalCd ));
+                            + ((spciesCd==null || spciesCd.isEmpty()) ? "" : ("&spciesCd=" + spciesCd))
+                            + ((whsalCd==null || whsalCd.isEmpty()) ? "" : ( "&whsalCd=" + whsalCd ));
 
         APIExplorer apiExplorer = new APIExplorer();
         String respones = apiExplorer.request(request);
@@ -66,7 +66,6 @@ public class RealTimePriceDAO {
                                                                 String.valueOf(root.at("/response/body/items/item")),
                                                                 new TypeReference<List<RealTimePrice>>(){}));
         }
-
         return realTimePriceResponse;
     }
 
