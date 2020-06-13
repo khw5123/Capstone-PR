@@ -44,11 +44,10 @@ public class RealTimePriceController {
 
         HashMap<String, Object> map = new HashMap<String, Object>();
         String message = null;
-        RealTimePriceResponse realTimePriceResponse = null;
 
         try {
 
-            realTimePriceResponse = realTimePriceService.getRealTimePriceList(numOfRows, pageNo,
+            RealTimePriceResponse realTimePriceResponse = realTimePriceService.getRealTimePriceList(numOfRows, pageNo,
                                                                                 delngDe, prdlstCd,
                                                                                 spciesCd, whsalCd);
 
