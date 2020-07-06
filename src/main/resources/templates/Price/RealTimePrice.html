@@ -16,27 +16,38 @@
 
 <h1>실시간 가격 정보</h1>
 
+<style>
+    .my {
+        height: 30px;
+        border-color: #41a6ff;
+        border-radius: 5px;
+        border-width: 1.5px;
+        background: #ffffff;
+        margin: 5px;
+    }
+</style>
 <!--<form action="/Price/RealTimePrice" accept-charset="utf-8" name = "price_info" method = "post">-->
 <form id="app-form" v-on:submit.prevent="request" name = "price_info" accept-charset="utf-8">
 
-    <input type="text" name="delngDe" placeholder="경략일자" ref="delngDe">
+    <input class="col-sm-2 col-lg-1 my" type="text" name="delngDe" placeholder="경략일자" ref="delngDe">
 
-    <select id="catgorySelect" name="catgoryCd" onchange="catgoryChange()" title="부류 선택" ref="catgoryCd">
+    <select class="col-sm-2 col-lg-1 my"
+            id="catgorySelect" name="catgoryCd" onchange="catgoryChange()" title="부류 선택" ref="catgoryCd">
         <option value="" selected="selected">부류</option>
         <option value="05">서류</option>
         <option value="06">과실류</option>
         <option value="08">과일과채류</option>
     </select>
 
-    <select id="prdlstSelect" name="prdlstCd" onchange="prdlstChange()" title="품목 선택" ref="prdlstCd">
+    <select class="col-sm-2 col-lg-1 my" id="prdlstSelect" name="prdlstCd" onchange="prdlstChange()" title="품목 선택" ref="prdlstCd">
         <option value="" selected="selected">품목</option>
     </select>
 
-    <select id="spciesSelect" name="spciesCd" title="품종 선택" ref="spciesCd">
+    <select class="col-sm-2 col-lg-1 my" id="spciesSelect" name="spciesCd" title="품종 선택" ref="spciesCd">
         <option value="" selected="selected">품종</option>
     </select>
 
-    <select id="whsalSelect" name="whsalCd" title="도매시장 선택" ref="whsalCd">
+    <select class="col-sm-3 col-lg-2 my" id="whsalSelect" name="whsalCd" title="도매시장 선택" ref="whsalCd">
         <option value="" selected="selected">도매시장</option>
         <option value="110001">서울가락도매시장</option>
         <option value="110008">서울강서도매시장</option>
@@ -44,7 +55,7 @@
         <option value="230003">인천삼산도매시장</option>
     </select>
 
-    <input type = "submit" value = "조회"/>
+    <input class="col-sm-1 col-lg-1 my" style="border-color: black" type = "submit" value = "조회"/>
 </form>
 
 <script
@@ -118,7 +129,7 @@
             <th class="col-md-2">시장명</th>
             <th class="col-md-1">부류명</th>
             <th class="col-md-1">품목명</th>
-            <th class="col-md-1">품종명</th>
+            <th class="col-md-2">품종명</th>
             <th class="col-md-1">거래단량</th> <!-- 거래단량 + 단위명 -->
             <th class="col-md-1">등급명</th>
             <th class="col-md-1">거래가격</th>
@@ -139,6 +150,18 @@
         </tr>
         </tbody>
     </table>
+
+    <ul class="pagination" style="display: table; margin-left: auto; margin-right: auto;">
+        <li v-if="pageNo > 10">
+            <a href="#" v-on:click="request(parseInt((pageNo - 1) / 10) * 10)"><</a>
+        </li>
+        <li v-for="n in pageNoList" v-bind:class="{ active : n == pageNo }">
+            <a href="#" v-on:click="request(n)">{{ n }}</a>
+        </li>
+        <li v-if="pageNo > 0 && pageNo <= parseInt((totalPage - 1) / 10) * 10">
+            <a href="#" v-on:click="request(parseInt((pageNo - 1) / 10) * 10 + 11)">></a>
+        </li>
+    </ul>
 
     <span style="font-size: 20px">{{message}}</span>
     <div class="load-6" v-if="isLoading">
@@ -173,21 +196,7 @@
                 this.prdlstCd = this.$refs.prdlstCd.value;
                 this.spciesCd = this.$refs.spciesCd.value;
                 this.whsalCd = this.$refs.whsalCd.value;
-                appTable.isLoading = true;
-                axios.get('/Price/RealTimePrice/Data', {
-                    params: {
-                        delngDe: this.delngDe,
-                        prdlstCd: this.prdlstCd,
-                        spciesCd: this.spciesCd,
-                        whsalCd: this.whsalCd
-                    }
-                }).then(response => {
-                    appTable.realTimePriceList = response.data.realTimePriceList;
-                    appTable.pageNo = response.data.pageNo;
-                    appTable.totalPage = response.data.totalPage;
-                    appTable.message = response.data.message;
-                    appTable.isLoading = false;
-                });
+                appTable.request(1);
             }
         }
     });
@@ -200,6 +209,35 @@
             totalPage: null,
             message: null,
             isLoading: false,
+            pageNoList: null,
+        },
+        methods: {
+            request(n) {
+                this.isLoading = true;
+                axios.get('/Price/RealTimePrice/Data', {
+                    params: {
+                        pageNo: n,
+                        delngDe: appForm.delngDe,
+                        prdlstCd: appForm.prdlstCd,
+                        spciesCd: appForm.spciesCd,
+                        whsalCd: appForm.whsalCd
+                    }
+                }).then(response => {
+                    this.realTimePriceList = response.data.realTimePriceList;
+                    this.pageNo = response.data.pageNo;
+                    this.totalPage = response.data.totalPage;
+                    this.message = response.data.message;
+                    this.isLoading = false;
+
+                    this.pageNoList = [];
+                    start = parseInt((this.pageNo - 1) / 10) * 10 + 1;
+                    if (start + 9 < this.totalPage) end = start + 9;
+                    else end = this.totalPage;
+                    for(let i = start; i <= end; i++) {
+                        this.pageNoList.push(i);
+                    }
+                });
+            }
         }
     });
 </script>
