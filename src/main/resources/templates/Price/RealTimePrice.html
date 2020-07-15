@@ -2,6 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -9,24 +10,33 @@
 <!--    <script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.5.1.slim.js"
+            integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM="
+            crossorigin="anonymous">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
     <title>real time price</title>
+
     <link href="/css/Loading.css" rel="stylesheet" type="text/css"/>
+
+    <style>
+        .my {
+            height: 30px;
+            border-color: #41a6ff;
+            border-radius: 5px;
+            border-width: 1.5px;
+            background: #ffffff;
+            margin: 5px;
+    }
+    </style>
+
 </head>
 <body>
 
 <h1>실시간 가격 정보</h1>
 
-<style>
-    .my {
-        height: 30px;
-        border-color: #41a6ff;
-        border-radius: 5px;
-        border-width: 1.5px;
-        background: #ffffff;
-        margin: 5px;
-    }
-</style>
-<!--<form action="/Price/RealTimePrice" accept-charset="utf-8" name = "price_info" method = "post">-->
 <form id="app-form" v-on:submit.prevent="request" name = "price_info" accept-charset="utf-8">
 
     <input class="col-sm-2 col-lg-1 my" type="text" name="delngDe" placeholder="경략일자" ref="delngDe">
@@ -34,9 +44,6 @@
     <select class="col-sm-2 col-lg-1 my"
             id="catgorySelect" name="catgoryCd" onchange="catgoryChange()" title="부류 선택" ref="catgoryCd">
         <option value="" selected="selected">부류</option>
-        <option value="05">서류</option>
-        <option value="06">과실류</option>
-        <option value="08">과일과채류</option>
     </select>
 
     <select class="col-sm-2 col-lg-1 my" id="prdlstSelect" name="prdlstCd" onchange="prdlstChange()" title="품목 선택" ref="prdlstCd">
@@ -49,27 +56,110 @@
 
     <select class="col-sm-3 col-lg-2 my" id="whsalSelect" name="whsalCd" title="도매시장 선택" ref="whsalCd">
         <option value="" selected="selected">도매시장</option>
-        <option value="110001">서울가락도매시장</option>
-        <option value="110008">서울강서도매시장</option>
-        <option value="210009">부산반여농산물도매시장</option>
-        <option value="230003">인천삼산도매시장</option>
     </select>
 
     <input class="col-sm-1 col-lg-1 my" style="border-color: black" type = "submit" value = "조회"/>
 </form>
 
-<script
-        src="https://code.jquery.com/jquery-3.5.1.slim.js"
-        integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM="
-        crossorigin="anonymous">
-</script>
+<div id="app-table">
 
-<script>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th class="col-md-2">경매시간</th>
+            <th class="col-md-2">시장명</th>
+            <th class="col-md-1">부류명</th>
+            <th class="col-md-1">품목명</th>
+            <th class="col-md-2">품종명</th>
+            <th class="col-md-1">거래단량</th> <!-- 거래단량 + 단위명 -->
+            <th class="col-md-1">등급명</th>
+            <th class="col-md-1">거래가격</th>
+            <th class="col-md-1">거래량</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="realTimePrice in realTimePriceList">
+            <td >{{ realTimePrice.sbidTime }}</td>
+            <td >{{ realTimePrice.whsalMrktNm }}</td>
+            <td >{{ realTimePrice.catgoryNm }}</td>
+            <td >{{ realTimePrice.stdPrdlstNm }}</td>
+            <td >{{ realTimePrice.stdSpciesNm }}</td>
+            <td><span >{{ realTimePrice.delngPrut }}</span><span >{{ realTimePrice.stdUnitNewNm }}</span></td>
+            <td >{{ realTimePrice.stdQlityNewNm }}</td>
+            <td >{{ realTimePrice.sbidPric }}</td>
+            <td >{{ realTimePrice.delngQy }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ul class="pagination" style="display: table; margin-left: auto; margin-right: auto;">
+        <li v-if="pageNo > 10">
+            <a href="#" v-on:click="request(parseInt((pageNo - 1) / 10) * 10)"><</a>
+        </li>
+        <li v-for="n in pageNoList" v-bind:class="{ active : n == pageNo }">
+            <a href="#" v-on:click="request(n)">{{ n }}</a>
+        </li>
+        <li v-if="pageNo > 0 && pageNo <= parseInt((totalPage - 1) / 10) * 10">
+            <a href="#" v-on:click="request(parseInt((pageNo - 1) / 10) * 10 + 11)">></a>
+        </li>
+    </ul>
+
+    <span style="font-size: 20px">{{message}}</span>
+    <div class="load-6" v-if="isLoading">
+        <div class="letter-holder">
+            <div class="l-1 letter">데</div>
+            <div class="l-2 letter">이</div>
+            <div class="l-3 letter">터</div>
+            <div class="l-4 letter">가</div>
+            <div class="l-5 letter">져</div>
+            <div class="l-6 letter">오</div>
+            <div class="l-7 letter">는</div>
+            <div class="l-8 letter">중</div>
+            <div class="l-9 letter">.</div>
+            <div class="l-10 letter">.</div>
+            <div class="l-11 letter">.</div>
+        </div>
+    </div>
+</div>
+
+<script th:inline="none">
     var catgorys = [];
+
+    $.getJSON('/json/catgorys.json', function(data){
+        catgorys = data;
+        makeCatgorySelect();
+    });
+
+    var whsals = [];
+
+    $.getJSON('/json/whsals.json', function(data){
+        whsals = data;
+        makeWhsalSelect();
+    });
+
     var selectedCatgorysIdx = 0;
-    catgorys.push({catgory: ["서류", "05"], prdlsts: [{prdlst: ["감자", "0501"], spcies: [ ["수미", "050101"], ["기타", "050199"] ]}, {prdlst: ["고구마", "0502"], spcies: [ ["밤고구마", "050201"], ["호박고구마", "050204"] ]}]});
-    catgorys.push({catgory: ["과실류", "06"], prdlsts: [{prdlst: ["사과", "0601"], spcies: [ ["후지", "060103"], ["미시마", "060139"] ]}, {prdlst: ["포도", "0603"], spcies: [ ["델라웨어", "060303"], ["포도(수입)", "060398"] ]}]});
-    catgorys.push({catgory: ["과일과채류", "08"], prdlsts: [{prdlst: ["수박", "0801"], spcies: [ ["흑수박", "080106"], ["수박(일반)(꼭지절단)", "080114"] ]}, {prdlst: ["딸기", "0804"], spcies: [ ["장희", "080406"], ["설향", "080413"] ]}]});
+
+    function makeCatgorySelect() {
+        $('#catgorySelect').empty();
+        var option = $("<option value=\"\">" + "부류" + "</option>");
+        $('#catgorySelect').append(option);
+
+        for (var i = 0; i < catgorys.length; i++) {
+            option = $("<option value=\"" + catgorys[i].catgory[1] + "\">" + catgorys[i].catgory[0] + "</option>");
+            $('#catgorySelect').append(option);
+        }
+    }
+
+    function makeWhsalSelect() {
+        $('#whsalSelect').empty();
+        var option = $("<option value=\"\">" + "도매시장" + "</option>");
+        $('#whsalSelect').append(option);
+
+        for (var i = 0; i < whsals.length; i++) {
+            option = $("<option value=\"" + whsals[i].whsal[1] + "\">" + whsals[i].whsal[0] + "</option>");
+            $('#whsalSelect').append(option);
+        }
+    }
 
     function catgoryChange() {
 
@@ -119,67 +209,6 @@
         }
     }
 </script>
-
-<div id="app-table">
-
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th class="col-md-2">경매시간</th>
-            <th class="col-md-2">시장명</th>
-            <th class="col-md-1">부류명</th>
-            <th class="col-md-1">품목명</th>
-            <th class="col-md-2">품종명</th>
-            <th class="col-md-1">거래단량</th> <!-- 거래단량 + 단위명 -->
-            <th class="col-md-1">등급명</th>
-            <th class="col-md-1">거래가격</th>
-            <th class="col-md-1">거래량</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="realTimePrice in realTimePriceList">
-            <td >{{ realTimePrice.sbidTime }}</td>
-            <td >{{ realTimePrice.whsalMrktNm }}</td>
-            <td >{{ realTimePrice.catgoryNewNm }}</td>
-            <td >{{ realTimePrice.stdPrdlstNewNm }}</td>
-            <td >{{ realTimePrice.stdSpciesNewNm }}</td>
-            <td><span >{{ realTimePrice.delngPrut }}</span><span >{{ realTimePrice.stdUnitNewNm }}</span></td>
-            <td >{{ realTimePrice.stdQlityNewNm }}</td>
-            <td >{{ realTimePrice.sbidPric }}</td>
-            <td >{{ realTimePrice.delngQy }}</td>
-        </tr>
-        </tbody>
-    </table>
-
-    <ul class="pagination" style="display: table; margin-left: auto; margin-right: auto;">
-        <li v-if="pageNo > 10">
-            <a href="#" v-on:click="request(parseInt((pageNo - 1) / 10) * 10)"><</a>
-        </li>
-        <li v-for="n in pageNoList" v-bind:class="{ active : n == pageNo }">
-            <a href="#" v-on:click="request(n)">{{ n }}</a>
-        </li>
-        <li v-if="pageNo > 0 && pageNo <= parseInt((totalPage - 1) / 10) * 10">
-            <a href="#" v-on:click="request(parseInt((pageNo - 1) / 10) * 10 + 11)">></a>
-        </li>
-    </ul>
-
-    <span style="font-size: 20px">{{message}}</span>
-    <div class="load-6" v-if="isLoading">
-        <div class="letter-holder">
-            <div class="l-1 letter">데</div>
-            <div class="l-2 letter">이</div>
-            <div class="l-3 letter">터</div>
-            <div class="l-4 letter">가</div>
-            <div class="l-5 letter">져</div>
-            <div class="l-6 letter">오</div>
-            <div class="l-7 letter">는</div>
-            <div class="l-8 letter">중</div>
-            <div class="l-9 letter">.</div>
-            <div class="l-10 letter">.</div>
-            <div class="l-11 letter">.</div>
-        </div>
-    </div>
-</div>
 
 <script>
     var appForm = new Vue({
