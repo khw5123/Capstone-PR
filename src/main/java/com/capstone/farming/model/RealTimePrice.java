@@ -14,11 +14,11 @@ public class RealTimePrice {
     /** 시장명 */
     private String whsalMrktNm;
     /** 부류명 */
-    private String catgoryNewNm;
+    private String catgoryNm;
     /** 품목명 */
-    private String stdPrdlstNewNm;
+    private String stdPrdlstNm;
     /** 품종명 */
-    private String stdSpciesNewNm;
+    private String stdSpciesNm;
     /** 거래단량 */
     private String delngPrut;
     /** 단위명 */
