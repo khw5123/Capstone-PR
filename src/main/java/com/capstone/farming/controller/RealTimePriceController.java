@@ -15,7 +15,7 @@ import java.util.HashMap;
 
 @Slf4j
 @Controller
-@RequestMapping("/Price")
+@RequestMapping("/RealTimePrice")
 public class RealTimePriceController {
 
     private RealTimePriceService realTimePriceService;
@@ -25,14 +25,14 @@ public class RealTimePriceController {
         this.realTimePriceService = realTimePriceService;
     }
 
-    @RequestMapping(value = "RealTimePrice")
+    @RequestMapping(value = "")
     public String realTimePrice(Model model) {
 
-        return "Price/RealTimePrice";
+        return "RealTimePrice/RealTimePrice";
     }
 
     @ResponseBody
-    @RequestMapping(value = "RealTimePrice/Data")
+    @RequestMapping(value = "/Data")
     public HashMap<String, Object> realTimePrice(Model model,
                                                  @RequestParam(value = "numOfRows", required = false, defaultValue = "10") int numOfRows,
                                                  @RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
