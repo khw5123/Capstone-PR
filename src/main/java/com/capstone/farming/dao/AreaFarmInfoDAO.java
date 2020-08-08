@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -29,6 +30,23 @@ public class AreaFarmInfoDAO
             query.addCriteria(Criteria.where("province").is(province).andOperator(Criteria.where("city").is(city)));
         return mongoTemplate.find(query, ShippingArea.class, "shippingArea");
     }
+
+    public int listCountCriteria(com.capstone.farming.model.Criteria cri){
+        Query query = new Query();
+        return (int)mongoTemplate.count(query, "shippingArea");
+    }
+
+
+    public List<ShippingArea> listCriteria(com.capstone.farming.model.Criteria cri) {
+        List<ShippingArea> shippingAreas = mongoTemplate.findAll(ShippingArea.class, "shippingArea");
+        List<ShippingArea> listShippingAreas = new ArrayList<>();
+        for (int i = cri.getPage(); i <= cri.getPage()*cri.getPerPageNum(); i++ ){
+            listShippingAreas.add(shippingAreas.get(i));
+        }
+
+        return listShippingAreas;
+    }
+
 
     public void insertShippingArea(ShippingArea shippingArea)
     {

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <title>농작업 일정</title>
+</head>
+<body>
+
+<select id="listCategoryCode" onchange="itemChange()">
+    <option value="0">선택하세요.</option>
+</select>
+
+<h4 id="selectedCntntsNo"></h4>
+<form name="listApiForm">
+    <input type="hidden" name="kidofcomdtySeCode">
+    <input type="hidden" name="cntntsNo" >
+    <input type="hidden" name="cntntsNoName">
+</form>
+
+<h2 th:text="${cntntsNoName}" style="text-align:center;"></h2>
+
+<div th:if="${#strings.isEmpty(cntntsNoName)}">
+    <table class="table table-dark table-striped">
+        <thead>
+        <tr>
+            <th class="col-xs-1">파일 이름</th>
+            <th class="col-xs-1">다운로드</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="wp : ${workingPlans}">
+            <td th:text="${#strings.replace(wp.fileName,'.hwp','')}" th:onclick="javascript:move([[${wp.cntntsNo}]], [[${#strings.replace(wp.fileName,'.hwp','')}]])" style="cursor: pointer"></td>
+            <td><a th:href="${wp.fileDownUrlInfo}">파일</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${#strings.isEmpty(workingPlans)}"> 목록이 없습니다. 품종을 선택해주세요.</div>
+</div>
+
+<div id="planInfo"></div>
+
+<script
+        src="https://code.jquery.com/jquery-3.5.1.slim.js"
+        integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM="
+        crossorigin="anonymous">
+
+</script>
+<script>
+    var test="[[${workingPlans}]]"
+    var nameNcode = "[[${nameNcode}]]";
+    var htmlCn = "[[${htmlCn}]]";
+    var selectedCode = "[[${selectedCode}]]";
+    if (htmlCn != ""){
+        htmlCn = htmlCn.replace(/&quot;/gi,"'");
+        htmlCn = htmlCn.replace(/&lt;/gi,"<");
+        htmlCn = htmlCn.replace(/&gt;/gi,">");
+        htmlCn = htmlCn.replace(/&amp;nbsp;/gi,"");
+
+        var planInfo = document.getElementById('planInfo');
+        planInfo.innerHTML = htmlCn;
+    }
+
+    nameNcode = JSON.parse(nameNcode.replace(/&quot;/gi,'"'));
+
+    var targetSel = document.getElementById('listCategoryCode');
+
+    if(targetSel.children.length === 1) {
+        var keys = Object.keys(nameNcode);
+        var values = Object.values(nameNcode);
+        for (var i = 0; i < keys.length; i++){
+            var opt = document.createElement('option');
+            opt.setAttribute('value', values[i]);
+            opt.innerText = keys[i];
+            if(values[i] == parseInt(selectedCode)){
+                opt.setAttribute("selected", 'selected');
+            }
+            targetSel.appendChild(opt);
+        }
+    }
+
+    function itemChange() {
+        var code = $('#listCategoryCode').val();
+        with(document.listApiForm){
+            kidofcomdtySeCode.value = code;
+            cntntsNo.value = null;
+            cntntsNoName.value = null;
+            method="get";
+            action = "plan";
+            target = "_self";
+            submit();
+        }
+    }
+
+    function move(val, Name){
+        var code = $('#listCategoryCode').val();
+        with(document.listApiForm){
+            kidofcomdtySeCode.value = code;
+            cntntsNo.value = val;
+            cntntsNoName.value = Name;
+            method="get";
+            action = "plan";
+            target = "_blank";
+            submit();
+        }
+    }
+</script>
+
+</body>
+</html>
