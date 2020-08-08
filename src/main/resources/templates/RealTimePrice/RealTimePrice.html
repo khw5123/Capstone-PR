@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+<!--    <script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.5.1.slim.js"
+            integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM="
+            crossorigin="anonymous">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <title>real time price</title>
+
+    <link href="/css/Loading.css" rel="stylesheet" type="text/css"/>
+
+    <style>
+        .my {
+            height: 30px;
+            border-color: #41a6ff;
+            border-radius: 5px;
+            border-width: 1.5px;
+            background: #ffffff;
+            margin: 5px;
+    }
+    </style>
+
+</head>
+<body>
+
+<h1>실시간 가격 정보</h1>
+
+<form id="app-form" v-on:submit.prevent="request" name = "price_info" accept-charset="utf-8">
+
+    <input class="col-sm-2 col-lg-2 my" type="text" name="delngDe" placeholder="경락일자(필수,예:20200102)" ref="delngDe">
+
+    <select class="col-sm-2 col-lg-1 my"
+            id="catgorySelect" name="catgoryCd" onchange="catgoryChange()" title="부류 선택" ref="catgoryCd">
+        <option value="" selected="selected">부류(필수)</option>
+    </select>
+
+    <select class="col-sm-2 col-lg-1 my" id="prdlstSelect" name="prdlstCd" onchange="prdlstChange()" title="품목 선택" ref="prdlstCd">
+        <option value="" selected="selected">품목(필수)</option>
+    </select>
+
+    <select class="col-sm-2 col-lg-1 my" id="spciesSelect" name="spciesCd" title="품종 선택" ref="spciesCd">
+        <option value="" selected="selected">품종(선택)</option>
+    </select>
+
+    <select class="col-sm-3 col-lg-2 my" id="whsalSelect" name="whsalCd" title="도매시장 선택" ref="whsalCd">
+        <option value="" selected="selected">도매시장(선택)</option>
+    </select>
+
+    <input class="col-sm-1 col-lg-1 my" style="border-color: black" type = "submit" value = "조회"/>
+</form>
+
+<div id="app-table">
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th class="col-md-2">경매시간</th>
+            <th class="col-md-2">시장명</th>
+            <th class="col-md-1">부류명</th>
+            <th class="col-md-1">품목명</th>
+            <th class="col-md-2">품종명</th>
+            <th class="col-md-1">거래단량</th> <!-- 거래단량 + 단위명 -->
+            <th class="col-md-1">등급명</th>
+            <th class="col-md-1">거래가격</th>
+            <th class="col-md-1">거래량</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="realTimePrice in realTimePriceList">
+            <td >{{ realTimePrice.sbidTime }}</td>
+            <td >{{ realTimePrice.whsalMrktNm }}</td>
+            <td >{{ realTimePrice.catgoryNm }}</td>
+            <td >{{ realTimePrice.stdPrdlstNm }}</td>
+            <td >{{ realTimePrice.stdSpciesNm }}</td>
+            <td><span>{{ realTimePrice.delngPrut }}</span><span>{{ realTimePrice.stdUnitNewNm }}</span></td>
+            <td >{{ realTimePrice.stdQlityNewNm }}</td>
+            <td >{{ realTimePrice.sbidPric }}</td>
+            <td >{{ realTimePrice.delngQy }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ul class="pagination" style="display: table; margin-left: auto; margin-right: auto;">
+        <li v-if="pageNo > 10">
+            <a href="#" v-on:click="request(parseInt((pageNo - 1) / 10) * 10)"><</a>
+        </li>
+        <li v-for="n in pageNoList" v-bind:class="{ active : n == pageNo }">
+            <a href="#" v-on:click="request(n)">{{ n }}</a>
+        </li>
+        <li v-if="pageNo > 0 && pageNo <= parseInt((totalPage - 1) / 10) * 10">
+            <a href="#" v-on:click="request(parseInt((pageNo - 1) / 10) * 10 + 11)">></a>
+        </li>
+    </ul>
+
+    <span style="font-size: 20px">{{message}}</span>
+    <div class="load-6" v-if="isLoading">
+        <div class="letter-holder">
+            <div class="l-1 letter">데</div>
+            <div class="l-2 letter">이</div>
+            <div class="l-3 letter">터</div>
+            <div class="l-4 letter">가</div>
+            <div class="l-5 letter">져</div>
+            <div class="l-6 letter">오</div>
+            <div class="l-7 letter">는</div>
+            <div class="l-8 letter">중</div>
+            <div class="l-9 letter">.</div>
+            <div class="l-10 letter">.</div>
+            <div class="l-11 letter">.</div>
+        </div>
+    </div>
+</div>
+
+<script th:inline="none">
+    var catgorys = [];
+
+    $.getJSON('/json/catgorys.json', function(data){
+        catgorys = data;
+        makeCatgorySelect();
+    });
+
+    var whsals = [];
+
+    $.getJSON('/json/whsals.json', function(data){
+        whsals = data;
+        makeWhsalSelect();
+    });
+
+    var selectedCatgorysIdx = 0;
+
+    function makeCatgorySelect() {
+        $('#catgorySelect').empty();
+        var option = $("<option value=\"\">" + "부류(필수)" + "</option>");
+        $('#catgorySelect').append(option);
+
+        for (var i = 0; i < catgorys.length; i++) {
+            option = $("<option value=\"" + catgorys[i].catgory[1] + "\">" + catgorys[i].catgory[0] + "</option>");
+            $('#catgorySelect').append(option);
+        }
+    }
+
+    function makeWhsalSelect() {
+        $('#whsalSelect').empty();
+        var option = $("<option value=\"\">" + "도매시장(선택)" + "</option>");
+        $('#whsalSelect').append(option);
+
+        for (var i = 0; i < whsals.length; i++) {
+            option = $("<option value=\"" + whsals[i].whsal[1] + "\">" + whsals[i].whsal[0] + "</option>");
+            $('#whsalSelect').append(option);
+        }
+    }
+
+    function catgoryChange() {
+
+        var selectedCatgory = $('#catgorySelect').val();
+
+        $('#prdlstSelect').empty();
+        var option = $("<option value=\"\">" + "품목(필수)" + "</option>");
+        $('#prdlstSelect').append(option);
+
+        if ("" != selectedCatgory) {
+
+            for (var i = 0; i < catgorys.length; i++) {
+
+                if (catgorys[i].catgory[1] == selectedCatgory) {
+
+                    selectedCatgorysIdx = i;
+
+                    for (var count = 0; count < catgorys[i].prdlsts.length; count++) {
+                        option = $("<option value=\"" + catgorys[i].prdlsts[count].prdlst[1] + "\">" + catgorys[i].prdlsts[count].prdlst[0] + "</option>");
+                        $('#prdlstSelect').append(option);
+                    }
+                }
+            }
+        }
+        prdlstChange();
+    }
+
+    function prdlstChange() {
+
+        var selectedPrdlst = $('#prdlstSelect').val();
+
+        $('#spciesSelect').empty();
+        var option = $("<option value=\"\">" + "품종(선택)" + "</option>");
+        $('#spciesSelect').append(option);
+
+        if ("" != selectedPrdlst) {
+
+            for (var i = 0; i < catgorys[selectedCatgorysIdx].prdlsts.length; i++) {
+
+                if (catgorys[selectedCatgorysIdx].prdlsts[i].prdlst[1] == selectedPrdlst) {
+                    for (var count = 0; count < catgorys[selectedCatgorysIdx].prdlsts[i].spcies.length; count++) {
+                        option = $("<option value=\"" + catgorys[selectedCatgorysIdx].prdlsts[i].spcies[count][1] + "\">" + catgorys[selectedCatgorysIdx].prdlsts[i].spcies[count][0] + "</option>");
+                        $('#spciesSelect').append(option);
+                    }
+                }
+            }
+        }
+    }
+</script>
+
+<script>
+    var appForm = new Vue({
+        el: '#app-form',
+        data: {
+            delngDe: null,
+            prdlstCd: null,
+            spciesCd: null,
+            whsalCd: null,
+        },
+        methods: {
+            request() {
+                this.delngDe = this.$refs.delngDe.value;
+                this.prdlstCd = this.$refs.prdlstCd.value;
+                this.spciesCd = this.$refs.spciesCd.value;
+                this.whsalCd = this.$refs.whsalCd.value;
+                appTable.request(1);
+            }
+        }
+    });
+
+    var appTable = new Vue({
+        el: '#app-table',
+        data: {
+            realTimePriceList: null,
+            pageNo: null,
+            totalPage: null,
+            message: null,
+            isLoading: false,
+            pageNoList: null,
+        },
+        methods: {
+            request(n) {
+                this.isLoading = true;
+                axios.get('/RealTimePrice/Data', {
+                    params: {
+                        pageNo: n,
+                        delngDe: appForm.delngDe,
+                        prdlstCd: appForm.prdlstCd,
+                        spciesCd: appForm.spciesCd,
+                        whsalCd: appForm.whsalCd
+                    }
+                }).then(response => {
+                    this.realTimePriceList = response.data.realTimePriceList;
+                    this.pageNo = response.data.pageNo;
+                    this.totalPage = response.data.totalPage;
+                    this.message = response.data.message;
+                    this.isLoading = false;
+
+                    this.pageNoList = [];
+                    start = parseInt((this.pageNo - 1) / 10) * 10 + 1;
+                    if (start + 9 < this.totalPage) end = start + 9;
+                    else end = this.totalPage;
+                    for(let i = start; i <= end; i++) {
+                        this.pageNoList.push(i);
+                    }
+                });
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -17,4 +17,11 @@ public class APIProperties {
 
     /** 실시간 가격 정보 서비스 요청에 사용할 API key */
     private String realTimePriceAPIKey;
+
+    /** 영농 기술 정보 서비스 요청 URL */
+    private String farmingTechniqueURL;
+
+    /** 영농 기술 정보 서비스 요청에 사용할 API key */
+    private String farmingTechniqueAPIKey;
+
 }
