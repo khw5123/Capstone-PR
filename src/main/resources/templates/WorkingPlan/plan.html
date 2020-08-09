@@ -7,12 +7,608 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
           crossorigin="anonymous">
+    <style>
+        #urban-Art .m_scrollTable {
+            margin: 0;
+        }
+        .asCrop .m_scrollTable {
+            margin: 0;
+            margin-bottom: 40px;
+        }
+
+        .asCrop .m_scrollTable p {
+            color: #727272;
+            display: block;
+            text-align: left;
+            font-size: 12px;
+            margin: 0;
+        }
+        .careFarming .m_scrollTable {
+            margin: 0 30px;
+        }
+
+        .careFarming .m_scrollTable.mrg0 {
+            margin: 0;
+        }
+
+        .careFarming .m_scrollTable p {
+            font-size: 13px;
+        }
+        #urban-Art .m_scrollTable {
+            overflow: hidden;
+            overflow-x: scroll;
+            margin-bottom: 10px;
+        }
+
+        <!---->
+
+        #nongScheduleTit {
+            margin: 15px 0.5em 0;
+        }
+
+        #nongScheduleTit div.floatDiv a {
+            display: none
+        }
+
+        #nongScheduleTit h1 {
+            float: none;
+            margin: 0 0 0.5em;
+            text-align: center
+        }
+
+        #nongScheduleTit h2, #nongSchedule h2 {
+            background: #f5f5f5;
+            border: 1px solid #ccc
+        }
+
+        #nongScheduleTit .m_scrollTable, #nongSchedule .m_scrollTable {
+            overflow-x: scroll
+        }
+
+        #nongScheduleTit .m_scrollTable .tblSchedule, #nongSchedule .m_scrollTable table {
+            width: 800px;
+            font-size: 15px
+        }
+
+        #nongSchedule {
+            margin: 1.5em 0.5em 0
+        }
+
+        #nongSchedule .bullet1 {
+            margin: 0.5em 0 0 0.8em
+        }
+
+        #nongSchedule ul li .tblSection {
+            margin: 0.5em 0 0 -1.8em !important
+        }
+
+        #nongScheduleTit .floatDiv {
+            text-align: center;
+            padding-top: 15px
+        }
+
+        #nongScheduleTit h1 {
+            font-size: 22px !important;
+            display: inline-block;
+            position: relative;
+            font-weight: 700;
+            letter-spacing: -0.055em
+        }
+
+        #nongScheduleTit h1:after {
+            content: '';
+            display: block;
+            background: #fdd92e;
+            height: 10px;
+            margin-top: -5px
+        }
+
+        #nongScheduleTit h2, #nongSchedule h2 {
+            font-size: 19px;
+            font-weight: 500;
+            border: 0;
+            border-top: 1px solid #ccc;
+            padding: 8px 0;
+            line-height: 1.3;
+        }
+
+        #nongSchedule h3 {
+            background: none;
+            padding-left: 0;
+            font-size: 18px;
+            font-weight: 500;
+            margin: 2em 0 0.5em !important;
+            display: block !important;
+        }
+
+        #nongSchedule .bullet1, #nongSchedule ul > li {
+            margin: 0 0 1em 0;
+        }
+
+        #nongSchedule ul ul {
+            margin: 0.5em 0 0.8em
+        }
+
+        #nongSchedule .tblSection th, #nongSchedule .tblSection td {
+            font-size: 16px !important;
+        }
+
+        #nongScheduleTit .floatDiv {
+            text-align: center;
+            padding-top: 15px
+        }
+
+        #nongScheduleTit h1 {
+            font-size: 22px !important;
+            display: inline-block;
+            position: relative;
+            font-weight: 700;
+            letter-spacing: -0.055em
+        }
+
+        #nongScheduleTit h1:after {
+            content: '';
+            display: block;
+            background: #fdd92e;
+            height: 10px;
+            margin-top: -5px
+        }
+
+        #nongScheduleTit h2, #nongSchedule h2 {
+            font-size: 19px;
+            font-weight: 500;
+            border: 0;
+            border-top: 1px solid #ccc;
+            padding: 8px 0;
+            line-height: 1.3;
+        }
+
+        #nongSchedule h3 {
+            background: none;
+            padding-left: 0;
+            font-size: 18px;
+            font-weight: 500;
+            margin: 2em 0 0.5em !important;
+            display: block !important;
+        }
+
+        #nongSchedule .bullet1, #nongSchedule ul > li {
+            margin: 0 0 1em 0;
+        }
+
+        #nongSchedule ul ul {
+            margin: 0.5em 0 0.8em
+        }
+
+        #nongSchedule .tblSection th, #nongSchedule .tblSection td {
+            font-size: 16px !important;
+        }
+
+        #nongScheduleTit {
+            margin-top: 30px
+        }
+
+        #nongScheduleTit h1 {
+            font-size: 24px;
+            margin-left: 10px;
+            float: left
+        }
+
+        #nongScheduleTit h2 {
+            background: #dadada;
+            font-size: 16px;
+            color: #434343;
+            font-weight: normal;
+            line-height: 30px;
+            text-align: center;
+            margin-top: 10px
+        }
+
+        #nongScheduleTit h1 span {
+            display: inline-block;
+            margin-left: 15px;
+            font-size: 16px;
+            color: #a3a3a3;
+            font-weight: normal;
+            background: url(../img/nongsaroAdd/division1.gif) no-repeat 0 100%;
+            padding-left: 10px
+        }
+
+        #nongScheduleTit .floatDiv .btn-2 {
+            float: right
+        }
+
+        #nongScheduleTit table, #nongScheduleTit td {
+            table-layout: fixed
+        }
+
+        #nongScheduleTit .m_scrollTable {
+            margin-bottom: 30px
+        }
+
+        #nongScheduleTit .tblSchedule {
+            border-top: 2px solid #70bc5c
+        }
+
+        #nongScheduleTit .tblSchedule thead th {
+            border: 1px solid #70bc5c;
+            background: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            color: #434343;
+            line-height: 30px;
+            text-align: center
+        }
+
+        #nongScheduleTit .tblSchedule thead td {
+            background: #70bc5c;
+            border: 1px solid #70bc5c;
+            font-size: 0;
+            text-indent: -1000000000px;
+            line-height: 0;
+            height: 8px
+        }
+
+        #nongScheduleTit .tblSchedule thead td.bg2 {
+            background: #8dc97d
+        }
+
+        #nongScheduleTit .tblSchedule thead td.bg3 {
+            background: #a9d79d
+        }
+
+        #nongScheduleTit .tblSchedule tbody td {
+            background: #fff;
+            border: 1px solid #ccc;
+            empty-cells: show;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 1.2 !important;
+            color: #333;
+            padding: 4px 0;
+            letter-spacing: -1px;
+            height: 30px;
+        }
+
+        #nongScheduleTit .tblSchedule tbody td.empty {
+            border: 0 !important;
+            height: 5px;
+            padding: 0
+        }
+
+        #nongScheduleTit .tblSchedule tbody td.bgYellow {
+            background: #e7ecbd
+        }
+
+        #nongScheduleTit .tblSchedule tbody td.bgBlue {
+            background: #daedff
+        }
+
+        #nongScheduleTit .tblSchedule tbody td.bgRed {
+            background: #ffe6d7
+        }
+
+        #nongScheduleTit .tblSchedule tbody td.bgPurple {
+            background: #dedfff
+        }
+
+        #nongScheduleTit .tblSchedule tbody td.bgGreen {
+            background: #e6ffde
+        }
+
+        #nongScheduleTit .tblSchedule.tblSchedule2 {
+            border-top: 2px solid #08acf2
+        }
+
+        #nongScheduleTit .tblSchedule.tblSchedule2 thead th {
+            border: 1px solid #08acf2;
+        }
+
+        #nongScheduleTit .tblSchedule.tblSchedule2 thead td {
+            background: #08acf2;
+            border: 1px solid #08acf2;
+        }
+
+        #nongScheduleTit .tblSchedule.tblSchedule2 thead td.bg2 {
+            background: #39bdf5
+        }
+
+        #nongScheduleTit .tblSchedule.tblSchedule2 thead td.bg3 {
+            background: #6bcdf7
+        }
+
+        #nongScheduleTit .tblSchedule.tblSchedule3 {
+            border-top: 2px solid #ffb400
+        }
+
+        #nongScheduleTit .tblSchedule.tblSchedule3 thead th {
+            border: 1px solid #ffb400;
+        }
+
+        #nongScheduleTit .tblSchedule.tblSchedule3 thead td {
+            background: #ffb400;
+            border: 1px solid #ffb400;
+        }
+
+        #nongScheduleTit .tblSchedule.tblSchedule3 thead td.bg2 {
+            background: #ffca4c
+        }
+
+        #nongScheduleTit .tblSchedule.tblSchedule3 thead td.bg3 {
+            background: #ffd97f
+        }
+
+        #nongScheduleTit h3 {
+            background: url(../img/interabang/interabang_h3.png) no-repeat 0 8px;
+            padding-left: 15px;
+            font-size: 19px;
+            color: #333;
+            letter-spacing: -1px;
+            line-height: 1.4;
+            margin: 30px 0 10px;
+        }
+
+        #nongScheduleTit .bullet1 {
+            background: url(../img/interabang/bullet1.png) no-repeat 0 7px;
+            margin: 0 0 5px 15px;
+            padding-left: 12px;
+            line-height: 1.4;
+            font-size: 16px;
+            color: #545454;
+            word-break: keep-all
+        }
+
+        #nongScheduleTit .bullet3 {
+            background: url(../img/interabang/bullet3.png) no-repeat 0 10px;
+            padding-left: 12px;
+            line-height: 1.4;
+            margin: 3px 0 0 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        #nongScheduleTit .txt_point {
+            font-size: 14px;
+            color: #ff7800;
+        }
+
+        #nongScheduleTit .tblSection {
+            margin-top: 30px
+        }
+
+        #nongScheduleTit .tblSection table {
+            border-top: 2px solid #ababab
+        }
+
+        #nongScheduleTit .tblSection th, #nongScheduleTit .tblSection td {
+            border: 1px solid #dedede;
+            font-size: 14px;
+            padding: 5px 10px;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        #nongScheduleTit .tblSection th {
+            background: #f5f5f5;
+            font-weight: 600
+        }
+
+        /* 농작업일정 */
+        #nongSchedule {
+            margin-top: 30px
+        }
+
+        #nongSchedule h1 {
+            font-size: 24px;
+            margin-left: 10px;
+            float: left
+        }
+
+        #nongSchedule h2 {
+            background: #dadada;
+            font-size: 16px;
+            color: #434343;
+            font-weight: normal;
+            line-height: 30px;
+            text-align: center;
+            margin-top: 10px
+        }
+
+        #nongSchedule h1 span {
+            display: inline-block;
+            margin-left: 15px;
+            font-size: 16px;
+            color: #a3a3a3;
+            font-weight: normal;
+            background: url(../img/nongsaroAdd/division1.gif) no-repeat 0 100%;
+            padding-left: 10px
+        }
+
+        #nongSchedule .floatDiv .btn-2 {
+            float: right
+        }
+
+        #nongSchedule table, #nongSchedule td {
+            table-layout: fixed
+        }
+
+        #nongSchedule .m_scrollTable {
+            margin-bottom: 30px
+        }
+
+        #nongSchedule .tblSchedule {
+            border-top: 2px solid #70bc5c
+        }
+
+        #nongSchedule .tblSchedule thead th {
+            border: 1px solid #70bc5c;
+            background: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            color: #434343;
+            line-height: 30px;
+            text-align: center
+        }
+
+        #nongSchedule .tblSchedule thead td {
+            background: #70bc5c;
+            border: 1px solid #70bc5c;
+            font-size: 0;
+            text-indent: -1000000000px;
+            line-height: 0;
+            height: 8px
+        }
+
+        #nongSchedule .tblSchedule thead td.bg2 {
+            background: #8dc97d
+        }
+
+        #nongSchedule .tblSchedule thead td.bg3 {
+            background: #a9d79d
+        }
+
+        #nongSchedule .tblSchedule tbody td {
+            background: #fff;
+            border: 1px solid #ccc;
+            empty-cells: show;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 1.2 !important;
+            color: #333;
+            padding: 4px 0;
+            letter-spacing: -1px;
+            height: 30px;
+        }
+
+        #nongSchedule .tblSchedule tbody td.empty {
+            border: 0 !important;
+            height: 5px;
+            padding: 0
+        }
+
+        #nongSchedule .tblSchedule tbody td.bgYellow {
+            background: #e7ecbd
+        }
+
+        #nongSchedule .tblSchedule tbody td.bgBlue {
+            background: #daedff
+        }
+
+        #nongSchedule .tblSchedule tbody td.bgRed {
+            background: #ffe6d7
+        }
+
+        #nongSchedule .tblSchedule tbody td.bgPurple {
+            background: #dedfff
+        }
+
+        #nongSchedule .tblSchedule tbody td.bgGreen {
+            background: #e6ffde
+        }
+
+        #nongSchedule .tblSchedule.tblSchedule2 {
+            border-top: 2px solid #08acf2
+        }
+
+        #nongSchedule .tblSchedule.tblSchedule2 thead th {
+            border: 1px solid #08acf2;
+        }
+
+        #nongSchedule .tblSchedule.tblSchedule2 thead td {
+            background: #08acf2;
+            border: 1px solid #08acf2;
+        }
+
+        #nongSchedule .tblSchedule.tblSchedule2 thead td.bg2 {
+            background: #39bdf5
+        }
+
+        #nongSchedule .tblSchedule.tblSchedule2 thead td.bg3 {
+            background: #6bcdf7
+        }
+
+        #nongSchedule .tblSchedule.tblSchedule3 {
+            border-top: 2px solid #ffb400
+        }
+
+        #nongSchedule .tblSchedule.tblSchedule3 thead th {
+            border: 1px solid #ffb400;
+        }
+
+        #nongSchedule .tblSchedule.tblSchedule3 thead td {
+            background: #ffb400;
+            border: 1px solid #ffb400;
+        }
+
+        #nongSchedule .tblSchedule.tblSchedule3 thead td.bg2 {
+            background: #ffca4c
+        }
+
+        #nongSchedule .tblSchedule.tblSchedule3 thead td.bg3 {
+            background: #ffd97f
+        }
+
+        #nongSchedule h3 {
+            background: url(../img/interabang/interabang_h3.png) no-repeat 0 8px;
+            padding-left: 15px;
+            font-size: 19px;
+            color: #333;
+            letter-spacing: -1px;
+            line-height: 1.4;
+            margin: 30px 0 10px;
+        }
+
+        #nongSchedule .bullet1 {
+            background: url(../img/interabang/bullet1.png) no-repeat 0 7px;
+            margin: 0 0 5px 15px;
+            padding-left: 12px;
+            line-height: 1.4;
+            font-size: 16px;
+            color: #545454;
+            word-break: keep-all
+        }
+
+        #nongSchedule .bullet3 {
+            background: url(../img/interabang/bullet3.png) no-repeat 0 10px;
+            padding-left: 12px;
+            line-height: 1.4;
+            margin: 3px 0 0 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        #nongSchedule .txt_point {
+            font-size: 14px;
+            color: #ff7800;
+        }
+
+        #nongSchedule .tblSection {
+            margin-top: 30px
+        }
+
+        #nongSchedule .tblSection table {
+            border-top: 2px solid #ababab
+        }
+
+        #nongSchedule .tblSection th, #nongSchedule .tblSection td {
+            border: 1px solid #dedede;
+            font-size: 14px;
+            padding: 5px 10px;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        #nongSchedule .tblSection th {
+            background: #f5f5f5;
+            font-weight: 600
+        }
+    </style>
     <title>농작업 일정</title>
 </head>
 <body>
 
 <select id="listCategoryCode" onchange="itemChange()">
-    <option value="0">선택하세요.</option>
+    <option value="0">작목을 선택하세요.</option>
 </select>
 
 <h4 id="selectedCntntsNo"></h4>
@@ -43,7 +639,7 @@
     <div th:if="${#strings.isEmpty(workingPlans)}"> 목록이 없습니다. 품종을 선택해주세요.</div>
 </div>
 
-<div id="planInfo"></div>
+<div id="nongScheduleTit"></div>
 
 <script
         src="https://code.jquery.com/jquery-3.5.1.slim.js"
@@ -62,7 +658,7 @@
         htmlCn = htmlCn.replace(/&gt;/gi,">");
         htmlCn = htmlCn.replace(/&amp;nbsp;/gi,"");
 
-        var planInfo = document.getElementById('planInfo');
+        var planInfo = document.getElementById('nongScheduleTit');
         planInfo.innerHTML = htmlCn;
     }
 
