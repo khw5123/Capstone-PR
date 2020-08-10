@@ -36,8 +36,6 @@ public class AreaFarmInfoController {
     @GetMapping("/AreaList")
     public String getAreaInfoList(Model model, Criteria cri){
         model.addAttribute("shippingAreaList",  areaFarmInfoDAO.listCriteria(cri));
-        //listPage(cri)
-        //select * from tbl_infrared where ino > 0 order by ino desc, regdate desc limit #{pageStart},#{perPageNum}
         PageMaker pageMaker = new PageMaker();
         pageMaker.setCri(cri);
 

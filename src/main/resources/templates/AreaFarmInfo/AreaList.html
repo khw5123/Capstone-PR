@@ -2,11 +2,25 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!--
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
           crossorigin="anonymous">
+    <script
+            src="https://code.jquery.com/jquery-3.5.1.slim.js"
+            integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM="
+            crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    -->
     <title>지역별 작목정보</title>
 </head>
 <body>
@@ -48,7 +62,7 @@
 <button id = "find-me">현재 위치</button><br/>
 <p id = "status"></p>
 
-<div id="mainHide">
+<div>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -77,46 +91,39 @@
     </table>
 
     <th:block th:if="${shippingAreaList.empty}">해당 내용이 없습니다.</th:block>
-
-    <div class='pull-right'>
-        <ul class="pagination">
-
-            <th:if test="${pageMaker.prev}">
-                <li class="paginate_button previous"><a
-                        href="${pageMaker.startPage -1}">Previous</a></li>
-            </th:if>
-
-            <div th:with="start=${pageMaker.startPage}, end=${pageMaker.endPage}">
-                <th:block th:each="num: ${#numbers.sequence(start, end)}">
-                    <li class='paginate_button  ${pageMaker.cri.page == num ? "active":""} '>
-                        <a href="${num}" th:text="${num}"></a>
-                    </li>
-                </th:block>
-            </div>
-
-            <th:if test="${pageMaker.next}">
-                <li class="paginate_button next"><a href="${pageMaker.endPage +1 }">Next</a></li>
-            </th:if>
-
-        </ul>
-    </div>
-
-    <form id='actionForm' action="/AreaList" method='get'>
-        <input type='hidden' name='page' value='${pageMaker.cri.page}'>
-        <input type='hidden' name='perPageNum' value='${pageMaker.cri.perPageNum}'>
-    </form>
-
-
 </div>
 
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7c2ea6cdea824e6159caeae6cc70ec39&libraries=services"></script>
-<script
-        src="https://code.jquery.com/jquery-3.5.1.slim.js"
-        integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM="
-        crossorigin="anonymous">
+<div class='pull-right'>
+    <ul class="pagination">
 
-</script>
+        <th:block th:if="${pageMaker.prev}">
+            <li class="paginate_button previous"><a
+                    th:href="${pageMaker.startPage -1}">Previous</a></li>
+        </th:block>
+
+        <th:block th:with="start=${pageMaker.startPage}, end=${pageMaker.endPage}">
+            <th:block th:each="num: ${#numbers.sequence(start, end)}">
+                <!--class='paginate_button  ${pageMaker.cri.page == num ? "active":""} '-->
+                <li class='paginate_button'>
+                    <a th:href="${num}" th:text="${num}"></a>
+                </li>
+            </th:block>
+        </th:block>
+
+        <th:block th:if="${pageMaker.next}">
+            <li class="paginate_button next"><a th:href="${pageMaker.endPage +1 }">Next</a></li>
+        </th:block>
+
+    </ul>
+</div>
+
+<form id='actionForm' action="/AreaList" method='get'>
+    <input type='hidden' name='page' th:attr="value=${pageMaker.cri.page}">
+    <input type='hidden' name='perPageNum' th:attr="value=${pageMaker.cri.perPageNum}">
+</form>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7c2ea6cdea824e6159caeae6cc70ec39&libraries=services"></script>
 <script>
     //이중 select
     var areas = [];

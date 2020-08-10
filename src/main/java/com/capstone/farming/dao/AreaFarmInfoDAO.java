@@ -40,8 +40,14 @@ public class AreaFarmInfoDAO
     public List<ShippingArea> listCriteria(com.capstone.farming.model.Criteria cri) {
         List<ShippingArea> shippingAreas = mongoTemplate.findAll(ShippingArea.class, "shippingArea");
         List<ShippingArea> listShippingAreas = new ArrayList<>();
-        for (int i = cri.getPage(); i <= cri.getPage()*cri.getPerPageNum(); i++ ){
-            listShippingAreas.add(shippingAreas.get(i));
+        if(shippingAreas.size() <= cri.getPage()*cri.getPerPageNum()){
+            for (int i = cri.getPageStart(); i < shippingAreas.size(); i++ ){
+                listShippingAreas.add(shippingAreas.get(i));
+            }
+        }else{
+            for (int i = cri.getPageStart(); i < cri.getPage()*cri.getPerPageNum(); i++ ){
+                listShippingAreas.add(shippingAreas.get(i));
+            }
         }
 
         return listShippingAreas;
