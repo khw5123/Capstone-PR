@@ -17,8 +17,10 @@ public class XlsprocessingTests {
     @Autowired
     XlsProcessing xlsProcessing;
 
+    /*
     @Test
     public void testXls() throws InvalidFormatException, IOException {
         xlsProcessing.insertMongo();
     }
+    */
 }

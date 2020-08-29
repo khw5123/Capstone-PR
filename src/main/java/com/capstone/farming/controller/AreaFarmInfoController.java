@@ -15,25 +15,21 @@ public class AreaFarmInfoController {
 
     @Autowired
     AreaFarmInfoDAO areaFarmInfoDAO;
-    //dao 전체정보가져오기
-    //현재위치 클릭 시 -> ajax로 url 파라미터를 통해 해당지역 가져오기
-    @GetMapping("/AreaFarmInfo")
-    public String getAllAreaFarmInfo(Model model){
-        //로그 추가하는 법 알기
-        model.addAttribute("shippingAreaList", areaFarmInfoDAO.findAll());
-        return "AreaFarmInfo/AreaFarmInfo";
-    }
 
-    @GetMapping("/AreaInfo")
+    @GetMapping("/AreaFarmInfo")
     public String getAreaFarmInfo(String province,String city, Model model){
         //로그 추가하는 법 알기
         model.addAttribute("province", province);
         model.addAttribute("city", city);
+
         model.addAttribute("shippingAreaList", areaFarmInfoDAO.find(province, city));
-        return "AreaFarmInfo/AreaFarmInfo";
+        if(province.equals("시도선택"))
+            return "redirect:/AreaFarmInfoList";
+        else
+            return "AreaFarmInfo/AreaFarmInfo";
     }
 
-    @GetMapping("/AreaList")
+    @GetMapping("/AreaFarmInfoList")
     public String getAreaInfoList(Model model, Criteria cri){
         model.addAttribute("shippingAreaList",  areaFarmInfoDAO.listCriteria(cri));
         PageMaker pageMaker = new PageMaker();

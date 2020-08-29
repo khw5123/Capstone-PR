@@ -30,8 +30,7 @@
         <span id="currentAddr"></span>
     </div>
 -->
-
-<form action="/AreaInfo" accept-charset="utf-8" name = "person_info" method = "get">
+<form action="/AreaFarmInfo" accept-charset="utf-8" name = "person_info" method = "get">
     <select id="sidoCdResearch" name="province" onchange="itemChange()" title="시도 선택">
         <option value="시도선택" selected="selected">시도선택</option>
         <option value="강원도">강원도</option>
@@ -105,7 +104,10 @@
         <th:block th:with="start=${pageMaker.startPage}, end=${pageMaker.endPage}">
             <th:block th:each="num: ${#numbers.sequence(start, end)}">
                 <!--class='paginate_button  ${pageMaker.cri.page == num ? "active":""} '-->
-                <li class='paginate_button'>
+                <li th:if=" ${pageMaker.cri.page} == ${num}" class='paginate_button active'>
+                    <a th:href="${num}" th:text="${num}"></a>
+                </li>
+                <li th:unless=" ${pageMaker.cri.page} == ${num}" class='paginate_button'>
                     <a th:href="${num}" th:text="${num}"></a>
                 </li>
             </th:block>
@@ -118,7 +120,7 @@
     </ul>
 </div>
 
-<form id='actionForm' action="/AreaList" method='get'>
+<form id='actionForm' action="/AreaFarmInfoList" method='get'>
     <input type='hidden' name='page' th:attr="value=${pageMaker.cri.page}">
     <input type='hidden' name='perPageNum' th:attr="value=${pageMaker.cri.perPageNum}">
 </form>
