@@ -1,6 +1,8 @@
 package com.capstone.farming.controller;
 
 import com.capstone.farming.dao.AreaFarmInfoDAO;
+import com.capstone.farming.model.Criteria;
+import com.capstone.farming.model.PageMaker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +21,7 @@ public class AreaFarmInfoController {
     public String getAllAreaFarmInfo(Model model){
         //로그 추가하는 법 알기
         model.addAttribute("shippingAreaList", areaFarmInfoDAO.findAll());
-        return "AreaFarmInfo";
+        return "AreaFarmInfo/AreaFarmInfo";
     }
 
     @GetMapping("/AreaInfo")
@@ -28,6 +30,18 @@ public class AreaFarmInfoController {
         model.addAttribute("province", province);
         model.addAttribute("city", city);
         model.addAttribute("shippingAreaList", areaFarmInfoDAO.find(province, city));
-        return "AreaFarmInfo";
+        return "AreaFarmInfo/AreaFarmInfo";
+    }
+
+    @GetMapping("/AreaList")
+    public String getAreaInfoList(Model model, Criteria cri){
+        model.addAttribute("shippingAreaList",  areaFarmInfoDAO.listCriteria(cri));
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCri(cri);
+
+        pageMaker.setTotalCount(areaFarmInfoDAO.listCountCriteria(cri));
+        model.addAttribute("pageMaker", pageMaker);
+
+        return "AreaFarmInfo/AreaList";
     }
 }
