@@ -22,6 +22,11 @@
     <link href="/css/Loading.css" rel="stylesheet" type="text/css"/>
 
     <style>
+
+        [v-cloak] {
+            display: none;
+        }
+
         .my {
             height: 30px;
             border-color: #41a6ff;
@@ -37,7 +42,7 @@
 
 <h1>실시간 가격 정보</h1>
 
-<form id="app-form" v-on:submit.prevent="request" name = "price_info" accept-charset="utf-8">
+<form id="app-form" v-cloak v-on:submit.prevent="request" name = "price_info" accept-charset="utf-8">
 
     <input class="col-sm-2 col-lg-2 my" type="text" name="delngDe" placeholder="경락일자(필수,예:20200102)" ref="delngDe">
 
@@ -61,7 +66,7 @@
     <input class="col-sm-1 col-lg-1 my" style="border-color: black" type = "submit" value = "조회"/>
 </form>
 
-<div id="app-table">
+<div id="app-table" v-cloak>
 
     <table class="table table-hover">
         <thead>
@@ -79,15 +84,15 @@
         </thead>
         <tbody>
         <tr v-for="realTimePrice in realTimePriceList">
-            <td >{{ realTimePrice.sbidTime }}</td>
-            <td >{{ realTimePrice.whsalMrktNm }}</td>
-            <td >{{ realTimePrice.catgoryNm }}</td>
-            <td >{{ realTimePrice.stdPrdlstNm }}</td>
-            <td >{{ realTimePrice.stdSpciesNm }}</td>
+            <td>{{ realTimePrice.sbidTime }}</td>
+            <td>{{ realTimePrice.whsalMrktNm }}</td>
+            <td>{{ realTimePrice.catgoryNm }}</td>
+            <td>{{ realTimePrice.stdPrdlstNm }}</td>
+            <td>{{ realTimePrice.stdSpciesNm }}</td>
             <td><span>{{ realTimePrice.delngPrut }}</span><span>{{ realTimePrice.stdUnitNewNm }}</span></td>
-            <td >{{ realTimePrice.stdQlityNewNm }}</td>
-            <td >{{ realTimePrice.sbidPric }}</td>
-            <td >{{ realTimePrice.delngQy }}</td>
+            <td>{{ realTimePrice.stdQlityNewNm }}</td>
+            <td>{{ realTimePrice.sbidPric }}</td>
+            <td>{{ realTimePrice.delngQy }}</td>
         </tr>
         </tbody>
     </table>
