@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <title>농식품구입통계</title>
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="PurchaseStatisticsMonthly">월간추이</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">월간추이<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="PurchaseStatisticsYearly">연간추이</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <form id="cropForm" method="post">
+        <div class="input-append">
+            <input class="span2" id="cropButton" name="cropName" type="hidden">
+            <div class="btn-group">
+                <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown"><span th:text="${cropName}"></span><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li onclick="$('#cropButton').val('감'); $('#cropForm').submit()">감</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('감귤'); $('#cropForm').submit()">감귤</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('견과류'); $('#cropForm').submit()">견과류</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('고추'); $('#cropForm').submit()">고추</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('김치'); $('#cropForm').submit()">김치</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('난류'); $('#cropForm').submit()">난류</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('닭고기'); $('#cropForm').submit()">닭고기</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('돼지고기'); $('#cropForm').submit()">돼지고기</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('두류'); $('#cropForm').submit()">두류</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('딸기'); $('#cropForm').submit()">딸기</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('마늘'); $('#cropForm').submit()">마늘</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('무'); $('#cropForm').submit()">무</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('배'); $('#cropForm').submit()">배</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('배추'); $('#cropForm').submit()">배추</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('버섯'); $('#cropForm').submit()">버섯</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('복숭아'); $('#cropForm').submit()">복숭아</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('사과'); $('#cropForm').submit()">사과</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('쇠고기'); $('#cropForm').submit()">쇠고기</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('수박'); $('#cropForm').submit()">수박</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('쌀'); $('#cropForm').submit()">쌀</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('양파'); $('#cropForm').submit()">양파</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('오이'); $('#cropForm').submit()">오이</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('우유'); $('#cropForm').submit()">우유</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('참외'); $('#cropForm').submit()">참외</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('토마토'); $('#cropForm').submit()">토마토</li>
+                    <li class="divider"></li>
+                    <li onclick="$('#cropButton').val('포도'); $('#cropForm').submit()">포도</li>
+                    <li class="divider"></li>
+                </ul>
+            </div>
+        </div>
+    </form>
+    <br>
+    <div class="container-fluid">
+        <img id="purchaseMonthly" src="" alt=""><br>
+        <img id="purchaseAmount" src="" alt=""><br>
+        <img id="purchaseFrequency" src="" alt=""><br>
+        <img id="purchaseAverage" src="" alt=""><br>
+        <img id="purchasePercentage" src="" alt=""><br>
+    </div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var cropName = /*[[${cropName}]]*/ 'default';
+        /*]]>*/
+        var crop = '';
+        if(cropName == '감') {
+            crop = 'persimmon';
+        } else if(cropName == '감귤') {
+            crop = 'citrus';
+        }
+        var img = document.getElementById('purchaseMonthly');
+        img.src = '/img/purchaseMonthly/' + crop + '.PNG';
+        img = document.getElementById('purchaseAmount');
+        img.src = '/img/purchaseMonthly/purchaseAmount/' + crop + '.PNG';
+        img = document.getElementById('purchaseFrequency');
+        img.src = '/img/purchaseMonthly/purchaseFrequency/' + crop + '.PNG';
+        img = document.getElementById('purchaseAverage');
+        img.src = '/img/purchaseMonthly/purchaseAverage/' + crop + '.PNG';
+        img = document.getElementById('purchasePercentage');
+        img.src = '/img/purchaseMonthly/purchasePercentage/' + crop + '.PNG';
+    </script>
+</body>
+</html>

@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -37,10 +38,10 @@ public class AreaFarmInfoTests {
     @Test
     public void testFindAll()
     {
-        List<ShippingArea> shippingAreaList1 = areaFarmInfoDAO.findAll();
-        List<ShippingArea> shippingAreaList2 = mongoTemplate.findAll(ShippingArea.class, "shippingArea");
-        System.out.println(shippingAreaList1.size()+" "+shippingAreaList2.size());
-        assertThat(shippingAreaList1.size(), is(shippingAreaList2.size())); //갯수 같은지, 값은 일일이 비교하거나 array로 바꿔서 가능할듯
+        List<ShippingArea> shippingAreaDAOList = areaFarmInfoDAO.findAll();
+        List<ShippingArea> shippingAreaMongoList = mongoTemplate.findAll(ShippingArea.class, "shippingArea");
+        System.out.println(shippingAreaDAOList.size()+" "+shippingAreaMongoList.size());
+        assertThat(shippingAreaDAOList.size(), is(shippingAreaMongoList.size())); //갯수 같은지, 값은 일일이 비교하거나 array로 바꿔서 가능할듯
         //assertArrayEquals(shippingAreaList1.toArray(), shippingAreaList2.toArray()); //같은거 같은데 다르다 나온다. 주소가 달라서그런가
     }
 
@@ -49,12 +50,30 @@ public class AreaFarmInfoTests {
     {
         Query query = new Query();
         query.addCriteria(Criteria.where("province").is("충청북도").andOperator(Criteria.where("city").is("제천시")));
-        List<ShippingArea> shippingAreaList1 = areaFarmInfoDAO.find("충청북도", "제천시");
-        List<ShippingArea> shippingAreaList2 = mongoTemplate.find(query, ShippingArea.class);
-        System.out.println(shippingAreaList1.size()+" "+shippingAreaList2.size()); // log로 바꾸기
-        assertThat(shippingAreaList1.size(), is(shippingAreaList2.size()));
+        List<ShippingArea> shippingAreaDAOList = areaFarmInfoDAO.find("충청북도", "제천시");
+        List<ShippingArea> shippingAreaMongoList = mongoTemplate.find(query, ShippingArea.class);
+        System.out.println(shippingAreaDAOList.size()+" "+shippingAreaMongoList.size()); // log로 바꾸기
+        assertThat(shippingAreaDAOList.size(), is(shippingAreaMongoList.size()));
     }
 
+    @Test
+    public void testListCriteria(){
+        com.capstone.farming.model.Criteria cri = new com.capstone.farming.model.Criteria();
+        List daolist = areaFarmInfoDAO.listCriteria(cri);
+        assertThat(daolist.size(), is(10));
+    }
+
+    @Test
+    public void testListCountCriteria(){
+        Query query = new Query();
+        com.capstone.farming.model.Criteria cri = new com.capstone.farming.model.Criteria();
+        int daoCount = areaFarmInfoDAO.listCountCriteria(cri);
+        int mongoCount =  (int)mongoTemplate.count(query, "shippingArea");
+        System.out.println(daoCount +" "+ mongoCount);
+        assertThat(daoCount, is(mongoCount));
+    }
+
+    /*
     @Test
     public void testIsInsert()
     {
@@ -70,4 +89,5 @@ public class AreaFarmInfoTests {
         //System.out.println(mongoTemplate.insert(shippingArea));
         //areaFarmInfoDAO.insertShippingArea(shippingArea);
     }
+    */
 }

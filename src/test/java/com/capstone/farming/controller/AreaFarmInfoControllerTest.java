@@ -28,22 +28,24 @@ public class AreaFarmInfoControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void testAllAreaFarmInfo() throws Exception{
-        mockMvc.perform(get("/AreaFarmInfo"))
-                .andDo(print()) // 처리 내용 출력
-                .andExpect(status().isOk()) // expects http200
-                .andExpect(view().name("AreaFarmInfo"));
-    }
-
-    @Test
     public void testFindAreaFarmInfo() throws Exception{
-        mockMvc.perform(get("/AreaInfo").param("province","충청남도").param("city","천안시"))
+        mockMvc.perform(get("/AreaFarmInfo").param("province","충청남도").param("city","천안시"))
                 .andDo(print()) // 처리 내용 출력
                 .andExpect(status().isOk()) // expects http200
-                .andExpect(view().name("AreaFarmInfo"))
+                .andExpect(view().name("AreaFarmInfo/AreaFarmInfo"))
                 .andExpect(model().attributeExists("province"))
                 .andExpect(model().attributeExists("city"))
                 .andExpect(model().attributeExists("shippingAreaList"));
                 //.andExpect(model().attribute("shippingAreaList", areaFarmInfoDAO.find("충청남도", "천안시")));
+    }
+
+    @Test
+    public void testFindAreaFarmInfoList() throws Exception{
+        mockMvc.perform(get("/AreaFarmInfoList").param("page","2").param("perPageNum","10"))
+                .andDo(print()) // 처리 내용 출력
+                .andExpect(status().isOk()) // expects http200
+                .andExpect(view().name("AreaFarmInfo/AreaList"))
+                .andExpect(model().attributeExists("shippingAreaList"))
+                .andExpect(model().attributeExists("pageMaker"));
     }
 }
