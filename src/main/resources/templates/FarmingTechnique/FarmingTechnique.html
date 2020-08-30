@@ -260,6 +260,8 @@
         },
         methods: {
             request() {
+                appForm.isLoading = true;
+
                 this.itemList = null;
                 if(appForm.$refs.techSelect.value == 'GS01') {
                     axios.get('/FarmingTechnique/VarietyList', {
@@ -267,11 +269,13 @@
                             subCategoryCode: appForm.$refs.subCategorySelect.value,
                         }
                     }).then(response => {
+                        this.showTechInfoList = false;
+                        this.showVideoList = false;
                         this.itemList = response.data;
+                        this.showVarietyList = true;
+
+                        appForm.isLoading = false;
                     });
-                    this.showTechInfoList = false;
-                    this.showVideoList = false;
-                    this.showVarietyList = true;
 
                 } else if(appForm.$refs.techSelect.value == 'movie') {
                     axios.get('/FarmingTechnique/VideoList', {
@@ -279,11 +283,13 @@
                             subCategoryCode: appForm.$refs.subCategorySelect.value,
                         }
                     }).then(response => {
+                        this.showTechInfoList = false;
+                        this.showVarietyList = false;
                         this.itemList = response.data;
+                        this.showVideoList = true;
+
+                        appForm.isLoading = false;
                     });
-                    this.showTechInfoList = false;
-                    this.showVideoList = true;
-                    this.showVarietyList = false;
 
                 } else {
                     axios.get('/FarmingTechnique/TechInfoList', {
@@ -292,11 +298,13 @@
                             subTechCode: appForm.$refs.techSelect.value,
                         }
                     }).then(response => {
+                        this.showVideoList = false;
+                        this.showVarietyList = false;
                         this.itemList = response.data;
+                        this.showTechInfoList = true;
+
+                        appForm.isLoading = false;
                     });
-                    this.showTechInfoList = true;
-                    this.showVideoList = false;
-                    this.showVarietyList = false;
                 }
             },
         }
