@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <meta charset="UTF-8">
 
     <link rel="stylesheet"
@@ -21,6 +23,21 @@
             display: none;
         }
 
+        .my {
+            height: 30px;
+            border-color: #41a6ff;
+            border-radius: 5px;
+            border-width: 1.5px;
+            background: #ffffff;
+            margin: 5px;
+        }
+
+        @media (max-width: 767px) {
+            .col-xs-hidden {
+                display: none !important;
+            }
+        }
+
     </style>
 
 </head>
@@ -30,28 +47,28 @@
 
 <form id="app-form" v-cloak accept-charset="utf-8">
 
-    <select class="col-sm-2 col-lg-2 my" id="mainCategorySelect" onchange="appForm.middleCategoryListRequest()" title="대분류 선택" ref="mainCategorySelect" v-bind:disabled="isLoading">
+    <select class="col-sm-2 col-xs-11 my" id="mainCategorySelect" onchange="appForm.middleCategoryListRequest()" title="대분류 선택" ref="mainCategorySelect" v-bind:disabled="isLoading">
         <option value="" selected="selected">대분류</option>
         <option v-for="mainCategory in mainCategoryList" v-bind:value="mainCategory.mainCategoryCode">
             {{ mainCategory.mainCategoryNm }}
         </option>
     </select>
 
-    <select class="col-sm-2 col-lg-2 my" id="middleCategorySelect" onchange="appForm.subCategoryListRequest()" title="중분류 선택" ref="middleCategorySelect" v-bind:disabled="isLoading">
+    <select class="col-sm-2 col-xs-11 my" id="middleCategorySelect" onchange="appForm.subCategoryListRequest()" title="중분류 선택" ref="middleCategorySelect" v-bind:disabled="isLoading">
         <option value="" selected="selected">중분류</option>
         <option v-for="middleCategory in middleCategoryList" v-bind:value="middleCategory.middleCategoryCode">
             {{ middleCategory.middleCategoryNm }}
         </option>
     </select>
 
-    <select class="col-sm-2 col-lg-2 my" id="subCategorySelect" onchange="appForm.techListRequest()" title="소분류 선택" ref="subCategorySelect" v-bind:disabled="isLoading">
+    <select class="col-sm-2 col-xs-11 my" id="subCategorySelect" onchange="appForm.techListRequest()" title="소분류 선택" ref="subCategorySelect" v-bind:disabled="isLoading">
         <option value="" selected="selected">소분류</option>
         <option v-for="subCategory in subCategoryList" v-bind:value="subCategory.subCategoryCode">
             {{ subCategory.subCategoryNm }}
         </option>
     </select>
 
-    <select class="col-sm-4 col-lg-3 my" id="techSelect" onchange="appTable.request()" title="영농 기술 선택" ref="techSelect" v-bind:disabled="isLoading">
+    <select class="col-sm-4 col-xs-11 my" id="techSelect" onchange="appTable.request()" title="영농 기술 선택" ref="techSelect" v-bind:disabled="isLoading">
         <option value="" selected="selected">영농 기술</option>
         <option v-for="subTech in subTechList" v-bind:value="subTech.subTechCode">
             <span>{{ subTech.mainTechNm }} {{ subTech.str }} {{ subTech.subTechNm }}</span>
@@ -65,16 +82,16 @@
     <table class="table table-hover" v-if="showTechInfoList">
         <thead>
         <tr>
-            <th>제목</th>
-            <th>등록일</th>
-            <th>첨부</th>
+            <th class="col-sm-6 col-xs-5">제목</th>
+            <th class="col-sm-3 col-xs-4">등록일</th>
+            <th class="col-sm-3 col-xs-3">첨부</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="item in itemList">
-            <td>{{ item.techNm }}</td>
-            <td>{{ item.regDt }}</td>
-            <td><a v-bind:href="item.fileDownUrl">파일다운</a></td>
+            <td class="col-sm-6 col-xs-5">{{ item.techNm }}</td>
+            <td class="col-sm-3 col-xs-4">{{ item.regDt }}</td>
+            <td class="col-sm-3 col-xs-3"><a v-bind:href="item.fileDownUrl">파일다운</a></td>
         </tr>
         </tbody>
     </table>
@@ -82,20 +99,20 @@
     <table class="table table-hover" v-if="showVarietyList">
         <thead>
         <tr>
-            <th class="col-md-2">사진</th>
-            <th class="col-md-2">작물명</th>
-            <th class="col-md-2">품종명</th>
-            <th class="col-md-5">주요특성</th>
-            <th class="col-md-1">첨부</th>
+            <th class="col-sm-2 col-xs-3">사진</th>
+            <th class="col-sm-2 col-xs-3">작물명</th>
+            <th class="col-sm-2 col-xs-3">품종명</th>
+            <th class="col-sm-4 col-xs-hidden">주요특성</th>
+            <th class="col-sm-2 col-xs-3">첨부</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="item in itemList">
-            <td><img v-bind:src="item.imgFileLink"></td>
-            <td>{{ item.cropNm }}</td>
-            <td>{{ item.varietyNm }}</td>
-            <td v-html="item.mainChartrInfo"></td>
-            <td><a v-bind:href="item.atchFileLink">파일다운</a></td>
+            <td class="col-sm-2 col-xs-3"><img class="col-sm-6 col-xs-12" v-bind:src="item.imgFileLink"></td>
+            <td class="col-sm-2 col-xs-3">{{ item.cropNm }}</td>
+            <td class="col-sm-2 col-xs-3">{{ item.varietyNm }}</td>
+            <td class="col-sm-4 col-xs-hidden" v-html="item.mainChartrInfo"></td>
+            <td class="col-sm-2 col-xs-3"><a v-bind:href="item.atchFileLink">파일다운</a></td>
         </tr>
         </tbody>
     </table>
@@ -103,16 +120,16 @@
     <table class="table table-hover" v-if="showVideoList">
         <thead>
         <tr>
-            <th class="col-md-2">동영상</th>
-            <th class="col-md-2">제목</th>
-            <th class="col-md-1">출처</th>
+            <th class="col-sm-6 col-xs-4">동영상</th>
+            <th class="col-sm-3 col-xs-4">제목</th>
+            <th class="col-sm-3 col-xs-4">출처</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="item in itemList">
-            <td><a v-bind:href="item.videoLink" target="_blank"><img v-bind:src="item.videoImg"></a></td>
-            <td>{{ item.videoTitle }}</td>
-            <td>{{ item.videoOriginInstt }}</td>
+            <td class="col-sm-6 col-xs-4"><a v-bind:href="item.videoLink" target="_blank"><img class="col-sm-3 col-xs-12" v-bind:src="item.videoImg"></a></td>
+            <td class="col-sm-3 col-xs-4">{{ item.videoTitle }}</td>
+            <td class="col-sm-3 col-xs-4">{{ item.videoOriginInstt }}</td>
         </tr>
         </tbody>
     </table>
