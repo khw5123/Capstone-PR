@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <meta charset="UTF-8">
 
     <link rel="stylesheet"
@@ -22,6 +24,11 @@
     <link href="/css/Loading.css" rel="stylesheet" type="text/css"/>
 
     <style>
+
+        [v-cloak] {
+            display: none;
+        }
+
         .my {
             height: 30px;
             border-color: #41a6ff;
@@ -29,7 +36,14 @@
             border-width: 1.5px;
             background: #ffffff;
             margin: 5px;
-    }
+        }
+
+        @media (max-width: 767px) {
+            .col-xs-hidden {
+                display: none !important;
+            }
+        }
+
     </style>
 
 </head>
@@ -37,57 +51,57 @@
 
 <h1>실시간 가격 정보</h1>
 
-<form id="app-form" v-on:submit.prevent="request" name = "price_info" accept-charset="utf-8">
+<form id="app-form" v-cloak v-on:submit.prevent="request" name = "price_info" accept-charset="utf-8">
 
-    <input class="col-sm-2 col-lg-2 my" type="text" name="delngDe" placeholder="경락일자(필수,예:20200102)" ref="delngDe">
+    <input class="col-sm-2 col-xs-11 my" type="text" name="delngDe" placeholder="경락일자(필수,예:20200102)" ref="delngDe">
 
-    <select class="col-sm-2 col-lg-1 my"
+    <select class="col-sm-2 col-xs-11 my"
             id="catgorySelect" name="catgoryCd" onchange="catgoryChange()" title="부류 선택" ref="catgoryCd">
         <option value="" selected="selected">부류(필수)</option>
     </select>
 
-    <select class="col-sm-2 col-lg-1 my" id="prdlstSelect" name="prdlstCd" onchange="prdlstChange()" title="품목 선택" ref="prdlstCd">
+    <select class="col-sm-2 col-xs-11 my" id="prdlstSelect" name="prdlstCd" onchange="prdlstChange()" title="품목 선택" ref="prdlstCd">
         <option value="" selected="selected">품목(필수)</option>
     </select>
 
-    <select class="col-sm-2 col-lg-1 my" id="spciesSelect" name="spciesCd" title="품종 선택" ref="spciesCd">
+    <select class="col-sm-2 col-xs-11 my" id="spciesSelect" name="spciesCd" title="품종 선택" ref="spciesCd">
         <option value="" selected="selected">품종(선택)</option>
     </select>
 
-    <select class="col-sm-3 col-lg-2 my" id="whsalSelect" name="whsalCd" title="도매시장 선택" ref="whsalCd">
+    <select class="col-sm-3 col-xs-11 my" id="whsalSelect" name="whsalCd" title="도매시장 선택" ref="whsalCd">
         <option value="" selected="selected">도매시장(선택)</option>
     </select>
 
-    <input class="col-sm-1 col-lg-1 my" style="border-color: black" type = "submit" value = "조회"/>
+    <input class="col-sm-1 col-xs-11 my" style="border-color: black" type = "submit" value = "조회"/>
 </form>
 
-<div id="app-table">
+<div id="app-table" v-cloak>
 
     <table class="table table-hover">
         <thead>
         <tr>
-            <th class="col-md-2">경매시간</th>
-            <th class="col-md-2">시장명</th>
-            <th class="col-md-1">부류명</th>
-            <th class="col-md-1">품목명</th>
-            <th class="col-md-2">품종명</th>
-            <th class="col-md-1">거래단량</th> <!-- 거래단량 + 단위명 -->
-            <th class="col-md-1">등급명</th>
-            <th class="col-md-1">거래가격</th>
-            <th class="col-md-1">거래량</th>
+            <th class="col-sm-2">경매시간</th>
+            <th class="col-sm-2 col-xs-hidden">시장명</th>
+            <th class="col-sm-1 col-xs-hidden">부류명</th>
+            <th class="col-sm-1 col-xs-hidden">품목명</th>
+            <th class="col-sm-2">품종명</th>
+            <th class="col-sm-1">거래단량</th> <!-- 거래단량 + 단위명 -->
+            <th class="col-sm-1 col-xs-hidden">등급명</th>
+            <th class="col-sm-1">거래가격</th>
+            <th class="col-sm-1 col-xs-hidden">거래량</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="realTimePrice in realTimePriceList">
-            <td >{{ realTimePrice.sbidTime }}</td>
-            <td >{{ realTimePrice.whsalMrktNm }}</td>
-            <td >{{ realTimePrice.catgoryNm }}</td>
-            <td >{{ realTimePrice.stdPrdlstNm }}</td>
-            <td >{{ realTimePrice.stdSpciesNm }}</td>
+            <td>{{ realTimePrice.sbidTime }}</td>
+            <td class="col-xs-hidden">{{ realTimePrice.whsalMrktNm }}</td>
+            <td class="col-xs-hidden">{{ realTimePrice.catgoryNm }}</td>
+            <td class="col-xs-hidden">{{ realTimePrice.stdPrdlstNm }}</td>
+            <td>{{ realTimePrice.stdSpciesNm }}</td>
             <td><span>{{ realTimePrice.delngPrut }}</span><span>{{ realTimePrice.stdUnitNewNm }}</span></td>
-            <td >{{ realTimePrice.stdQlityNewNm }}</td>
-            <td >{{ realTimePrice.sbidPric }}</td>
-            <td >{{ realTimePrice.delngQy }}</td>
+            <td class="col-xs-hidden">{{ realTimePrice.stdQlityNewNm }}</td>
+            <td>{{ realTimePrice.sbidPric }}</td>
+            <td class="col-xs-hidden">{{ realTimePrice.delngQy }}</td>
         </tr>
         </tbody>
     </table>

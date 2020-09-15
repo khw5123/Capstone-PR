@@ -147,7 +147,8 @@ public class FarmingTechniqueController {
         APIExplorer apiExplorer = new APIExplorer();
         String xml = apiExplorer.request(farmingTechniqueURL + "/techInfoList?apiKey=" + farmingTechniqueAPIKey
                 + "&subCategoryCode=" + subCategoryCode
-                + "&subTechCode=" + subTechCode);
+                + "&subTechCode=" + subTechCode
+                + "&numOfRows=" + "100");
 
         JSONObject jObject = XML.toJSONObject(xml);
         ObjectMapper mapper = new ObjectMapper();
@@ -166,7 +167,8 @@ public class FarmingTechniqueController {
 
         APIExplorer apiExplorer = new APIExplorer();
         String xml = apiExplorer.request(farmingTechniqueURL + "/videoList?apiKey=" + farmingTechniqueAPIKey
-                + "&subCategoryCode=" + subCategoryCode);
+                + "&subCategoryCode=" + subCategoryCode
+                + "&numOfRows=" + "100");
 
         JSONObject jObject = XML.toJSONObject(xml);
         ObjectMapper mapper = new ObjectMapper();
@@ -185,7 +187,8 @@ public class FarmingTechniqueController {
 
         APIExplorer apiExplorer = new APIExplorer();
         String xml = apiExplorer.request(farmingTechniqueURL + "/varietyList?apiKey=" + farmingTechniqueAPIKey
-                + "&subCategoryCode=" + subCategoryCode);
+                + "&subCategoryCode=" + subCategoryCode
+                + "&numOfRows=" + "100");
 
         JSONObject jObject = XML.toJSONObject(xml);
         ObjectMapper mapper = new ObjectMapper();
