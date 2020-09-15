@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>귀농 귀촌 길잡이</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        body {
+            background-image: url('img/background.png');
+            background-repeat: no-repeat;
+            min-height: 100%;
+            background-size: cover;
+        }
+        @media (max-width: 767px) {
+            #web {
+                display: none;
+            }
+        }
+        @media (min-width: 767px) {
+            #app {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">귀농 귀촌 길잡이</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP1 재배 작물 선택<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="Crop/FoodCropsInfo">품종 정보</a></li>
+                            <li><a href="AreaFarmInfo/AreaFarmInfo">지역별 작목 정보</a></li>
+                            <li><a href="RealTimePrice">실시간 가격 정보</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP2 영농 기술 습득<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="FarmingTechnique">영농 기술 정보</a></li>
+                            <li><a href="Education/Education">영농 교육</a></li>
+                        </ul>
+                    </li><li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP3 영농 계획 수립<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="plan">농작업 관리 일정</a></li>
+                        <li><a href="Statistics/PurchaseStatisticsMonthly">농식품 구입 통계</a></li>
+                    </ul>
+                </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- content -->
+    <div id="web" class="container">
+        <div media="screen and (min-width: 767px)">
+            <div class="row">
+                <!-- 사이트 소개 -->
+                <div class="col-sm-6">
+                    <div class="card bg-primary">
+                        <br><br><br><br><br><br><br><br><br><br><br><br><p class="text-center">사이트 소개</p><br><br><br><br><br><br><br><br><br><br><br><br>
+                    </div>
+                </div>
+                <!-- 관련 사이트 소개 -->
+                <div class="col-sm-6">
+                    <div class="card bg-success">
+                        <br><br><br><br><br><br><br><br><br><br><br><br><p class="text-center">관련 사이트 소개</p><br><br><br><br><br><br><br><br><br><br><br><br>
+                    </div>
+                </div>
+                <!-- STEP 1, 2, 3 -->
+
+            </div>
+        </div>
+    </div>
+    <div id="app" class="container">
+        <div media="screen and (max-width: 767px)">
+            <!-- 사이트 소개 -->
+            <div class="card bg-primary">
+                <br><br><br><br><br><br><br><br><p class="text-center">사이트 소개</p><br><br><br><br><br><br><br><br>
+            </div>
+            <br>
+            <!-- 관련 사이트 소개 -->
+            <div class="card bg-success">
+                <br><br><br><br><br><br><br><br><p class="text-center">관련 사이트 소개</p><br><br><br><br><br><br><br><br>
+            </div>
+            <br>
+            <!-- STEP 1, 2, 3 -->
+
+        </div>
+    </div>
+    <br>
+
+    <!-- Footer -->
+    <footer class="jumbotron text-center mt-5 mb-0">
+        <div class="container-fluid text-center text-md-left">
+            <div class="row">
+                <div class="col-md-6 mt-md-0 mt-3">
+                    <h5 class="text-uppercase">Footer Content</h5>
+                    <p>Here you can use rows and columns to organize your footer content.</p>
+                </div>
+                <hr class="clearfix w-100 d-md-none pb-3">
+                <div class="col-md-6 mb-md-0 mb-3">
+                    <h5 class="text-uppercase">Links</h5>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="#!">Link 1</a>
+                        </li>
+                        <li>
+                            <a href="#!">Link 2</a>
+                        </li>
+                        <li>
+                            <a href="#!">Link 3</a>
+                        </li>
+                        <li>
+                            <a href="#!">Link 4</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright text-center py-3">© 2020 Copyright:
+            <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+        </div>
+    </footer>
+</body>
+</html>
