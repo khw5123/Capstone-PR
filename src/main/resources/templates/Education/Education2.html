@@ -1,96 +1,332 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>영농 교육</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <title>영농 교육</title>
+    <style>
+        @media (max-width: 767px) {
+            #web {
+                display: none;
+            }
+        }
+        @media (min-width: 767px) {
+            #app {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Navigation Bar -->
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="Education2">영농교육(귀농귀촌종합센터)</a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">귀농 귀촌 길잡이</a>
             </div>
-            <div>
-                <ul class="nav navbar-nav">
-                    <li><a href="Education">영농교육(농사로)</a></li>
-                    <li><a href="Education2">영농교육(귀농귀촌종합센터)</a></li>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP1 재배 작물 선택<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../Crop/FoodCropsInfo">품종 정보</a></li>
+                            <li><a href="../AreaFarmInfo/AreaFarmInfo">지역별 작목 정보</a></li>
+                            <li><a href="../RealTimePrice">실시간 가격 정보</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP2 영농 기술 습득<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../FarmingTechnique">영농 기술 정보</a></li>
+                            <li><a href="../Education/Education">영농 교육</a></li>
+                        </ul>
+                    </li><li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP3 영농 계획 수립<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../plan">농작업 관리 일정</a></li>
+                        <li><a href="../Statistics/PurchaseStatisticsMonthly">농식품 구입 통계</a></li>
+                    </ul>
+                </li>
                 </ul>
+            </div>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="Education2">영농교육(귀농귀촌종합센터)</a>
+                </div>
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="Education">영농교육(농사로)</a></li>
+                        <li><a href="Education2">영농교육(귀농귀촌종합센터)</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
-    <div class="container-fluid">
-        <h3 class="display-4 font-italic">온라인교육</h3>
-        <table class="table table-dark table-striped">
-            <thead>
-            <tr>
-                <th class="col-xs-1">교육목적</th>
-                <th class="col-xs-1">운영기간</th>
-                <th class="col-xs-1">수료기준</th>
-                <th class="col-xs-1">신청방법</th>
-                <th class="col-xs-1">교육문의</th>
-                <th class="col-xs-1">사이트링크</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>귀농귀촌 이해에서부터 기초 품목기술까지 다양한 온라인 콘텐츠 제공</td>
-                <td>1월~12월(기수당 1개월) / 교육신청 : 매월 말일까지</td>
-                <td>과정 당 90% 이상 이수 시 교육수료 인정 (다만, 정책지원을 위한 교육시간 인정은 수료시간의 50% 인정, 최대 40시간)</td>
-                <td>농업교육포털(www.agriedu.net) 회원가입 후 희망하는 강좌 수강신청</td>
-                <td>농업교육포털 콜센터 1811-8656</td>
-                <td><a href="http://www.returnfarm.com/cmn/board/BBSMSTR_000000000111/bbsList.do">바로가기</a></td>
-            </tr>
-            </tbody>
-        </table>
+
+    <!-- content -->
+    <div id="web" class="container-fluid">
+        <div media="screen and (min-width: 767px)">
+            <h3 class="display-4 font-italic">온라인교육</h3>
+            <table class="table table-dark table-striped">
+                <thead>
+                <tr>
+                    <th class="col-xs-1">교육목적</th>
+                    <th class="col-xs-1">운영기간</th>
+                    <th class="col-xs-1">수료기준</th>
+                    <th class="col-xs-1">신청방법</th>
+                    <th class="col-xs-1">교육문의</th>
+                    <th class="col-xs-1">사이트링크</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>귀농귀촌 이해에서부터 기초 품목기술까지 다양한 온라인 콘텐츠 제공</td>
+                    <td>1월~12월(기수당 1개월) / 교육신청 : 매월 말일까지</td>
+                    <td>과정 당 90% 이상 이수 시 교육수료 인정 (다만, 정책지원을 위한 교육시간 인정은 수료시간의 50% 인정, 최대 40시간)</td>
+                    <td>농업교육포털(www.agriedu.net) 회원가입 후 희망하는 강좌 수강신청</td>
+                    <td>농업교육포털 콜센터 1811-8656</td>
+                    <td><a href="http://www.returnfarm.com/cmn/board/BBSMSTR_000000000111/bbsList.do">바로가기</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <h3 class="display-4 font-italic">오프라인교육</h3>
+            <table class="table table-dark table-striped">
+                <thead>
+                <tr>
+                    <th class="col-xs-1">과정종류</th>
+                    <th class="col-xs-1">교육목적</th>
+                    <th class="col-xs-1">교육대상</th>
+                    <th class="col-xs-1">교육일정</th>
+                    <th class="col-xs-1">교육장소</th>
+                    <th class="col-xs-1">교육내용</th>
+                    <th class="col-xs-1">교육문의</th>
+                    <th class="col-xs-1">사이트링크</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>귀농귀촌아카데미</td>
+                    <td>귀농귀촌 희망 도시민 및 은퇴예정자의 안정적인 귀농귀촌 정착 지원을 위해 교육프로그램 및 정보 제공</td>
+                    <td>귀농귀촌 희망 또는 예정자</td>
+                    <td>연중(2~11월)</td>
+                    <td>귀농귀촌종합센터 교육장(서울특별시 서초구 강남대로 27 aT센터 4층 귀농귀촌종합센터)</td>
+                    <td>이론 및 사례 중심의 귀농귀촌 기초소양교육</td>
+                    <td>귀농귀촌 종합상담 : 1899-9097</td>
+                    <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/eduAkademy/rfAkademyMain.do">바로가기</a></td>
+                </tr>
+                <tr>
+                    <td>맞춤형공모교육</td>
+                    <td>귀농귀촌 관심·준비자를 대상으로 교육 운영을 통해 농업 창업 및 안정적인 농촌 정착 지원</td>
+                    <td>[청년창업농(탐색/준비)] 만 40세 미만(1980.1.1. 이후 출생자)<br>
+                        [전직창업농(탐색/준비)] 4050세대<br>
+                        [은퇴창업농(탐색/준비)] 60대 이상<br>
+                        [장애인창업농(탐색)] 장애인(가족 포함)<br>
+                        [귀촌(탐색/준비)] 연령 구분 없음</td>
+                    <td>연중(~10월), 교육일정, 형태 및 시간은 과정별 상이</td>
+                    <td>전국(교육과정별 상이)</td>
+                    <td>[청년창업농(탐색/준비)] 농산업 최신트렌드, 청년창업농을 위한 기업가 정신, 농산업 재무회계, 혁신적 창농 아이템 등<br>
+                        [전직창업농(탐색/준비)] 농업인으로서 삶과 변화 관리, 비즈니스 마인드, 농산물 유통전략, 농촌에서의 가족 생활 등<br>
+                        [은퇴창업농(탐색/준비)] 은퇴와 농업인으로서의 변화, 농촌에서의 보건의료, 은퇴창업농의 자산관리와 재테크 등<br>
+                        [장애인(탐색)] 귀농과 치유농업, 장애인 귀농 정착 및 역귀농 사례, 가족과 함께하는 귀농귀촌 의사결정 등<br>
+                        [귀촌(탐색/준비)] 농촌생활 적정기술, 농촌일자리 탐색, 지역문화와 여가생활, 참여하는 지역공동체, 소규모 친환경 영농 등</td>
+                    <td>귀농귀촌 종합상담 : 1899-9097 / 각 과정별 교육운영기관 담당(※추후 확정)</td>
+                    <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/eduAkademy/publicEducation.do">바로가기</a></td>
+                </tr>
+                <tr>
+                    <td>청년귀농장기교육</td>
+                    <td>영농 경험이 부족한 청년층의 안정적인 농업․농촌 정착지원을 위해 실습 중심의 장기 체류형 교육과정 운영을 통한 역량강화 지원</td>
+                    <td>만 40세 미만 귀농 희망 청년, 사업시행연도 기준 1980년 1월 1일 이후 출생한 자</td>
+                    <td>6개월 이내, 총 450~1,000시간(교육기관별 상이)</td>
+                    <td>전국 11개 교육기관</td>
+                    <td>청년층이 성공적인 창농에 필요한 역량과 경험을 실제 복합농업 활동과 농촌 생활을 통해 직접 학습할 수 있도록 교육기관별 특색 있는 교육 구성</td>
+                    <td>귀농귀촌 종합상담 : 1899-9097 / 각 교육기관별 담당자(※연락처 참조)</td>
+                    <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/eduAkademy/youngLongEducation.do">바로가기</a></td>
+                </tr>
+                <tr>
+                    <td>귀촌인농산업창업교육</td>
+                    <td>농산업 창업을 희망하는 귀촌인에 대한 창업 중심 실무교육지원으로 일자리 창출 및 지역경제 활성화에 기여</td>
+                    <td>농촌지역 주소지 이전 후 5년 이내(농산업 창업경험이 없는 경우 7년)의 귀촌인</td>
+                    <td>5~10월 / 총 100시간, 교육일정은 교육기관별 상이</td>
+                    <td>전국 11개 교육기관 (교육기관별 상이)</td>
+                    <td>(이론) 실무적 관점에서 창업에 도움이 되는 농산업 창업 환경 이해, 실무요령, 전략 수립, 사업자등록 프로세스 등 특성에 맞는 교육<br>
+                        (컨설팅) 실습 중심의 맞춤형 상담을 통해 창업 아이템 구체화 지원<br>
+                        (과제수행) 토론, 견학, 실습, 사례 분석 등</td>
+                    <td>귀농귀촌 종합상담 : 1899-9097 / 각 교육기관별 담당자(※연락처 참조)</td>
+                    <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/eduAkademy/foundingEducation.do">바로가기</a></td>
+                </tr>
+                <tr>
+                    <td>지자체귀농귀촌교육</td>
+                    <td>지자체에서 진행하는 귀농귀촌교육</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>귀농귀촌 종합상담 : 1899-9097</td>
+                    <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/eduAkademy/localGovEducation.do">바로가기</a></td>
+                </tr>
+                <tr>
+                    <td>현장실습교육장(WPL)</td>
+                    <td>‘현장실습교육(WPL : Work Place Learning)’이란 이론교육장과 실습장 등을 갖추고, 선도농업인이 보유한 전문기술과 핵심노하우를 후발농업인에게 전수하는 현장 실습형 교육을 말한다. 각 품목의 베테랑 농업인들과 전문가들이 현장교수가 되어 직접 실시하는 맞춤형 멘토 교육이라는 점에서 교육생의 수요와 만족도가 높다. 현장실습교육(WPL)장은 2009년 45개소를 시작으로 매년 확대되어 현재는 122개소의 교육장이 운영 중이다.</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>귀농귀촌 관련상담: 1899-9097</td>
+                    <td><a href="http://www.returnfarm.com/cmn/sym/mnu/mpm/1020202/htmlMenuView.do">바로가기</a></td>
+                </tr>
+                <tr>
+                    <td>농업농촌탐색교육<br>
+                        2시간과정(농업기술센터)</td>
+                    <td>코로나19로 인한 귀농귀촌 수요 증가에 대응, 접근성을 고려하여 전국 단위 조직(시‧군 농업기술센터)을 활용한 귀농귀촌 교육 제공</td>
+                    <td>귀농귀촌 관심·희망 도시민</td>
+                    <td></td>
+                    <td>각 시·군 농업기술센터 교육장</td>
+                    <td>귀농귀촌 일반교육(농업·농촌이해, 귀농설계)<br>
+                        * 현행 품목·기술 교육 외에 주민 갈등, 정착실패 사례 등 농촌공동체 이해 및 귀농설계 교육을 보강하여 2시간 과정으로 제공</td>
+                    <td>(문의) 각 교육기관별 담당자(‘자세히보기’ 확인)<br>
+                        (신청) 귀농귀촌종합센터 홈페이지(www.returnfarm.com)</td>
+                    <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/tempBbs/tempBbs1.do">바로가기</a></td>
+                </tr>
+                <tr>
+                    <td>농업농촌탐색교육<br>
+                        4시간과정(도시농협)</td>
+                    <td>코로나19로 인한 귀농귀촌 수요 증가에 대응, 접근성을 고려하여 전국 단위 조직(도시농협)을 활용한 귀농귀촌 교육 제공</td>
+                    <td>귀농귀촌 관심·희망 도시민</td>
+                    <td></td>
+                    <td>각 도시농협 교육장</td>
+                    <td>귀농귀촌 일반교육(농업‧농촌이해, 귀농설계), 농협 특화교육(자산관리, 금융, 세제 등)<br>
+                        * 귀농 기초교육과 농협의 전문성을 살린 자산관리·세제·금융 등 특화교육 프로그램</td>
+                    <td>(문의) 각 교육기관별 담당자(‘자세히보기’ 확인)<br>
+                        (신청) 귀농귀촌종합센터 홈페이지(www.returnfarm.com)</td>
+                    <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/tempBbs/tempBbs2.do">바로가기</a></td>
+                </tr>
+                <tr>
+                    <td>농업농촌탐색교육<br>
+                        4일과정(농업마이스터대학·서울시)</td>
+                    <td>코로나19로 인한 실직·폐업 등으로 농업분야 취·창업 희망자를 지원하기 위한 현장실습 교육 제공 및 일자리 연계</td>
+                    <td>농업분야 전직 희망자 및 영농관련 체험 희망자</td>
+                    <td></td>
+                    <td>농업마이스터대학 8개소(경기, 강원, 충북, 충남, 전북, 전남, 경북, 경남), 서울농장 3개소(충북 괴산, 경북 상주, 전남 영암)</td>
+                    <td>농업·농촌 이론교육(3일) + 농업분야 일자리탐색 및 현장실습(1일)<br>
+                        * 농업분야 취·창업 정보, 정착지원 정책 등 3일간의 이론교육을 수강하고, 현장실습교육장(WPL), APC, 농장 등에서 근로실습을 진행하는 프로그램</td>
+                    <td>(문의) 각 교육기관별 담당자(‘자세히보기’ 확인)<br>
+                        (신청) 귀농귀촌종합센터 홈페이지(www.returnfarm.com)</td>
+                    <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/tempBbs/tempBbs3.do">바로가기</a></td>
+                </tr>
+                <tr>
+                    <td>영농근로체험교육</td>
+                    <td>코로나19로 인한 실직·폐업 등으로 농업분야 취·창업 희망자를 지원하기 위한 현장실습 교육 제공 및 일자리 연계</td>
+                    <td>농업분야 취·창업 전직 희망자 및 영농관련 체험희망자<br>
+                        * 코로나19로 인해 실직·폐업, 휴직 중인 사람 등을 우선 선발)</td>
+                    <td></td>
+                    <td>5개 권역(서울, 경기·강원, 충청, 영남, 호남) 주요 거점도시<br>
+                        * (이론) 귀농귀촌종합센터(서울) 및 농관원 지원시설 등 활용<br>
+                        * (실습) 인력을 필요로 하는 인근 농가·농업법인 등</td>
+                    <td>농업·농촌 이론교육(5일) + 단기 영농근로(5일)<br>
+                        * (이론) 농업·농촌 및 귀농귀촌의 이해, 농업분야 취창업 정보, 분야별 농작업 및 영농기술 소개<br>
+                        * (실습) 지역 선도기업·농가 등 농작업 현장실습 및 단기 영농근로<br>
+                        - 단기 영농근로는 농촌 고용인력지원센터와 연계하여 제공하고 임금을 지급 받음</td>
+                    <td>(문의) 귀농귀촌종합센터(1899-9097)<br>
+                        (신청) 귀농귀촌종합센터 홈페이지(www.returnfarm.com)</td>
+                    <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/tempBbs/tempBbs4.do">바로가기</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="container-fluid">
-        <h3 class="display-4 font-italic">오프라인교육</h3>
-        <table class="table table-dark table-striped">
-            <thead>
-            <tr>
-                <th class="col-xs-1">과정종류</th>
-                <th class="col-xs-2">사이트링크</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>귀농귀촌아카데미</td>
-                <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/eduAkademy/rfAkademyMain.do">바로가기</a></td>
-            </tr>
-            <tr>
-                <td>맞춤형공모교육</td>
-                <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/eduAkademy/publicEducation.do">바로가기</a></td>
-            </tr>
-            <tr>
-                <td>청년귀농장기교육</td>
-                <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/eduAkademy/youngLongEducation.do">바로가기</a></td>
-            </tr>
-            <tr>
-                <td>귀촌인농산업창업교육</td>
-                <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/eduAkademy/foundingEducation.do">바로가기</a></td>
-            </tr>
-            <tr>
-                <td>지자체귀농귀촌교육</td>
-                <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/eduAkademy/localGovEducation.do">바로가기</a></td>
-            </tr>
-            <tr>
-                <td>현장실습교육장(WPL)</td>
-                <td><a href="http://www.returnfarm.com/cmn/sym/mnu/mpm/1020202/htmlMenuView.do">바로가기</a></td>
-            </tr>
-            <tr>
-                <td>농업농촌탐색교육</td>
-                <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/tempBbs/tempBbs1.do">바로가기</a></td>
-            </tr>
-            <tr>
-                <td>영농근로체험교육</td>
-                <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/tempBbs/tempBbs4.do">바로가기</a></td>
-            </tr>
-            </tbody>
-        </table>
+    <div id="app" class="container-fluid">
+        <div media="screen and (max-width: 767px)">
+            <h3 class="display-4 font-italic">온라인교육</h3>
+            <table class="table table-dark table-striped">
+                <thead>
+                <tr>
+                    <th class="col-xs-1">교육목적</th>
+                    <th class="col-xs-1">교육문의</th>
+                    <th class="col-xs-1">사이트링크</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>귀농귀촌 이해에서부터 기초 품목기술까지 다양한 온라인 콘텐츠 제공</td>
+                    <td>농업교육포털 콜센터 1811-8656</td>
+                    <td><a href="http://www.returnfarm.com/cmn/board/BBSMSTR_000000000111/bbsList.do">바로가기</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <h3 class="display-4 font-italic">오프라인교육</h3>
+            <table class="table table-dark table-striped">
+                <thead>
+                <tr>
+                    <th class="col-xs-1">과정종류</th>
+                    <th class="col-xs-1">교육목적</th>
+                    <th class="col-xs-1">사이트링크</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>귀농귀촌아카데미</td>
+                    <td>귀농귀촌 희망 도시민 및 은퇴예정자의 안정적인 귀농귀촌 정착 지원을 위해 교육프로그램 및 정보 제공</td>
+                    <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/eduAkademy/rfAkademyMain.do">바로가기</a></td>
+                </tr>
+                <tr>
+                    <td>맞춤형공모교육</td>
+                    <td>귀농귀촌 관심·준비자를 대상으로 교육 운영을 통해 농업 창업 및 안정적인 농촌 정착 지원</td>
+                    <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/eduAkademy/publicEducation.do">바로가기</a></td>
+                </tr>
+                <tr>
+                    <td>청년귀농장기교육</td>
+                    <td>영농 경험이 부족한 청년층의 안정적인 농업․농촌 정착지원을 위해 실습 중심의 장기 체류형 교육과정 운영을 통한 역량강화 지원</td>
+                    <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/eduAkademy/youngLongEducation.do">바로가기</a></td>
+                </tr>
+                <tr>
+                    <td>귀촌인농산업창업교육</td>
+                    <td>농산업 창업을 희망하는 귀촌인에 대한 창업 중심 실무교육지원으로 일자리 창출 및 지역경제 활성화에 기여</td>
+                    <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/eduAkademy/foundingEducation.do">바로가기</a></td>
+                </tr>
+                <tr>
+                    <td>지자체귀농귀촌교육</td>
+                    <td>지자체에서 진행하는 귀농귀촌교육</td>
+                    <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/eduAkademy/localGovEducation.do">바로가기</a></td>
+                </tr>
+                <tr>
+                    <td>현장실습교육장(WPL)</td>
+                    <td>‘현장실습교육(WPL : Work Place Learning)’이란 이론교육장과 실습장 등을 갖추고, 선도농업인이 보유한 전문기술과 핵심노하우를 후발농업인에게 전수하는 현장 실습형 교육을 말한다. 각 품목의 베테랑 농업인들과 전문가들이 현장교수가 되어 직접 실시하는 맞춤형 멘토 교육이라는 점에서 교육생의 수요와 만족도가 높다. 현장실습교육(WPL)장은 2009년 45개소를 시작으로 매년 확대되어 현재는 122개소의 교육장이 운영 중이다.</td>
+                    <td><a href="http://www.returnfarm.com/cmn/sym/mnu/mpm/1020202/htmlMenuView.do">바로가기</a></td>
+                </tr>
+                <tr>
+                    <td>농업농촌탐색교육<br>
+                        2시간과정(농업기술센터)</td>
+                    <td>코로나19로 인한 귀농귀촌 수요 증가에 대응, 접근성을 고려하여 전국 단위 조직(시‧군 농업기술센터)을 활용한 귀농귀촌 교육 제공</td>
+                    <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/tempBbs/tempBbs1.do">바로가기</a></td>
+                </tr>
+                <tr>
+                    <td>농업농촌탐색교육<br>
+                        4시간과정(도시농협)</td>
+                    <td>코로나19로 인한 귀농귀촌 수요 증가에 대응, 접근성을 고려하여 전국 단위 조직(도시농협)을 활용한 귀농귀촌 교육 제공</td>
+                    <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/tempBbs/tempBbs2.do">바로가기</a></td>
+                </tr>
+                <tr>
+                    <td>농업농촌탐색교육<br>
+                        4일과정(농업마이스터대학·서울시)</td>
+                    <td>코로나19로 인한 실직·폐업 등으로 농업분야 취·창업 희망자를 지원하기 위한 현장실습 교육 제공 및 일자리 연계</td>
+                    <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/tempBbs/tempBbs3.do">바로가기</a></td>
+                </tr>
+                <tr>
+                    <td>영농근로체험교육</td>
+                    <td>코로나19로 인한 실직·폐업 등으로 농업분야 취·창업 희망자를 지원하기 위한 현장실습 교육 제공 및 일자리 연계</td>
+                    <td><a href="http://www.returnfarm.com/cmn/returnFarm/module/tempBbs/tempBbs4.do">바로가기</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>
