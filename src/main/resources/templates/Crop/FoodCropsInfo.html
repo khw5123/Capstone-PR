@@ -191,5 +191,29 @@
             </table>
         </div>
     </div>
+    <div class='pull-right'>
+        <ul class="pagination">
+            <th:block th:if="${prev}">
+                <li class="paginate_button previous">
+                    <a th:href="@{/Crop/FoodCropsInfo(page=${startPage-1})}">Previous</a>
+                </li>
+            </th:block>
+            <th:block th:with="start=${startPage}, end=${endPage}">
+                <th:block th:each="num: ${#numbers.sequence(start, end)}">
+                    <li th:if=" ${currentPage} == ${num}" class='paginate_button active'>
+                        <a th:href="@{/Crop/FoodCropsInfo(page=${num})}" th:text="${num}"></a>
+                    </li>
+                    <li th:unless=" ${currentPage} == ${num}" class='paginate_button'>
+                        <a th:href="@{/Crop/FoodCropsInfo(page=${num})}" th:text="${num}"></a>
+                    </li>
+                </th:block>
+            </th:block>
+            <th:block th:if="${next}">
+                <li class="paginate_button next">
+                    <a th:href="@{/Crop/FoodCropsInfo(page=${endPage+1})}">Next</a>
+                </li>
+            </th:block>
+        </ul>
+    </div>
 </body>
 </html>
