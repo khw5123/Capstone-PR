@@ -29,7 +29,7 @@
             width: auto;
             padding: 16px;
             margin-top: -22px;
-            color: white;
+            color: black;
             font-weight: bold;
             font-size: 18px;
             transition: 0.6s ease;
@@ -45,23 +45,23 @@
 
         /* On hover, add a black background color with a little bit see-through */
         .prev:hover, .next:hover {
-            background-color: rgba(0,0,0,0.8);
+            background-color: black;
         }
 
         /* Caption text */
         .text {
+            background-color: white;
+            font-weight: bold;
             color: black;
             font-size: 15px;
             padding: 8px 12px;
-            position: absolute;
-            bottom: 8px;
             width: 100%;
             text-align: center;
         }
 
         /* Number text (1/3 etc) */
         .numbertext {
-            color: #f2f2f2;
+            color: black;
             font-size: 12px;
             padding: 8px 12px;
             position: absolute;
@@ -84,7 +84,8 @@
             background-color: #717171;
         }
 
-        /* Fading animation */
+
+        /* Fading animation
         .fade {
             -webkit-animation-name: fade;
             -webkit-animation-duration: 5s;
@@ -101,6 +102,7 @@
             from {opacity: .4}
             to {opacity: 1}
         }
+        */
 
         /* On smaller screens, decrease text size */
         @media only screen and (max-width: 300px) {
@@ -185,22 +187,34 @@
                 <div class="col-sm-6">
                     <div class="slideshow-container">
 
-                        <div class="mySlides fade">
+                        <div class="mySlides">
                             <div class="numbertext">1 / 3</div>
-                            <img src="/img/referenceSites/ci-signature.jpg" style="width:100%">
-                            <div class="text">농사로 관련 설명</div>
+                            <div>
+                                <a href="https://www.nongsaro.go.kr/"><img src="/img/referenceSites/ci-signature.jpg" style="width:100%; height:300px;"></a>
+                            </div>
+                            <div class="text">
+                                <p>농업기술, 농기계, 농자재, 농업안전과 건강, 농식품과 생활농업, 참여공간 5개의 기술유형으로 분류하여 500여만건의 농업기술 정보를 통합한 서비스이다.</p>
+                            </div>
                         </div>
 
-                        <div class="mySlides fade">
+                        <div class="mySlides">
                             <div class="numbertext">2 / 3</div>
-                            <img src="img/referenceSites/ci-signature.jpg" style="width:100%">
-                            <div class="text">농사로</div>
+                            <div>
+                                <a href="http://www.returnfarm.com/"><img src="/img/referenceSites/returnfarm.jpg" style="width:100%; height:300px;"></a>
+                            </div>
+                            <div class="text">
+                                <p>상담, 농설계, 컨설팅, 1:1 맞춤형 귀농 닥터 연계 등 귀농귀촌을 위한 종합상담과 농업농촌 현장 사례 중심의 귀농귀촌아카데미 교육을 실시하고 있습니다.</p>
+                            </div>
                         </div>
 
-                        <div class="mySlides fade">
+                        <div class="mySlides">
                             <div class="numbertext">3 / 3</div>
-                            <img src="img/referenceSites/ci-signature.jpg" style="width:100%">
-                            <div class="text">농사로</div>
+                            <div>
+                                <a href="http://soil.rda.go.kr/"><img src="/img/referenceSites/soil.jpg" style="width:100%; height:300px;"></a>
+                            </div>
+                            <div class="text">
+                                <p>토양특성에 맞는 작물을 재배할 수 있도록 토양정보를 제공하고, 알맞은 비료량을 추천해주는 누구나 쉽게 이용할 수 있는 인터넷 시스템이다.</p>
+                            </div>
                         </div>
 
                         <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -220,7 +234,6 @@
             </div>
         </div>
     </div>
-
     <div id="app" class="container">
         <div media="screen and (max-width: 767px)">
             <!-- 사이트 소개 -->
@@ -231,22 +244,34 @@
             <!-- 관련 사이트 소개 -->
             <div class="slideshow-container">
 
-                <div class="mySlides fade">
+                <div class="mySlides">
                     <div class="numbertext">1 / 3</div>
-                    <img src="/img/referenceSites/ci-signature.jpg" style="width:100%">
-                    <div class="text">농사로 관련 설명</div>
+                    <div>
+                        <a href="https://www.nongsaro.go.kr/"><img src="/img/referenceSites/ci-signature.jpg" style="width:100%; height:300px;"></a>
+                    </div>
+                    <div class="text">
+                        <p>농업기술, 농기계, 농자재, 농업안전과 건강, 농식품과 생활농업, 참여공간 5개의 기술유형으로 분류하여 500여만건의 농업기술 정보를 통합한 서비스이다.</p>
+                    </div>
                 </div>
 
-                <div class="mySlides fade">
+                <div class="mySlides">
                     <div class="numbertext">2 / 3</div>
-                    <img src="/img/referenceSites/ci-signature.jpg" style="width:100%">
-                    <div class="text">농사로</div>
+                    <div>
+                        <a href="http://www.returnfarm.com/"><img src="/img/referenceSites/returnfarm.jpg" style="width:100%"></a>
+                    </div>
+                    <div class="text">
+                        <p>상담, 농설계, 컨설팅, 1:1 맞춤형 귀농 닥터 연계 등 귀농귀촌을 위한 종합상담과 농업농촌 현장 사례 중심의 귀농귀촌아카데미 교육을 실시하고 있습니다.</p>
+                    </div>
                 </div>
 
-                <div class="mySlides fade">
+                <div class="mySlides">
                     <div class="numbertext">3 / 3</div>
-                    <img src="/img/referenceSites/ci-signature.jpg" style="width:100%">
-                    <div class="text">농사로</div>
+                    <div>
+                        <a href="http://soil.rda.go.kr/"><img src="/img/referenceSites/soil.jpg" style="width:100%; height:300px;"></a>
+                    </div>
+                    <div class="text">
+                        <p>토양특성에 맞는 작물을 재배할 수 있도록 토양정보를 제공하고, 알맞은 비료량을 추천해주는 누구나 쉽게 이용할 수 있는 인터넷 시스템이다.</p>
+                    </div>
                 </div>
 
                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -256,10 +281,11 @@
             <br>
 
             <div style="text-align:center">
-                <span class="dot" onclick="currentSlide(1)"></span>
-                <span class="dot" onclick="currentSlide(2)"></span>
-                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+                <span class="dot" onclick="currentSlide(5)"></span>
+                <span class="dot" onclick="currentSlide(6)"></span>
             </div>
+
             <!-- STEP 1, 2, 3 -->
 
         </div>
@@ -315,16 +341,33 @@
         var i;
         var slides = document.getElementsByClassName("mySlides");
         var dots = document.getElementsByClassName("dot");
-        if (n > slides.length) {slideIndex = 1}
-        if (n < 1) {slideIndex = slides.length}
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
+        if(screen.width > 767) { //web
+            if (n > 3) {
+                slideIndex = 1
+            }
+            if (n < 1) {
+                slideIndex = 3
+            }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+        }else{
+            if (n > slides.length) {slideIndex = 4}
+            if (n < 4) {slideIndex = 6}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";
+            dots[slideIndex-1].className += " active";
         }
-        for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-        }
-        slides[slideIndex-1].style.display = "block";
-        dots[slideIndex-1].className += " active";
     }
 </script>
 </html>
