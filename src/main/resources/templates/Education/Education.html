@@ -1,34 +1,71 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>영농 교육</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <title>영농 교육</title>
 </head>
 <body>
+    <!-- Navigation Bar -->
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="Education">영농교육(농사로)</a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">귀농 귀촌 길잡이</a>
             </div>
-            <div>
-                <ul class="nav navbar-nav">
-                    <li><a href="Education">영농교육(농사로)</a></li>
-                    <li><a href="Education2">영농교육(귀농귀촌종합센터)</a></li>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP1 재배 작물 선택<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../Crop/FoodCropsInfo">품종 정보</a></li>
+                            <li><a href="../AreaFarmInfo/AreaFarmInfo">지역별 작목 정보</a></li>
+                            <li><a href="../RealTimePrice">실시간 가격 정보</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP2 영농 기술 습득<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../FarmingTechnique">영농 기술 정보</a></li>
+                            <li><a href="../Education/Education">영농 교육</a></li>
+                        </ul>
+                    </li><li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP3 영농 계획 수립<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../plan">농작업 관리 일정</a></li>
+                        <li><a href="../Statistics/PurchaseStatisticsMonthly">농식품 구입 통계</a></li>
+                    </ul>
+                </li>
                 </ul>
+            </div>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="Education">영농교육(농사로)</a>
+                </div>
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="Education">영농교육(농사로)</a></li>
+                        <li><a href="Education2">영농교육(귀농귀촌종합센터)</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
+
+    <!-- content -->
     <div class="container-fluid">
         <h3 class="display-4 font-italic">온라인교육</h3>
         <table class="table table-dark table-striped">
             <thead>
             <tr>
                 <th class="col-xs-1">과정종류</th>
-                <th class="col-xs-2">사이트링크</th>
+                <th class="col-xs-1">사이트링크</th>
             </tr>
             </thead>
             <tbody>
@@ -53,7 +90,7 @@
             <thead>
             <tr>
                 <th class="col-xs-1">과정종류</th>
-                <th class="col-xs-2">사이트링크</th>
+                <th class="col-xs-1">사이트링크</th>
             </tr>
             </thead>
             <tbody>

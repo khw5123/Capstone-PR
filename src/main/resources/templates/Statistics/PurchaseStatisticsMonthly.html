@@ -1,31 +1,84 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>농식품 구입 통계</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <title>농식품구입통계</title>
+    <style>
+        @media (max-width: 767px) {
+            #web {
+                display: none;
+            }
+            .img-fluid {
+                width: 100%;
+            }
+        }
+        @media (min-width: 767px) {
+            #app {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Navigation Bar -->
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="PurchaseStatisticsMonthly">월간추이</a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">귀농 귀촌 길잡이</a>
             </div>
-            <div>
-                <ul class="nav navbar-nav">
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">월간추이<b class="caret"></b></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP1 재배 작물 선택<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="PurchaseStatisticsYearly">연간추이</a></li>
+                            <li><a href="../Crop/FoodCropsInfo">품종 정보</a></li>
+                            <li><a href="../AreaFarmInfo/AreaFarmInfo">지역별 작목 정보</a></li>
+                            <li><a href="../RealTimePrice">실시간 가격 정보</a></li>
                         </ul>
                     </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP2 영농 기술 습득<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../FarmingTechnique">영농 기술 정보</a></li>
+                            <li><a href="../Education/Education">영농 교육</a></li>
+                        </ul>
+                    </li><li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP3 영농 계획 수립<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../plan">농작업 관리 일정</a></li>
+                        <li><a href="../Statistics/PurchaseStatisticsMonthly">농식품 구입 통계</a></li>
+                    </ul>
+                </li>
                 </ul>
+            </div>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="PurchaseStatisticsMonthly">월간추이</a>
+                </div>
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">월간추이<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="PurchaseStatisticsYearly">연간추이</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
+
+    <!-- content -->
     <form id="cropForm" method="post">
         <div class="input-append">
             <input class="span2" id="cropButton" name="cropName" type="hidden">
@@ -90,11 +143,24 @@
     </form>
     <br>
     <div class="container-fluid">
-        <img id="purchaseMonthly" src="" alt=""><br>
-        <img id="purchaseAmount" src="" alt=""><br>
-        <img id="purchaseFrequency" src="" alt=""><br>
-        <img id="purchaseAverage" src="" alt=""><br>
-        <img id="purchasePercentage" src="" alt=""><br>
+        <div id="web">
+            <div media="screen and (min-width: 767px)">
+                <img id="purchaseMonthly" src=""><br>
+                <img id="purchaseAmount" src=""><br>
+                <img id="purchaseFrequency" src=""><br>
+                <img id="purchaseAverage" src=""><br>
+                <img id="purchasePercentage" src=""><br>
+            </div>
+        </div>
+        <div id="app">
+            <div media="screen and (max-width: 767px)">
+                <img id="purchaseMonthly2" src="" class="img-fluid"><br>
+                <img id="purchaseAmount2" src="" class="img-fluid"><br>
+                <img id="purchaseFrequency2" src=""  class="img-fluid"><br>
+                <img id="purchaseAverage2" src="" class="img-fluid"><br>
+                <img id="purchasePercentage2" src="" class="img-fluid"><br>
+            </div>
+        </div>
     </div>
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -106,16 +172,54 @@
         } else if(cropName == '감귤') {
             crop = 'citrus';
         }
-        var img = document.getElementById('purchaseMonthly');
-        img.src = '/img/purchaseMonthly/' + crop + '.PNG';
-        img = document.getElementById('purchaseAmount');
-        img.src = '/img/purchaseMonthly/purchaseAmount/' + crop + '.PNG';
-        img = document.getElementById('purchaseFrequency');
-        img.src = '/img/purchaseMonthly/purchaseFrequency/' + crop + '.PNG';
-        img = document.getElementById('purchaseAverage');
-        img.src = '/img/purchaseMonthly/purchaseAverage/' + crop + '.PNG';
-        img = document.getElementById('purchasePercentage');
-        img.src = '/img/purchaseMonthly/purchasePercentage/' + crop + '.PNG';
+        if(window.outerWidth > 767) {
+            var img = document.getElementById('purchaseMonthly');
+            img.src = '/img/purchaseMonthly/' + crop + '.PNG';
+            img = document.getElementById('purchaseAmount');
+            img.src = '/img/purchaseMonthly/purchaseAmount/' + crop + '.PNG';
+            img = document.getElementById('purchaseFrequency');
+            img.src = '/img/purchaseMonthly/purchaseFrequency/' + crop + '.PNG';
+            img = document.getElementById('purchaseAverage');
+            img.src = '/img/purchaseMonthly/purchaseAverage/' + crop + '.PNG';
+            img = document.getElementById('purchasePercentage');
+            img.src = '/img/purchaseMonthly/purchasePercentage/' + crop + '.PNG';
+        } else {
+            var img = document.getElementById('purchaseMonthly2');
+            img.src = '/img/purchaseMonthly/' + crop + '.PNG';
+            img = document.getElementById('purchaseAmount2');
+            img.src = '/img/purchaseMonthly/purchaseAmount/' + crop + '.PNG';
+            img = document.getElementById('purchaseFrequency2');
+            img.src = '/img/purchaseMonthly/purchaseFrequency/' + crop + '.PNG';
+            img = document.getElementById('purchaseAverage2');
+            img.src = '/img/purchaseMonthly/purchaseAverage/' + crop + '.PNG';
+            img = document.getElementById('purchasePercentage2');
+            img.src = '/img/purchaseMonthly/purchasePercentage/' + crop + '.PNG';
+        }
+        $(window).resize(function () {
+            if(window.outerWidth > 767) {
+                var img = document.getElementById('purchaseMonthly');
+                img.src = '/img/purchaseMonthly/' + crop + '.PNG';
+                img = document.getElementById('purchaseAmount');
+                img.src = '/img/purchaseMonthly/purchaseAmount/' + crop + '.PNG';
+                img = document.getElementById('purchaseFrequency');
+                img.src = '/img/purchaseMonthly/purchaseFrequency/' + crop + '.PNG';
+                img = document.getElementById('purchaseAverage');
+                img.src = '/img/purchaseMonthly/purchaseAverage/' + crop + '.PNG';
+                img = document.getElementById('purchasePercentage');
+                img.src = '/img/purchaseMonthly/purchasePercentage/' + crop + '.PNG';
+            } else {
+                var img = document.getElementById('purchaseMonthly2');
+                img.src = '/img/purchaseMonthly/' + crop + '.PNG';
+                img = document.getElementById('purchaseAmount2');
+                img.src = '/img/purchaseMonthly/purchaseAmount/' + crop + '.PNG';
+                img = document.getElementById('purchaseFrequency2');
+                img.src = '/img/purchaseMonthly/purchaseFrequency/' + crop + '.PNG';
+                img = document.getElementById('purchaseAverage2');
+                img.src = '/img/purchaseMonthly/purchaseAverage/' + crop + '.PNG';
+                img = document.getElementById('purchasePercentage2');
+                img.src = '/img/purchaseMonthly/purchasePercentage/' + crop + '.PNG';
+            }
+        });
     </script>
 </body>
 </html>
