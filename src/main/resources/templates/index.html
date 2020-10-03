@@ -8,6 +8,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <link href="/css/index.css" rel="stylesheet" type="text/css"/>
+
     <style>
         /* reference site */
         /* Slideshow container */
@@ -113,10 +116,11 @@
 
 
         body {
-            background-image: url('img/background.png');
+            /*background-image: url('img/background.png');*/
             background-repeat: no-repeat;
             min-height: 100%;
             background-size: cover;
+            background-position-x: center;
         }
         @media (max-width: 767px) {
             #web {
@@ -180,7 +184,7 @@
                 <!-- 사이트 소개 -->
                 <div class="col-sm-6">
                     <div class="card bg-primary">
-                        <br><br><br><br><br><br><br><br><br><br><br><br><p class="text-center">사이트 소개</p><br><br><br><br><br><br><br><br><br><br><br><br>
+                        <br><br><br><br><br><br><br><br><p class="text-center">사이트 소개</p><br><br><br><br><br><br>
                     </div>
                 </div>
                 <!-- 관련 사이트 소개 -->
@@ -234,6 +238,7 @@
             </div>
         </div>
     </div>
+
     <div id="app" class="container">
         <div media="screen and (max-width: 767px)">
             <!-- 사이트 소개 -->
@@ -291,6 +296,36 @@
         </div>
     </div>
     <br>
+
+    <div class="background"></div>
+
+    <div class="outerBox">
+        <div class="middleBox" style="background-image: url('img/image1.jpg'); background-position: 20% 30%;">
+            <div class="titleBox">
+                STEP1<br>
+                재배 작물 선택
+            </div>
+            <div class="innerBox" onclick="location.href='Crop/FoodCropsInfo'">품종 정보</div>
+            <div class="innerBox" onclick="location.href='AreaFarmInfoList'">지역별 작목 정보</div>
+            <div class="innerBox" onclick="location.href='RealTimePrice'">실시간 가격 정보</div>
+        </div>
+        <div class="middleBox" style="background-image: url('img/image2.jpg'); background-position: 40% 30%;">
+            <div class="titleBox">
+                STEP2<br>
+                영농 기술 습득
+            </div>
+            <div class="innerBox" onclick="location.href='FarmingTechnique'">영농 기술 정보</div>
+            <div class="innerBox" onclick="location.href='Education/Education'">영농 교육</div>
+        </div>
+        <div class="middleBox" style="background-image: url('img/image3.jpg'); background-position: 60% 30%;">
+            <div class="titleBox">
+                STEP3<br>
+                영농 계획 수립
+            </div>
+            <div class="innerBox" onclick="location.href='plan'">농작업 관리 일정</div>
+            <div class="innerBox" onclick="location.href='Statistics/PurchaseStatisticsMonthly'">농식품 구입 통계</div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="jumbotron text-center mt-5 mb-0">
