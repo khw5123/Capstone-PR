@@ -1,0 +1,141 @@
+@media (min-width: 768px) {
+
+    .background {
+        position: absolute;
+        top: 0px;
+        left: 0;
+        right: 0;
+        height: 600px;
+        z-index: -1;
+        background-image: url("/img/background.jpg");
+        background-position-x: 100%;
+    }
+
+    .outerBox {
+        margin-top: 200px;
+        width: 90%;
+        margin-bottom: 150px;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .middleBox {
+        width: 27%;
+        padding-bottom: 10px;
+        text-align: center;
+        border-radius: 20px;
+        font-weight: bold;
+        background-color: #0005;
+        background-blend-mode: multiply;
+        background-size: cover;
+    }
+
+    .titleBox {
+        margin-top: 40px;
+        margin-bottom: 50px;
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        line-height: 30px;
+        word-break: keep-all;
+    }
+
+    .innerBox {
+        width: 70%;
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+        padding: 10px;
+        color: black;
+        background-color: white;
+        font-size: 17px;
+        font-weight: bold;
+        border-radius: 10px;
+        word-break: keep-all;
+        cursor: pointer;
+        transition: box-shadow 0.6s, color 0.4s;
+    }
+
+    .innerBox:hover {
+        color: white;
+        /*background-color: black;*/
+        box-shadow: inset 0 0 0 50px #4dc113;
+    }
+}
+
+@media (max-width: 767px) {
+
+    .background {
+        position: absolute;
+        top: 0px;
+        left: 0;
+        right: 0;
+        height: 950px;
+        z-index: -1;
+        background-image: url("/img/background.jpg");
+        background-position: 100% 40%;
+    }
+
+    .outerBox {
+        margin-top: 100px;
+        width: 80%;
+        margin-bottom: 150px;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .middleBox {
+        width: 100%;
+        margin-top: 50px;
+        padding-bottom: 10px;
+        text-align: center;
+        border-radius: 10px;
+        font-weight: bold;
+        background-color: #0005;
+        background-blend-mode: multiply;
+        background-size: cover;
+    }
+
+    .titleBox {
+        margin-top: 40px;
+        margin-bottom: 50px;
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        line-height: 30px;
+        word-break: keep-all;
+    }
+
+    .innerBox {
+        width: 70%;
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+        padding: 10px;
+        color: black;
+        background-color: white;
+        font-size: 17px;
+        font-weight: bold;
+        border-radius: 10px;
+        word-break: keep-all;
+        cursor: pointer;
+        transition: box-shadow 0.6s, color 0.4s;
+    }
+
+    .innerBox:hover {
+        color: white;
+        /*background-color: black;*/
+        box-shadow: inset 0 0 0 50px #4dc113;
+    }
+}
