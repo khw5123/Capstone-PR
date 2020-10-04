@@ -262,7 +262,7 @@
                 <div class="mySlides">
                     <div class="numbertext">2 / 3</div>
                     <div>
-                        <a href="http://www.returnfarm.com/"><img src="/img/referenceSites/returnfarm.jpg" style="width:100%"></a>
+                        <a href="http://www.returnfarm.com/"><img src="/img/referenceSites/returnfarm.jpg" style="width:100%; height:300px;"></a>
                     </div>
                     <div class="text">
                         <p>상담, 농설계, 컨설팅, 1:1 맞춤형 귀농 닥터 연계 등 귀농귀촌을 위한 종합상담과 농업농촌 현장 사례 중심의 귀농귀촌아카데미 교육을 실시하고 있습니다.</p>
@@ -364,6 +364,10 @@
     var slideIndex = 1;
     showSlides(slideIndex);
 
+    $(window).resize(function(){
+        showSlides(slideIndex);
+    })
+
     function plusSlides(n) {
         showSlides(slideIndex += n);
     }
@@ -376,7 +380,7 @@
         var i;
         var slides = document.getElementsByClassName("mySlides");
         var dots = document.getElementsByClassName("dot");
-        if(screen.width > 767) { //web
+        if(window.innerWidth > 767) { //web
             if (n > 3) {
                 slideIndex = 1
             }
