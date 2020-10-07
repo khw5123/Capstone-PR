@@ -8,20 +8,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <!--
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-          crossorigin="anonymous">
-    <script
-            src="https://code.jquery.com/jquery-3.5.1.slim.js"
-            integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM="
-            crossorigin="anonymous">
-    </script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    -->
     <title>지역별 작목정보</title>
+    <style>
+        .my {
+            height: 30px;
+            border-color: #41a6ff;
+            border-radius: 5px;
+            border-width: 1.5px;
+            background: #ffffff;
+            margin: 5px;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-inverse">
@@ -61,14 +58,9 @@
         </div>
     </div>
 </nav>
-<!--
-    <div class="hAddr">
-        <span class="title">지도중심기준 행정동 주소정보</span>
-        <span id="currentAddr"></span>
-    </div>
--->
+
 <form action="/AreaFarmInfo" accept-charset="utf-8" name = "person_info" method = "get">
-    <select id="sidoCdResearch" name="province" onchange="itemChange()" title="시도 선택">
+    <select class = "my" id="sidoCdResearch" name="province" onchange="itemChange()" title="시도 선택">
         <option value="시도선택" selected="selected">시도선택</option>
         <option value="강원도">강원도</option>
         <option value="경기도">경기도</option>
@@ -89,13 +81,13 @@
         <option value="충청북도">충청북도</option>
     </select>
 
-    <select id="sigunCdResearch" name="city" title="시군구 선택">
+    <select class="my" id="sigunCdResearch" name="city" title="시군구 선택">
         <option value="" selected="selected">시군구선택</option>
     </select>
-    <input type = "submit" value = "검색"/>
+    <input class="my" type = "submit" value = "검색"/>
 </form>
 
-<button id = "find-me">현재 위치</button><br/>
+<button class="my" id = "find-me">현재 위치</button><br/>
 <p id = "status"></p>
 
 <div>

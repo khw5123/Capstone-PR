@@ -607,6 +607,15 @@
             background: #f5f5f5;
             font-weight: 600
         }
+
+         .my {
+             height: 30px;
+             border-color: #41a6ff;
+             border-radius: 5px;
+             border-width: 1.5px;
+             background: #ffffff;
+             margin: 5px;
+         }
     </style>
     <title>농작업 일정</title>
 </head>
@@ -649,7 +658,7 @@
     </div>
 </nav>
 
-<select id="listCategoryCode" onchange="itemChange()">
+<select class="my" id="listCategoryCode" onchange="itemChange()">
     <option value="0">작목을 선택하세요.</option>
 </select>
 
