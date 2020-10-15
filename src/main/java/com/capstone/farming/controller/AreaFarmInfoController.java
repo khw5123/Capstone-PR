@@ -18,7 +18,7 @@ public class AreaFarmInfoController {
 
     @GetMapping("/AreaFarmInfo")
     public String getAreaFarmInfo(String province,String city, Model model){
-        //로그 추가하는 법 알기
+
         model.addAttribute("province", province);
         model.addAttribute("city", city);
 
