@@ -2,23 +2,69 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
           crossorigin="anonymous">
     <title>지역별 작목정보</title>
+    <style>
+        .my {
+            height: 30px;
+            border-color: #41a6ff;
+            border-radius: 5px;
+            border-width: 1.5px;
+            background: #ffffff;
+            margin: 5px;
+        }
+    </style>
 </head>
 <body>
-<!--
-    <div class="hAddr">
-        <span class="title">지도중심기준 행정동 주소정보</span>
-        <span id="currentAddr"></span>
-    </div>
--->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">귀농 귀촌 길잡이</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP1 재배 작물 선택<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="Crop/FoodCropsInfo">품종 정보</a></li>
+                            <li><a href="AreaFarmInfoList">지역별 작목 정보</a></li>
+                            <li><a href="RealTimePrice">실시간 가격 정보</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP2 영농 기술 습득<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="FarmingTechnique">영농 기술 정보</a></li>
+                            <li><a href="Education/Education">영농 교육</a></li>
+                        </ul>
+                    </li><li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP3 영농 계획 수립<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="plan">농작업 관리 일정</a></li>
+                        <li><a href="Statistics/PurchaseStatisticsMonthly">농식품 구입 통계</a></li>
+                    </ul>
+                </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <form action="/AreaFarmInfo" accept-charset="utf-8" name = "person_info" method = "get">
-        <select id="sidoCdResearch" name="province" onchange="itemChange()" title="시도 선택">
+        <select class="my" id="sidoCdResearch" name="province" onchange="itemChange()" title="시도 선택">
             <option value="시도선택" selected="selected">시도선택</option>
             <option value="강원도">강원도</option>
             <option value="경기도">경기도</option>
@@ -39,13 +85,13 @@
             <option value="충청북도">충청북도</option>
         </select>
 
-        <select id="sigunCdResearch" name="city" title="시군구 선택">
+        <select class="my" id="sigunCdResearch" name="city" title="시군구 선택">
             <option value="" selected="selected">시군구선택</option>
         </select>
-        <input type = "submit" value = "검색"/>
+        <input class="my" type = "submit" value = "검색"/>
     </form>
 
-    <button id = "find-me">현재 위치</button><br/>
+    <button class="my" id = "find-me">현재 위치</button><br/>
     <p id = "status"></p>
 
     <div id="mainHide">
