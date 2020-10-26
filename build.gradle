@@ -22,6 +22,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.11.1' // xml to json
+    compile group: 'org.json', name: 'json', version: '20160212' // xml to json
 
     compile('org.apache.poi:poi-ooxml:3.16') // .xlsx
     compile('org.apache.poi:poi:3.16') // .xls
@@ -29,9 +31,15 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.0' 
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.0' 
+    testCompileOnly 'junit:junit:4.12'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.1.0'
+    
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor" // Generating Your Own Metadata by Using the Annotation Processor
+
 }
 
 test {

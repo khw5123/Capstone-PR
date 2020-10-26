@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!--    <script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <title>Title</title>
+
+    <link href="/css/Loading.css" rel="stylesheet" type="text/css"/>
+
+    <style>
+
+        [v-cloak] {
+            display: none;
+        }
+
+        .my {
+            height: 30px;
+            border-color: #41a6ff;
+            border-radius: 5px;
+            border-width: 1.5px;
+            background: #ffffff;
+            margin: 5px;
+        }
+
+        @media (max-width: 767px) {
+            .col-xs-hidden {
+                display: none !important;
+            }
+        }
+
+    </style>
+
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">귀농 귀촌 길잡이</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP1 재배 작물 선택<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="Crop/FoodCropsInfo">품종 정보</a></li>
+                        <li><a href="AreaFarmInfoList">지역별 작목 정보</a></li>
+                        <li><a href="RealTimePrice">실시간 가격 정보</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP2 영농 기술 습득<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="FarmingTechnique">영농 기술 정보</a></li>
+                        <li><a href="Education/Education">영농 교육</a></li>
+                    </ul>
+                </li><li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP3 영농 계획 수립<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="plan">농작업 관리 일정</a></li>
+                    <li><a href="Statistics/PurchaseStatisticsMonthly">농식품 구입 통계</a></li>
+                </ul>
+            </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<h1>영농 기술 정보</h1>
+
+<form id="app-form" v-cloak accept-charset="utf-8">
+
+    <select class="col-sm-2 col-xs-11 my" id="mainCategorySelect" onchange="appForm.middleCategoryListRequest()" title="대분류 선택" ref="mainCategorySelect" v-bind:disabled="isLoading">
+        <option value="" selected="selected">대분류</option>
+        <option v-for="mainCategory in mainCategoryList" v-bind:value="mainCategory.mainCategoryCode">
+            {{ mainCategory.mainCategoryNm }}
+        </option>
+    </select>
+
+    <select class="col-sm-2 col-xs-11 my" id="middleCategorySelect" onchange="appForm.subCategoryListRequest()" title="중분류 선택" ref="middleCategorySelect" v-bind:disabled="isLoading">
+        <option value="" selected="selected">중분류</option>
+        <option v-for="middleCategory in middleCategoryList" v-bind:value="middleCategory.middleCategoryCode">
+            {{ middleCategory.middleCategoryNm }}
+        </option>
+    </select>
+
+    <select class="col-sm-2 col-xs-11 my" id="subCategorySelect" onchange="appForm.techListRequest()" title="소분류 선택" ref="subCategorySelect" v-bind:disabled="isLoading">
+        <option value="" selected="selected">소분류</option>
+        <option v-for="subCategory in subCategoryList" v-bind:value="subCategory.subCategoryCode">
+            {{ subCategory.subCategoryNm }}
+        </option>
+    </select>
+
+    <select class="col-sm-4 col-xs-11 my" id="techSelect" onchange="appTable.request()" title="영농 기술 선택" ref="techSelect" v-bind:disabled="isLoading">
+        <option value="" selected="selected">영농 기술</option>
+        <option v-for="subTech in subTechList" v-bind:value="subTech.subTechCode">
+            <span>{{ subTech.mainTechNm }} {{ subTech.str }} {{ subTech.subTechNm }}</span>
+        </option>
+    </select>
+
+</form>
+
+<div id="app-table" v-cloak>
+
+    <table class="table table-hover" v-if="showTechInfoList">
+        <thead>
+        <tr>
+            <th class="col-sm-6 col-xs-5">제목</th>
+            <th class="col-sm-3 col-xs-4">등록일</th>
+            <th class="col-sm-3 col-xs-3">첨부</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="item in itemList">
+            <td class="col-sm-6 col-xs-5">{{ item.techNm }}</td>
+            <td class="col-sm-3 col-xs-4">{{ item.regDt }}</td>
+            <td class="col-sm-3 col-xs-3"><a v-bind:href="item.fileDownUrl">파일다운</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-hover" v-if="showVarietyList">
+        <thead>
+        <tr>
+            <th class="col-sm-2 col-xs-3">사진</th>
+            <th class="col-sm-2 col-xs-3">작물명</th>
+            <th class="col-sm-2 col-xs-3">품종명</th>
+            <th class="col-sm-4 col-xs-hidden">주요특성</th>
+            <th class="col-sm-2 col-xs-3">첨부</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="item in itemList">
+            <td class="col-sm-2 col-xs-3">
+                <img class="col-sm-12 col-xs-12" style="max-width: 150px;"v-bind:src="item.imgFileLink">
+            </td>
+            <td class="col-sm-2 col-xs-3">{{ item.cropNm }}</td>
+            <td class="col-sm-2 col-xs-3">{{ item.varietyNm }}</td>
+            <td class="col-sm-4 col-xs-hidden" v-html="item.mainChartrInfo"></td>
+            <td class="col-sm-2 col-xs-3"><a v-bind:href="item.atchFileLink">파일다운</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-hover" v-if="showVideoList">
+        <thead>
+        <tr>
+            <th class="col-sm-6 col-xs-4">동영상</th>
+            <th class="col-sm-3 col-xs-4">제목</th>
+            <th class="col-sm-3 col-xs-4">출처</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="item in itemList">
+            <td class="col-sm-6 col-xs-4">
+                <a v-bind:href="item.videoLink" target="_blank">
+                    <img class="col-sm-5 col-xs-12" style="max-width: 200px;" v-bind:src="item.videoImg">
+                </a>
+            </td>
+            <td class="col-sm-3 col-xs-4">{{ item.videoTitle }}</td>
+            <td class="col-sm-3 col-xs-4">{{ item.videoOriginInstt }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="col-sm-12 col-xs-12"><br>< 출처 : 농촌진흥청 ><br><br><br></div>
+</div>
+
+
+<script>
+
+    var appForm = new Vue({
+        el: '#app-form',
+        data: {
+            mainCategoryList: null,
+            middleCategoryList: null,
+            subCategoryList: null,
+            mainTechList: null,
+            subTechList: null,
+            isLoading: false,
+        },
+        methods: {
+            mainCategoryListRequest() {
+                this.isLoading = true;
+                axios.get('/FarmingTechnique/MainCategoryList', {
+                    params: {}
+                }).then(response => {
+                    this.mainCategoryList = response.data;
+                    this.isLoading = false;
+                });
+            },
+
+            middleCategoryListRequest() {
+                this.isLoading = true;
+                this.middleCategoryList = null;
+                this.subCategoryList = null;
+                this.mainTechList = null;
+                this.subTechList = null;
+                axios.get('/FarmingTechnique/MiddleCategoryList', {
+                    params: {
+                        mainCategoryCode: this.$refs.mainCategorySelect.value,
+                    }
+                }).then(response => {
+                    this.middleCategoryList = response.data;
+                    this.isLoading = false;
+                });
+            },
+
+            subCategoryListRequest() {
+                this.isLoading = true;
+                this.subCategoryList = null;
+                this.mainTechList = null;
+                this.subTechList = null;
+                axios.get('/FarmingTechnique/SubCategoryList', {
+                    params: {
+                        middleCategoryCode: this.$refs.middleCategorySelect.value,
+                    }
+                }).then(response => {
+                    this.subCategoryList = response.data;
+                    this.isLoading = false;
+                });
+            },
+
+            techListRequest() {
+                this.isLoading = true;
+                this.mainTechList = null;
+                this.subTechList = null;
+
+                Promise.all([
+                    axios.get('/FarmingTechnique/MainTechList', {
+                        params: {
+                            subCategoryCode: this.$refs.subCategorySelect.value,
+                        }
+                    }),
+                    axios.get('/FarmingTechnique/SubTechList', {
+                        params: {
+                            subCategoryCode: this.$refs.subCategorySelect.value,
+                            mainTechCode: '',
+                        }
+                    }),
+                    axios.get('/FarmingTechnique/SubTechList', {
+                        params: {
+                            subCategoryCode: this.$refs.subCategorySelect.value,
+                            mainTechCode: 'GS',
+                        }
+                    }),
+                ]).then(values => {
+                    if(values[0].data.length > 1) {
+                        this.mainTechList = values[0].data;
+                    } else {
+                        this.mainTechList = [];
+                        this.mainTechList.push(values[0].data);
+                    }
+
+                    if(values[1].data != null) {
+                        this.subTechList = values[1].data;
+                    } else if(values[2].data != null) {
+                        this.subTechList = [];
+                        this.subTechList.push(values[2].data);
+                    }
+
+                    var i = 0;
+                    var j = 0;
+                    if(this.subTechList != null) {
+                        for (j = 0; j < this.subTechList.length && i < this.mainTechList.length; j++) {
+                            if (this.subTechList[j].subTechCode.indexOf(this.mainTechList[i].mainTechCode) >= 0) {
+                                this.subTechList[j].mainTechCode = this.mainTechList[i].mainTechCode;
+                                this.subTechList[j].mainTechNm = this.mainTechList[i].mainTechNm;
+                                this.subTechList[j].str = '>';
+                            } else {
+                                i++;
+                                if (this.subTechList[j].subTechNm == '품종.대목') {
+                                    this.subTechList[j].subTechCode = 'GS01';
+                                    this.subTechList[j].mainTechCode = 'GS';
+                                    this.subTechList[j].mainTechNm = '종자(축)';
+                                    this.subTechList[j].str = '>';
+                                    continue;
+                                }
+                                j--;
+                                continue;
+                            }
+                        }
+                    }
+
+                    if(this.mainTechList != null && this.mainTechList[this.mainTechList.length - 1].mainTechCode == 'movie') {
+                        this.subTechList.push({
+                            subTechCode: this.mainTechList[this.mainTechList.length - 1].mainTechCode,
+                            mainTechCode: this.mainTechList[this.mainTechList.length - 1].mainTechCode,
+                            mainTechNm: this.mainTechList[this.mainTechList.length - 1].mainTechNm,
+                            str: '',
+                        });
+                    }
+
+                    this.isLoading = false;
+                });
+            },
+        }
+    });
+
+    var appTable = new Vue({
+        el: '#app-table',
+        data: {
+            itemList: null,
+            showTechInfoList: false,
+            showVarietyList: false,
+            showVideoList: false,
+        },
+        methods: {
+            request() {
+                appForm.isLoading = true;
+
+                this.itemList = null;
+                if(appForm.$refs.techSelect.value == 'GS01') {
+                    axios.get('/FarmingTechnique/VarietyList', {
+                        params: {
+                            subCategoryCode: appForm.$refs.subCategorySelect.value,
+                        }
+                    }).then(response => {
+                        this.showTechInfoList = false;
+                        this.showVideoList = false;
+                        this.itemList = response.data;
+                        this.showVarietyList = true;
+
+                        appForm.isLoading = false;
+                    });
+
+                } else if(appForm.$refs.techSelect.value == 'movie') {
+                    axios.get('/FarmingTechnique/VideoList', {
+                        params: {
+                            subCategoryCode: appForm.$refs.subCategorySelect.value,
+                        }
+                    }).then(response => {
+                        this.showTechInfoList = false;
+                        this.showVarietyList = false;
+                        this.itemList = response.data;
+                        this.showVideoList = true;
+
+                        appForm.isLoading = false;
+                    });
+
+                } else {
+                    axios.get('/FarmingTechnique/TechInfoList', {
+                        params: {
+                            subCategoryCode: appForm.$refs.subCategorySelect.value,
+                            subTechCode: appForm.$refs.techSelect.value,
+                        }
+                    }).then(response => {
+                        this.showVideoList = false;
+                        this.showVarietyList = false;
+                        this.itemList = response.data;
+                        this.showTechInfoList = true;
+
+                        appForm.isLoading = false;
+                    });
+                }
+            },
+        }
+    });
+
+    appForm.mainCategoryListRequest();
+
+</script>
+</body>
+</html>
