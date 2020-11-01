@@ -1,0 +1,16 @@
+{
+    "name": "귀농귀촌 길잡이",
+    "short_name": "귀농귀촌 길잡이",
+    "description": "귀농귀촌 길잡이",
+    "icons": [
+        {
+            "src": "icons/returnFarmIcon.jpg",
+            "sizes": "32x32",
+            "type": "image/jpg"
+        }
+    ],
+    "start_url": "../templates/index.html",
+    "display": "fullscreen",
+    "theme_color": "#00ED7E",
+    "background_color": "#00ED7E"
+}
