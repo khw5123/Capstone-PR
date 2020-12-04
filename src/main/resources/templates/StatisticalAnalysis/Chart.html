@@ -21,25 +21,40 @@
 <div id="chart-container" v-cloak>
 
 <!--    <form id="app-form" v-cloak v-on:submit.prevent="request" name = "price_info" accept-charset="utf-8">-->
-    <form v-cloak name = "price_info" accept-charset="utf-8">
+    <form class="col-xs-12" v-cloak name = "price_info" accept-charset="utf-8">
 
-        <select class="col-sm-2 col-xs-11 my" id="city-filter" name="city" title="시군구 선택" ref="city">
-            <option value="" selected="selected">전국</option>
-            <option value="성주군">성주군</option>
-            <option value="정읍시">정읍시</option>
-        </select>
+        <div class="col-sm-2 col-xs-11">
+            <div class="col-xs-12 my">시군구</div>
+            <select class="col-xs-12 my" id="city-filter" name="city" title="시군구 선택" ref="city">
+                <option value="" selected="selected">전국</option>
+                <option value="성주군">성주군</option>
+                <option value="정읍시">정읍시</option>
+            </select>
+        </div>
 
-        <select class="col-sm-2 col-xs-11 my" id="cost-filter" name="cost" title="연간 투자비 + 운영비 (만원)" ref="cost">
-            <option value='["",""]' selected="selected">전체</option>
-            <option value='["",""]'>1</option>
-            <option value='["",""]'>2</option>
-        </select>
+        <div class="col-sm-2 col-xs-11">
+            <div class="col-xs-12 my">연간 운영비</div>
+            <select class="col-xs-12 my" id="annual_operating_cost-filter" name="annual_operating_cost" title="연간 운영비" ref="annual_operating_cost">
+                <option value='[0,0]' selected="selected">전체</option>
+                <option value='[0,50000000]'>5천만원 미만</option>
+                <option value='[50000000,100000000]'>5천만원 ~ 1억원</option>
+                <option value='[100000000,0]'>1억원 이상</option>
+            </select>
+        </div>
+
+
+<!--        <div class="col-sm-2 col-xs-11">-->
+<!--            <div class="col-xs-12 my">aaa</div>-->
+<!--            <select class="col-xs-12 my" id="cost-filter" name="cost" title="연간 투자비 + 운영비 (만원)" ref="cost">-->
+<!--                <option value='[0,0]' selected="selected">전체</option>-->
+<!--                <option value='[0,100000000]'>~ 1억</option>-->
+<!--                <option value='[100000000,0]'>1억 ~</option>-->
+<!--            </select>-->
+<!--        </div>-->
 
 <!--        <input id="refresh" class="col-sm-1 col-xs-11 my" type = "submit" value = "조회"/>-->
 
     </form>
-
-    <br>
 
     <div id="chart"></div>
 
@@ -54,41 +69,56 @@
 
         const chart = sdk.createChart({
             chartId: "1d7f71e1-5f77-416e-9361-82f5e82e6fd8",
+            // chartId: "6e285309-b49f-43ea-b9e7-750c26f40c3d",
             height: "500px",
-            width: "700px",
+            width: "1000px",
             // filter: { "average_income": { "$eq": "3.4E7" } }
             // filter: { "item": { "$eq": "인삼" } }
         });
         await chart.render(document.getElementById("chart"));
 
         city = "";
-        cost = ["",""];
+        annual_operating_cost = [0,0];
+        cost = [0,0];
 
         // $("#refresh").on("click", () => {
         //     chart.refresh();
         // });
         $("#city-filter").on("change", e => {
-            // const city = e.target.value;
             city = e.target.value;
             chart.setFilter( {
                 $and: [
-                    (city ? {"city": city} : {}),
-                    // (cost[0] ? {"province": cost[0]} : {})
+                    (city ? {"city": city } : {}),
+                    (annual_operating_cost[0] ? { "annual_operating_cost": { "$gte": annual_operating_cost[0] } } : {}),
+                    (annual_operating_cost[1] ? { "annual_operating_cost": { "$lt": annual_operating_cost[1] } } : {})
                 ]
             } );
             // city
             //     ? chart.setFilter({ "city": city })
             //     : chart.setFilter({});
         });
-        $("#cost-filter").on("change", e => {
-            cost = JSON.parse(e.target.value);
+        $("#annual_operating_cost-filter").on("change", e => {
+            annual_operating_cost = JSON.parse(e.target.value);
             chart.setFilter( {
                 $and: [
-                    (city ? {"city": city} : {}),
-                    // (cost[0] ? {"province": cost[0]} : {})
+                    (city ? {"city": city } : {}),
+                    (annual_operating_cost[0] ? { "annual_operating_cost": { "$gte": annual_operating_cost[0] } } : {}),
+                    (annual_operating_cost[1] ? { "annual_operating_cost": { "$lt": annual_operating_cost[1] } } : {})
                 ]
             } );
         });
+        // $("#cost-filter").on("change", e => {
+        //     cost = JSON.parse(e.target.value);
+        //     chart.setFilter( {
+        //         $and: [
+        //             (city ? {"city": city } : {}),
+        //             // (cost[0] ? { "cost": { "$gte": cost[0] } } : {}),
+        //             // (cost[1] ? { "cost": { "$lt": cost[1] } } : {}),
+        //             // (cost[0] ? { $expr: { $gte: [ { $add: [ "$annual_operating_cost", { $divide: [ "$average_investment_cost", 3] } ] } , cost[0] ] } } : {}),
+        //             // (cost[1] ? { $expr: { $lt: [ { $add: [ "$annual_operating_cost", { $divide: [ "$average_investment_cost", 3] } ] } , cost[1] ] } } : {})
+        //         ]
+        //     } );
+        // });
     }
 
     renderChart().catch(e => window.alert(e.message));
