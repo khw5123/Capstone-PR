@@ -33,10 +33,11 @@
         </div>
 
         <div class="col-sm-2 col-xs-11">
-            <div class="col-xs-12 my">연간 운영비</div>
-            <select class="col-xs-12 my" id="annual_operating_cost-filter" name="annual_operating_cost" title="연간 운영비" ref="annual_operating_cost">
+            <div class="col-xs-12 my">연간 투자비 + 운영비</div>
+            <select class="col-xs-12 my" id="one_year_cost-filter" name="one_year_cost" title="연간 투자비 + 운영비" ref="one_year_cost">
                 <option value='[0,0]' selected="selected">전체</option>
-                <option value='[0,50000000]'>5천만원 미만</option>
+                <option value='[0,20000000]'>2천만원 미만</option>
+                <option value='[20000000,50000000]'>2천만원 ~ 5천만원</option>
                 <option value='[50000000,100000000]'>5천만원 ~ 1억원</option>
                 <option value='[100000000,0]'>1억원 이상</option>
             </select>
@@ -78,8 +79,8 @@
         await chart.render(document.getElementById("chart"));
 
         city = "";
-        annual_operating_cost = [0,0];
-        cost = [0,0];
+        one_year_cost = [0,0];
+        // cost = [0,0];
 
         // $("#refresh").on("click", () => {
         //     chart.refresh();
@@ -89,21 +90,21 @@
             chart.setFilter( {
                 $and: [
                     (city ? {"city": city } : {}),
-                    (annual_operating_cost[0] ? { "annual_operating_cost": { "$gte": annual_operating_cost[0] } } : {}),
-                    (annual_operating_cost[1] ? { "annual_operating_cost": { "$lt": annual_operating_cost[1] } } : {})
+                    (one_year_cost[0] ? { "one_year_cost": { "$gte": one_year_cost[0] } } : {}),
+                    (one_year_cost[1] ? { "one_year_cost": { "$lt": one_year_cost[1] } } : {})
                 ]
             } );
             // city
             //     ? chart.setFilter({ "city": city })
             //     : chart.setFilter({});
         });
-        $("#annual_operating_cost-filter").on("change", e => {
-            annual_operating_cost = JSON.parse(e.target.value);
+        $("#one_year_cost-filter").on("change", e => {
+            one_year_cost = JSON.parse(e.target.value);
             chart.setFilter( {
                 $and: [
                     (city ? {"city": city } : {}),
-                    (annual_operating_cost[0] ? { "annual_operating_cost": { "$gte": annual_operating_cost[0] } } : {}),
-                    (annual_operating_cost[1] ? { "annual_operating_cost": { "$lt": annual_operating_cost[1] } } : {})
+                    (one_year_cost[0] ? { "one_year_cost": { "$gte": one_year_cost[0] } } : {}),
+                    (one_year_cost[1] ? { "one_year_cost": { "$lt": one_year_cost[1] } } : {})
                 ]
             } );
         });
