@@ -15,4 +15,16 @@ public class StatisticalAnalysisController {
 
         return "StatisticalAnalysis/Chart";
     }
+    
+    @RequestMapping(value = "/farmlandLeaseChart")
+    public String farmlandLeaseChart(Model model) {
+
+        return "StatisticalAnalysis/farmlandLeaseChart";
+    }
+
+    @RequestMapping(value = "/farmlandTradingChart")
+    public String farmlandTradingChart(Model model) {
+
+        return "StatisticalAnalysis/farmlandTradingChart";
+    }
 }
