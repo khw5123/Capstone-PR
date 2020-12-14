@@ -27,4 +27,16 @@ public class StatisticalAnalysisController {
 
         return "StatisticalAnalysis/farmlandTradingChart";
     }
+
+    @RequestMapping(value = "/AverageIncomeChart")
+    public String averageIncomeChart(Model model) {
+
+        return "StatisticalAnalysis/AverageIncomeChart";
+    }
+
+    @RequestMapping(value = "/ManagementScale")
+    public String managementScale(Model model) {
+
+        return "StatisticalAnalysis/ManagementScale";
+    }
 }

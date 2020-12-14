@@ -2,6 +2,12 @@ package com.capstone.farming.controller;
 
 import com.capstone.farming.model.Crop;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +19,8 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +42,13 @@ public class CropController {
     }
     private String currentCrop = null; // 현재 작물 종류
     private NodeList nList = null; // 현재 작물의 정보가 저장될 리스트
+
+    /*
+    // 품종 데이터 엑셀 파일에 추출 시
+    private int totalRow = 0;
+    XSSFWorkbook workbook = new XSSFWorkbook();
+    XSSFSheet sheet = workbook.createSheet();
+    */
 
     // 식량 작물
     @RequestMapping("/Crop/FoodCropsInfo")
@@ -81,6 +96,28 @@ public class CropController {
             }
             model.addAttribute("cropName", cropName);
             model.addAttribute("cropList", crop);
+
+            /*
+            // 품종 데이터 엑셀 파일에 추출 시
+            File path = new File("C:/Users/Mine/Desktop/crop_info.xlsx");
+            FileOutputStream fileout = new FileOutputStream(path, true);
+            for(int i=0; i < crop.size(); i++) {
+                Row row = sheet.createRow(totalRow);
+                Cell cell = row.createCell(0);
+                cell.setCellValue(crop.get(i).getCntntsSj());
+                cell = row.createCell(1);
+                cell.setCellValue(crop.get(i).getUnbrngYear());
+                cell = row.createCell(2);
+                cell.setCellValue(crop.get(i).getUnbrngInsttInfo());
+                cell = row.createCell(3);
+                cell.setCellValue(crop.get(i).getMainChartrInfo());
+                totalRow += 1;
+            }
+            System.out.println(totalRow);
+            workbook.write(fileout);
+            fileout.close();
+            */
+
             // 페이지네이션
             int endPage = -1;
             if(nList.getLength() %  Integer.parseInt(maxNumOfRows) == 0) {
