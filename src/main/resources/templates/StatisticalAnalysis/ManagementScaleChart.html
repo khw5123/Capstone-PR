@@ -64,9 +64,10 @@
         </div>
     </nav>
 
-    <h1>수익 금액</h1>
+    <h1>경영규모 금액</h1>
     <div id="chart-container" v-cloak>
         <form class="col-xs-12" v-cloak name = "price_info" accept-charset="utf-8">
+
             <div class="col-sm-2 col-xs-11">
                 <div class="col-xs-12 my">도 단위</div>
                 <select class="col-xs-12 my" id="province-filter" name="province" title="도 선택" ref="province">
@@ -90,6 +91,17 @@
                     <option value="충청북도">충청북도</option>
                 </select>
             </div>
+
+            <div class="col-sm-2 col-xs-11">
+                <div class="col-xs-12 my">경영 규모(m²)</div>
+                <select class="col-xs-12 my" id="family_management_scale-filter" name="family_management_scale" title="경영 규모(m²)" ref="family_management_scale">
+                    <option value='[0, 0]' selected="selected">전체</option>
+                    <option value='[0, 5000]'>5000(m²)미만</option>
+                    <option value='[5000, 10000]'>5000(m²)이상 10000(m²)미만</option>
+                    <option value='[10000, 0]'>10000(m²)이상</option>
+                </select>
+            </div>
+
         </form>
         <div id="chart"></div>
     </div>
@@ -108,12 +120,26 @@
             await chart.render(document.getElementById("chart"));
 
             province = "";
+            family_management_scale = [0, 0];
 
             $("#province-filter").on("change", e => {
                 province = e.target.value;
                 chart.setFilter({
                     $and: [
-                        (province ? {"province": province} : {})
+                        (province ? {"province": province} : {}),
+                        (family_management_scale[0] ? {"family_management_scale": {"$gte": family_management_scale[0]}} : {}),
+                        (family_management_scale[1] ? {"family_management_scale": {"$lt": family_management_scale[1]}} : {})
+                    ]
+                });
+            });
+
+            $("#family_management_scale-filter").on("change", e => {
+                family_management_scale = JSON.parse(e.target.value);
+                chart.setFilter({
+                    $and: [
+                        (province ? {"province": province} : {}),
+                        (family_management_scale[0] ? {"family_management_scale": {"$gte": family_management_scale[0]}} : {}),
+                        (family_management_scale[1] ? {"family_management_scale": {"$lt": family_management_scale[1]}} : {})
                     ]
                 });
             });

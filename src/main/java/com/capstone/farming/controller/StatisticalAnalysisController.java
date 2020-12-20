@@ -17,9 +17,15 @@ public class StatisticalAnalysisController {
 //    }
 
     @RequestMapping(value = "/AverageIncomeChart")
-    public String averageIncomeChart(Model model) {
+    public String averageIncome(Model model) {
 
         return "StatisticalAnalysis/AverageIncomeChart";
+    }
+
+    @RequestMapping(value = "/AverageIncomeRatioChart")
+    public String averageIncomeRatio(Model model) {
+
+        return "StatisticalAnalysis/AverageIncomeRatioChart";
     }
 
     @RequestMapping(value = "/CostChartAmount")
@@ -46,10 +52,16 @@ public class StatisticalAnalysisController {
         return "StatisticalAnalysis/CostChartRatioRegion";
     }
 
-    @RequestMapping(value = "/ManagementScale")
+    @RequestMapping(value = "/ManagementScaleChart")
     public String managementScale(Model model) {
 
-        return "StatisticalAnalysis/ManagementScale";
+        return "StatisticalAnalysis/ManagementScaleChart";
+    }
+
+    @RequestMapping(value = "/ManagementScaleRatioChart")
+    public String managementScaleRatio(Model model) {
+
+        return "StatisticalAnalysis/ManagementScaleRatioChart";
     }
 
     @RequestMapping(value = "/farmlandLeaseChart")
