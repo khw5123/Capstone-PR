@@ -31,7 +31,15 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">통계 분석<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="Chart">몽고 차트 페이지</a></li>
+                            <!--                            <li><a href="StatisticalAnalysis/Chart">몽고 차트 페이지</a></li>-->
+                            <li><a href="AverageIncomeChart">수익 금액</a></li>
+                            <li><a href="AverageIncomeRatioChart">수익 비율</a></li>
+                            <li><a href="CostChartAmount">투자비, 운영비 합계별 수익 (전국)</a></li>
+                            <li><a href="CostChartRatio">투자비, 운영비 합계별 순이익률 (전국)</a></li>
+                            <li><a href="CostChartAmountRegion">투자비, 운영비 합계별 수익 (지역별)</a></li>
+                            <li><a href="CostChartRatioRegion">투자비, 운영비 합계별 순이익률 (지역별)</a></li>
+                            <li><a href="ManagementScaleChart">경영규모 금액</a></li>
+                            <li><a href="ManagementScaleRatioChart">경영규모 비율</a></li>
                             <li><a href="farmlandLeaseChart">평균 농지 임대 가격</a></li>
                             <li><a href="farmlandTradingChart">평균 농지 매매 가격</a></li>
                         </ul>
@@ -39,17 +47,17 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">모니터링<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="RealTimePrice">실시간 가격 정보</a></li>
-                            <li><a href="plan">농작업 관리 일정</a></li>
+                            <li><a href="../RealTimePrice">실시간 가격 정보</a></li>
+                            <li><a href="../plan">농작업 관리 일정</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">리포팅<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="AreaFarmInfoList">지역별 작목 정보</a></li>
-                            <li><a href="Crop/FoodCropsInfo">품종 정보</a></li>
-                            <li><a href="FarmingTechnique">영농 기술 정보</a></li>
-                            <li><a href="Statistics/PurchaseStatisticsMonthly">농식품 구입 통계</a></li>
+                            <!--                            <li><a href="AreaFarmInfoList">지역별 작목 정보</a></li>-->
+                            <li><a href="../Crop/FoodCropsInfo">품종 정보</a></li>
+                            <li><a href="../FarmingTechnique">작목별 농업 기술 정보</a></li>
+                            <li><a href="../Statistics/PurchaseStatisticsMonthly">농식품 구입 통계</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -57,7 +65,8 @@
         </div>
     </nav>
 
-    <h1>평균 농지 매매 가격</h1>
+
+<h1>평균 농지 매매 가격</h1>
 
     <div id="chart-container" v-cloak>
 
@@ -91,7 +100,11 @@
 
         </form>
 
-        <div id="chart"></div>
+        <div id="minChart"></div>
+        <div id="meanChart"></div>
+        <div id="maxChart"></div>
+        <div id="stdevChart"></div>
+
 
     </div>
 
@@ -102,22 +115,62 @@
                 baseUrl: "https://charts.mongodb.com/charts-crop-recommender-mfumo"
             });
 
-            const chart = sdk.createChart({
+            const minChart = sdk.createChart({
+                chartId: "b5a5d643-1642-468b-a3da-6be55ba20e30",
+                height: "1000px",
+                width: "1000px"
+            });
+            await minChart.render(document.getElementById("minChart"));
+
+
+            const meanChart = sdk.createChart({
                 chartId: "7d2d58ca-ea86-43f0-a953-9d74f7ca34a8",
                 height: "1000px",
                 width: "1000px"
             });
-            await chart.render(document.getElementById("chart"));
+            await meanChart.render(document.getElementById("meanChart"));
+
+            const maxChart = sdk.createChart({
+                chartId: "0e5f9b60-b4bb-4113-bfe0-38d44cd3f7a2",
+                height: "1000px",
+                width: "1000px"
+            });
+            await maxChart.render(document.getElementById("maxChart"));
+
+            const stdevChart = sdk.createChart({
+                chartId: "56fd4b3f-7b4e-4fdf-9d6f-6e24bd9e368d",
+                height: "1000px",
+                width: "1000px"
+            });
+            await stdevChart.render(document.getElementById("stdevChart"));
 
             province = "";
 
             $("#province-filter").on("change", e => {
                 province = e.target.value;
-                chart.setFilter( {
+                minChart.setFilter( {
                     $and: [
                         (province ? {"province": province } : {})
                     ]
-                } );
+                });
+
+                meanChart.setFilter( {
+                    $and: [
+                        (province ? {"province": province } : {})
+                    ]
+                });
+
+                maxChart.setFilter( {
+                    $and: [
+                        (province ? {"province": province } : {})
+                    ]
+                });
+
+                stdevChart.setFilter( {
+                    $and: [
+                        (province ? {"province": province } : {})
+                    ]
+                });
             });
         }
 
