@@ -64,7 +64,7 @@
         </div>
     </nav>
 
-    <h1>수익 금액</h1>
+    <h1>수익 비율</h1>
     <div id="chart-container" v-cloak>
         <form class="col-xs-12" v-cloak name = "price_info" accept-charset="utf-8">
             <div class="col-sm-2 col-xs-11">
@@ -101,7 +101,7 @@
             });
 
             const chart = sdk.createChart({
-                chartId: "d015d0d2-cd8b-4cd5-8f6b-8de92f612df7",
+                chartId: "6de471e8-7760-4fc6-9d2e-391f2214a3cf",
                 height: "1000px",
                 width: "1000px"
             });
@@ -111,12 +111,12 @@
 
             $("#province-filter").on("change", e => {
                 province = e.target.value;
-                chart.setFilter({
-                    $and: [
-                        (province ? {"province": province} : {})
-                    ]
-                });
+            chart.setFilter({
+                $and: [
+                    (province ? {"province": province} : {})
+                ]
             });
+        });
         }
 
         renderChart().catch(e => window.alert(e.message));
