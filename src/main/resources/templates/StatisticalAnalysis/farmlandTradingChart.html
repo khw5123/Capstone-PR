@@ -100,10 +100,7 @@
 
         </form>
 
-        <div id="minChart"></div>
         <div id="meanChart"></div>
-        <div id="maxChart"></div>
-        <div id="stdevChart"></div>
 
 
     </div>
@@ -115,44 +112,17 @@
                 baseUrl: "https://charts.mongodb.com/charts-crop-recommender-mfumo"
             });
 
-            const minChart = sdk.createChart({
-                chartId: "b5a5d643-1642-468b-a3da-6be55ba20e30",
-                height: "1000px",
-                width: "1000px"
-            });
-            await minChart.render(document.getElementById("minChart"));
-
-
             const meanChart = sdk.createChart({
                 chartId: "7d2d58ca-ea86-43f0-a953-9d74f7ca34a8",
                 height: "1000px",
-                width: "1000px"
+                width: $(window).width()
             });
             await meanChart.render(document.getElementById("meanChart"));
-
-            const maxChart = sdk.createChart({
-                chartId: "0e5f9b60-b4bb-4113-bfe0-38d44cd3f7a2",
-                height: "1000px",
-                width: "1000px"
-            });
-            await maxChart.render(document.getElementById("maxChart"));
-
-            const stdevChart = sdk.createChart({
-                chartId: "56fd4b3f-7b4e-4fdf-9d6f-6e24bd9e368d",
-                height: "1000px",
-                width: "1000px"
-            });
-            await stdevChart.render(document.getElementById("stdevChart"));
 
             province = "";
 
             $("#province-filter").on("change", e => {
                 province = e.target.value;
-                minChart.setFilter( {
-                    $and: [
-                        (province ? {"province": province } : {})
-                    ]
-                });
 
                 meanChart.setFilter( {
                     $and: [
@@ -160,17 +130,6 @@
                     ]
                 });
 
-                maxChart.setFilter( {
-                    $and: [
-                        (province ? {"province": province } : {})
-                    ]
-                });
-
-                stdevChart.setFilter( {
-                    $and: [
-                        (province ? {"province": province } : {})
-                    ]
-                });
             });
         }
 
