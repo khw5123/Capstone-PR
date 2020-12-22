@@ -31,7 +31,15 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">통계 분석<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="Chart">몽고 차트 페이지</a></li>
+                            <!--                            <li><a href="StatisticalAnalysis/Chart">몽고 차트 페이지</a></li>-->
+                            <li><a href="AverageIncomeChart">수익 금액</a></li>
+                            <li><a href="AverageIncomeRatioChart">수익 비율</a></li>
+                            <li><a href="CostChartAmount">투자비, 운영비 합계별 수익 (전국)</a></li>
+                            <li><a href="CostChartRatio">투자비, 운영비 합계별 순이익률 (전국)</a></li>
+                            <li><a href="CostChartAmountRegion">투자비, 운영비 합계별 수익 (지역별)</a></li>
+                            <li><a href="CostChartRatioRegion">투자비, 운영비 합계별 순이익률 (지역별)</a></li>
+                            <li><a href="ManagementScaleChart">경영규모 금액</a></li>
+                            <li><a href="ManagementScaleRatioChart">경영규모 비율</a></li>
                             <li><a href="farmlandLeaseChart">평균 농지 임대 가격</a></li>
                             <li><a href="farmlandTradingChart">평균 농지 매매 가격</a></li>
                         </ul>
@@ -39,17 +47,17 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">모니터링<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="RealTimePrice">실시간 가격 정보</a></li>
-                            <li><a href="plan">농작업 관리 일정</a></li>
+                            <li><a href="../RealTimePrice">실시간 가격 정보</a></li>
+                            <li><a href="../plan">농작업 관리 일정</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">리포팅<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="AreaFarmInfoList">지역별 작목 정보</a></li>
-                            <li><a href="Crop/FoodCropsInfo">품종 정보</a></li>
-                            <li><a href="FarmingTechnique">영농 기술 정보</a></li>
-                            <li><a href="Statistics/PurchaseStatisticsMonthly">농식품 구입 통계</a></li>
+                            <!--                            <li><a href="AreaFarmInfoList">지역별 작목 정보</a></li>-->
+                            <li><a href="../Crop/FoodCropsInfo">품종 정보</a></li>
+                            <li><a href="../FarmingTechnique">작목별 농업 기술 정보</a></li>
+                            <li><a href="../Statistics/PurchaseStatisticsMonthly">농식품 구입 통계</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -57,7 +65,8 @@
         </div>
     </nav>
 
-    <h1>평균 농지 임대 가격</h1>
+
+<h1>평균 농지 임대 가격</h1>
 
     <div id="chart-container" v-cloak>
 
@@ -90,7 +99,8 @@
 
         </form>
 
-        <div id="chart"></div>
+        <div id="meanChart"></div>
+
 
     </div>
 
@@ -101,23 +111,25 @@
                 baseUrl: "https://charts.mongodb.com/charts-crop-recommender-mfumo"
             });
 
-            const chart = sdk.createChart({
+            const meanChart = sdk.createChart({
                 chartId: "1150142e-e9a8-4627-86a2-ba00deef2124",
-                // chartId: "6e285309-b49f-43ea-b9e7-750c26f40c3d",
                 height: "1000px",
-                width: "1000px"
+                width: $(window).width()
             });
-            await chart.render(document.getElementById("chart"));
+            await meanChart.render(document.getElementById("meanChart"));
+
 
             province = "";
 
             $("#province-filter").on("change", e => {
                 province = e.target.value;
-                chart.setFilter( {
+
+                meanChart.setFilter( {
                     $and: [
                         (province ? {"province": province } : {})
                     ]
-                } );
+                });
+
             });
         }
 

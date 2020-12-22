@@ -58,7 +58,7 @@
         </div>
     </nav>
 
-    <h1>경영 규모</h1>
+    <h1>투자비, 운영비 합계별 수익 (전국)</h1>
     <div id="chart-container" v-cloak>
         <form class="col-xs-12" v-cloak name = "price_info" accept-charset="utf-8">
 
@@ -110,7 +110,8 @@
             const chart = sdk.createChart({
                 chartId: "1d7f71e1-5f77-416e-9361-82f5e82e6fd8",
                 height: "1000px",
-                width: "1000px"
+                // width: "1000px"
+                width: $(window).width()
             });
             await chart.render(document.getElementById("chart"));
 
