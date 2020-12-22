@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+    <link rel="icon" sizes="48x48" href="/icons/returnFarmIcon48.png" />
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -621,6 +621,7 @@
     <title>농작업 일정</title>
 </head>
 <body>
+<!-- Navigation Bar -->
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -629,35 +630,84 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">귀농 귀촌 길잡이</a>
+            <a class="navbar-brand" href="/">SSBI-FD</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP1 재배 작물 선택<span class="caret"></span></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">데이터 시각화<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="Crop/FoodCropsInfo">품종 정보</a></li>
-                        <li><a href="AreaFarmInfoList">지역별 작목 정보</a></li>
-                        <li><a href="RealTimePrice">실시간 가격 정보</a></li>
+                        <!--                            <li><a href="StatisticalAnalysis/Chart">몽고 차트 페이지</a></li>-->
+                        <li><a href="StatisticalAnalysis/AverageIncomeChart">수익 금액</a></li>
+                        <!--                            <li><a href="StatisticalAnalysis/CostChartAmount">투자비, 운영비 합계별 수익 (전국)</a></li>-->
+                        <!--                            <li><a href="StatisticalAnalysis/CostChartRatio">투자비, 운영비 합계별 순이익률 (전국)</a></li>-->
+                        <li><a href="StatisticalAnalysis/CostChartAmountRegion">투자비, 운영비 합계별 수익</a></li>
+                        <li><a href="StatisticalAnalysis/CostChartRatioRegion">투자비, 운영비 합계별 순이익률</a></li>
+                        <li><a href="StatisticalAnalysis/ManagementScaleChart">경영규모 금액</a></li>
+                        <li><a href="StatisticalAnalysis/farmlandLeaseChart">평균 농지 임대 가격</a></li>
+                        <li><a href="StatisticalAnalysis/farmlandTradingChart">평균 농지 매매 가격</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP2 영농 기술 습득<span class="caret"></span></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">리포팅<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="FarmingTechnique">영농 기술 정보</a></li>
-                        <li><a href="Education/Education">영농 교육</a></li>
+                        <!--                            <li><a href="AreaFarmInfoList">지역별 작목 정보</a></li>-->
+                        <li><a href="Crop/FoodCropsInfo">품종 정보</a></li>
+                        <li><a href="FarmingTechnique">작목별 농업 기술 정보</a></li>
+                        <li><a href="Statistics/PurchaseStatisticsMonthly">농식품 구입 통계</a></li>
                     </ul>
-                </li><li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP3 영농 계획 수립<span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <li><a href="plan">농작업 관리 일정</a></li>
-                    <li><a href="Statistics/PurchaseStatisticsMonthly">농식품 구입 통계</a></li>
-                </ul>
-            </li>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">모니터링<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="RealTimePrice">실시간 가격 정보</a></li>
+                        <li><a href="plan">농작업 관리 일정</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
+
+<!--
+<nav class="navbar navbar-inverse">
+<div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">귀농 귀촌 길잡이</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP1 재배 작물 선택<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="Crop/FoodCropsInfo">품종 정보</a></li>
+                    <li><a href="AreaFarmInfoList">지역별 작목 정보</a></li>
+                    <li><a href="RealTimePrice">실시간 가격 정보</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP2 영농 기술 습득<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="FarmingTechnique">영농 기술 정보</a></li>
+                    <li><a href="Education/Education">영농 교육</a></li>
+                </ul>
+            </li><li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">STEP3 영농 계획 수립<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="plan">농작업 관리 일정</a></li>
+                <li><a href="Statistics/PurchaseStatisticsMonthly">농식품 구입 통계</a></li>
+            </ul>
+        </li>
+        </ul>
+    </div>
+</div>
+</nav>
+-->
 
 <select class="my" id="listCategoryCode" onchange="itemChange()">
     <option value="0">작목을 선택하세요.</option>

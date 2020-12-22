@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>귀농 귀촌 길잡이</title>
+    <title>수익 금액</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -23,31 +23,22 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">귀농 귀촌 길잡이</a>
+                <a class="navbar-brand" href="/">SSBI-FD</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">통계 분석<span class="caret"></span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">데이터 시각화<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <!--                            <li><a href="StatisticalAnalysis/Chart">몽고 차트 페이지</a></li>-->
                             <li><a href="AverageIncomeChart">수익 금액</a></li>
-                            <li><a href="AverageIncomeRatioChart">수익 비율</a></li>
-                            <li><a href="CostChartAmount">투자비, 운영비 합계별 수익 (전국)</a></li>
-                            <li><a href="CostChartRatio">투자비, 운영비 합계별 순이익률 (전국)</a></li>
-                            <li><a href="CostChartAmountRegion">투자비, 운영비 합계별 수익 (지역별)</a></li>
-                            <li><a href="CostChartRatioRegion">투자비, 운영비 합계별 순이익률 (지역별)</a></li>
+                            <!--                            <li><a href="StatisticalAnalysis/CostChartAmount">투자비, 운영비 합계별 수익 (전국)</a></li>-->
+                            <!--                            <li><a href="StatisticalAnalysis/CostChartRatio">투자비, 운영비 합계별 순이익률 (전국)</a></li>-->
+                            <li><a href="CostChartAmountRegion">투자비, 운영비 합계별 수익</a></li>
+                            <li><a href="CostChartRatioRegion">투자비, 운영비 합계별 순이익률</a></li>
                             <li><a href="ManagementScaleChart">경영규모 금액</a></li>
-                            <li><a href="ManagementScaleRatioChart">경영규모 비율</a></li>
                             <li><a href="farmlandLeaseChart">평균 농지 임대 가격</a></li>
                             <li><a href="farmlandTradingChart">평균 농지 매매 가격</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">모니터링<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="../RealTimePrice">실시간 가격 정보</a></li>
-                            <li><a href="../plan">농작업 관리 일정</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -57,6 +48,13 @@
                             <li><a href="../Crop/FoodCropsInfo">품종 정보</a></li>
                             <li><a href="../FarmingTechnique">작목별 농업 기술 정보</a></li>
                             <li><a href="../Statistics/PurchaseStatisticsMonthly">농식품 구입 통계</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">모니터링<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../RealTimePrice">실시간 가격 정보</a></li>
+                            <li><a href="../plan">농작업 관리 일정</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -103,7 +101,7 @@
             const chart = sdk.createChart({
                 chartId: "d015d0d2-cd8b-4cd5-8f6b-8de92f612df7",
                 height: "1000px",
-                width: "1000px"
+                width: $(window).width()
             });
             await chart.render(document.getElementById("chart"));
 
